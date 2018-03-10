@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+	    <file>main.qml</file>
+		<file>qtquickcontrols2.conf</file>
+		<file>NeoCanvas.qml</file>
+		<file>NeoBasicNode.qml</file>
+		<file>NeoMenuBar.qml</file>
+		<file>NeoRadioButton.qml</file>
+		</qresource>
+</RCC>
