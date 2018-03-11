@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/">
-	    <file>qml/main.qml</file>
-		<file>qml/NeoCanvas.qml</file>
-		<file>qml/NeoBasicNode.qml</file>
-		<file>qml/NeoMenuBar.qml</file>
-		<file>qml/NeoRadioButton.qml</file>
-		<file>qtquickcontrols2.conf</file>
-		</qresource>
+        <file>qml/main.qml</file>
+        <file>qml/NeoCanvas.qml</file>
+        <file>qml/NeoBasicNode.qml</file>
+        <file>qml/NeoMenuBar.qml</file>
+        <file>qml/NeoRadioButton.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>qml/NeoMenuItem.qml</file>
+    </qresource>
 </RCC>
