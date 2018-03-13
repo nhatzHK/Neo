@@ -2,16 +2,20 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 
+/*! \brief Main window of the program.
+        This is the outmost layer.
+        Every other component is a (direct or indirect child) of this.
+*/
 ApplicationWindow {
     id: app
 
-    property Component basicNode: Component.Null
-    property var elements: []
-    property variant mouseEvent: null
+    property Component basicNode: Component.Null //! Base component used to create nodes
+    property var elements: [] //! Array containing all the nodes created
+    property variant mouseEvent: null //! Used to store the last state of the mouse
     property int count: 0
 
-    width: 640
-    height: 480
+    width: 480
+    height: 360
     visible: true
 
     // set unresizable
@@ -22,16 +26,19 @@ ApplicationWindow {
 
     title: qsTr("Neo")
 
+    //Finish necessary initializations
     Component.onCompleted: {
 
         basicNode = Qt.createComponent("NeoBasicNode.qml")
         menuBar.getMenu("file").insertItem(0, createMenu)
     }
 
+    // exported in a file for readability
     menuBar: NeoMenuBar {
         id: menuBar
     }
 
+    //! Main canvas of the program
     NeoCanvas {
         id: canvas
         nodes: elements
@@ -46,6 +53,8 @@ ApplicationWindow {
 
         signal rightClick
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+        //! On press show menu and save mouse state
         onPressed: {
             if (Qt.RightButton & pressedButtons) {
                 contextMenu.popup()
@@ -54,6 +63,7 @@ ApplicationWindow {
         }
     }
 
+    //! Context menu accessible by clicking directly on the canvas
     Menu {
         id: contextMenu
 
@@ -70,16 +80,21 @@ ApplicationWindow {
         }
     }
 
+    /*! \brief Create a new node.
+        Use the previously loaded NeoBasicNode component to create new qml objects on demand
+        TODO: Fails silently if the NeoBasicNode component wasn't successfully loaded
+    */
     function createBasicNode() {
         if (basicNode.status === Component.Ready) {
-            var node = basicNode.createObject(app, {"x": mouseEvent.x, "y": mouseEvent.y})
+
+            // create node at click position
+            const node = basicNode.createObject(app, {"x": mouseEvent.x, "y": mouseEvent.y})
             node.elements = elements
             node.name = String(count)
+            node.canvas = canvas
             count += 1
             elements.push(node)
             canvas.baseCanvas.requestPaint()
-        } else {
-            console.warn("woopidoop")
         }
     }
 }

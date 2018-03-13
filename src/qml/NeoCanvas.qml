@@ -1,5 +1,8 @@
 import QtQuick 2.0
 
+/*! \file Main canvas of the node editor
+    Draw lines between connected nodes.
+*/
 Rectangle {
     id: node_edit
     x: 0
@@ -10,35 +13,35 @@ Rectangle {
     Canvas {
         id: canvas
         anchors.fill: parent
-        function do_spline(node1, node2, context) {
-            var x1 = node1.x -10
-            var x2 = node2.x - 13
-            var y1 = node1.y + node2.height / 4
-            var y2 = node2.y + node2.height / 4
-            context.moveTo(x1, y1)
-            if (x1 > x2) {
-                context.bezierCurveTo((x1 - x2) + x1, y1, x2 - (x1 - x2),
-                                      y2, x2, y2)
+
+        /*! \brief Draw bezier curve between two nodes (in -> out)
+            \param pos1 Qt.point giving the position of the first slot (out)
+            \param pos2 Qt.point giving the position of the second slot (in)
+        */
+        function do_spline(pos1, pos2, context) {
+            if(pos1 === null || pos2 === null)
+                return
+
+            context.moveTo(pos1.x, pos1.y)
+            if (pos1.x > pos2.x) {
+                context.bezierCurveTo((pos1.x - pos2.x) + pos1.x, pos1.y, pos2.x - (pos1.x - pos2.x),
+                                      pos2.y, pos2.x, pos2.y)
             } else {
-                context.bezierCurveTo((x1 + x2) / 2, y1, (x1 + x2) / 2,
-                                      y2, x2, y2)
+                context.bezierCurveTo((pos1.x + pos2.x) / 2, pos1.y, (pos1.x + pos2.x) / 2,
+                                      pos2.y, pos2.x, pos2.y)
             }
         }
+
+        //! Draw all connections curves between all connected slots
         onPaint: {
-            console.log("Painting")
-            var ctx = canvas.getContext("2d")
+            const ctx = canvas.getContext("2d")
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
             ctx.lineWidth = 1
             ctx.beginPath()
-            //do_spline(Qt.point(40, 40), Qt.point(80, 80), ctx)
-            console.log("Nodes: " + nodes.length)
             for (var i = 0; i < nodes.length; ++i) {
-                console.log("Reached")
-                console.log("Connections: " + nodes[i].connections.length)
                 for (var j = 0; j < nodes[i].connections.length; ++j) {
-                    do_spline(nodes[i], nodes[i].connections[j], ctx)
-                    console.log("Reached 2")
+                    do_spline(nodes[i].getOutPos(), nodes[i].connections[j].getInPos(), ctx)
                 }
             }
 
@@ -46,5 +49,6 @@ Rectangle {
         }
     }
 
+    //! real canvas, only for accessibility out of this scope
     property Canvas baseCanvas: canvas
 }

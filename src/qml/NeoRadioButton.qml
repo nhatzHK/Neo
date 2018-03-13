@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 
 RadioButton {
-    id: out2
+    id: slot
     enabled: false
     clip: true
     visible: true

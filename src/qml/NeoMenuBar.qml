@@ -12,6 +12,10 @@ MenuBar {
         }
     }
 
+    /*! Return a menu from the bar
+        FIXME: HARDCODED
+        \param menu Lowercase name of the menu to return
+    */
     function getMenu(menu) {
         switch (menu) {
         case "file":
