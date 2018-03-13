@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.4
 
+
 /*! \file Basic node to build more complex elements on
     Basic node with a in and an out slot to connect.
 */
@@ -14,14 +15,13 @@ Rectangle {
 
     property string name: "Name" //! Name used to connect to the node
 
-    property var connections: [] //! Array of outgoing connections this node have
+    property var outCon: [] //! Array of outgoing connections
+    property var inCon: [] //! Array of incoming connections
+
     property var elements: [] //! Array of elements declared in the main window
 
-    property bool hasIn: false //! Does the node have incoming connection currectly
-    property bool hasOut: connections.length > 0 //! Does the node have outgoing connections currently
-
     property Item inSlot: NeoRadioButton {
-        //visible: hasIn
+        visible: false
         y: node.height / 4
         x: -10
         parent: group.contentItem // one group for the node
@@ -29,7 +29,7 @@ Rectangle {
     property Item outSlot: NeoRadioButton {
         y: node.height / 4
         x: node.width - 13
-        //visible: connections.length > 0 ? true: false
+        visible: false
         parent: group.contentItem
     }
 
@@ -112,26 +112,21 @@ Rectangle {
     /*! \brief Clear content of a menu */
     function clearMenu(menu) {
         menu.items = []
+        return menu
     }
 
     /*! Create an array of checkable menu items to display.
         \param type Type of connection to create
     */
     function updateConnectableList(type) {
-        var menu
-        switch (type) {
-        case "in":
-            clearMenu(menuConnectIn)
-            menu = menuConnectIn
-            break
-        case "out":
-            clearMenu(menuConnectOut)
-            menu = menuConnectOut
-            break
-        default:
+        if (type !== "in" && type !== "out") {
             errorBadType(type)
             return
         }
+
+        var menu = type === "in" ? clearMenu(menuConnectIn) : clearMenu(
+                                       menuConnectOut)
+        var connections = type === "in" ? inCon : outCon
 
         /*! \brief Recursive loop replacing a for loop.
 
@@ -147,10 +142,7 @@ Rectangle {
             }
 
             // do not include **this** node, skip
-            var breaking = false
-            if (elements[i] === node) {
-                breaking = true
-            }
+            var breaking = elements[i] === node
 
             if (!breaking) {
 
@@ -162,17 +154,10 @@ Rectangle {
                         break
                     }
                 }
-                // is this node in the connection array of the element
-                for (var k = 0; k < elements[i].connections.length; ++k) {
-                    if (elements[i].connections[k] === node) {
-                        inConnections = true
-                        break
-                    }
-                }
 
                 // create menu item
                 if (dynamicMenuItem.status === Component.Ready) {
-                    const mnuItem = dynamicMenuItem.createObject(contextMenu)
+                    var mnuItem = dynamicMenuItem.createObject(contextMenu)
 
                     menu.insertItem(0, mnuItem)
 
@@ -194,21 +179,23 @@ Rectangle {
                         switch (type) {
                         case "in":
                             if (checked) {
-                                addConnection(elements[i])
+                                connectIn(elements[i])
                             } else {
-                                removeConnection(elements[i])
+                                disconnectIn(elements[i])
                             }
                             break
                         case "out":
                             if (checked) {
-                                elements[i].addConnection(node)
+                                connectOut(elements[i])
                             } else {
-                                elements[i].removeConnection(node)
+                                disconnectOut(elements[i])
                             }
 
                             break
                         }
 
+                        updateSlots()
+                        elements[i].updateSlots()
                         canvas.baseCanvas.requestPaint()
                     })
                 }
@@ -218,18 +205,49 @@ Rectangle {
         rec_for(elements, 0)
     }
 
-    /*! \brief Add item to the connection array.
-        \param item Nodee to be added as an outgoing connection.
+    /*! \brief Hide/show connections slots based on the number of connections
+       Hide when there is no connection passing through the slot
+       Show when there is at least one connection going through the slot
     */
-    function addConnection(item) {
-        item.connections.push(node)
+    function updateSlots() {
+        outSlot.visible = outCon.length > 0
+        inSlot.visible = inCon.length > 0
     }
 
-    /*! \brief Remove item from the connection array.
-        \param item Node to be removed from the connection array.
+    /*! \brief Create an incoming connection with the item
+        \param item Node that we want to connect to.
+        Also create an outgoing connection on the item's side.
     */
-    function removeConnection(item) {
-        item.connections.pop(node)
+    function connectIn(item) {
+        inCon.push(item)
+        item.outCon.push(node)
+    }
+
+    /*! \brief Create an outgoing connection with the item
+        \param item Node that we want to connect to.
+        Also create an incoming connection on the item's side.
+    */
+    function connectOut(item) {
+        outCon.push(item)
+        item.inCon.push(node)
+    }
+
+    /*! \brief Break the incoming connection with the item.
+        \param item Item currently connected to the node that we wish to disconnect.
+        Also break the connection from the item's side.
+    */
+    function disconnectIn(item) {
+        inCon.pop(item)
+        item.outCon.pop(node)
+    }
+
+    /*! \brief Break the outgoing connection with the item.
+        \param item Item currently connected to the node that we wish to disconnect.
+        Also break the connection from the item's side.
+    */
+    function disconnectOut(item) {
+        outCon.pop(item)
+        item.inCon.pop(node)
     }
 
     /*! Return position of slot for outgoing connections. */
@@ -243,7 +261,7 @@ Rectangle {
     }
 
     /*! Dummy type error logging */
-    function errorBadtype(type) {
+    function errorBadType(type) {
         console.log("[NeoBasicNode] Bad 'type' parameter. Should be 'in' or 'out', but is '"
                     + type + "'.")
     }

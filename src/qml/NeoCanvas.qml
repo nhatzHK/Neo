@@ -40,8 +40,8 @@ Rectangle {
             ctx.lineWidth = 1
             ctx.beginPath()
             for (var i = 0; i < nodes.length; ++i) {
-                for (var j = 0; j < nodes[i].connections.length; ++j) {
-                    do_spline(nodes[i].getOutPos(), nodes[i].connections[j].getInPos(), ctx)
+                for (var j = 0; j < nodes[i].outCon.length; ++j) {
+                    do_spline(nodes[i].getOutPos(), nodes[i].outCon[j].getInPos(), ctx)
                 }
             }
 
