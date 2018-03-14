@@ -98,6 +98,23 @@ Rectangle {
                 onAboutToShow: updateConnectableList("in")
             }
         }
+
+        MenuItem {
+            text: "Delete"
+            onTriggered: {
+                for(var i = 0; i < inCon.length; ++i) {
+                    disconnectIn(inCon[i])
+                }
+
+                for(var j = 0; j < outCon.length; ++j) {
+                    disconnectOut(outCon[j])
+                }
+
+                elements.splice(elements.indexOf(node), 1)
+                node.destroy()
+                canvas.baseCanvas.requestPaint()
+            }
+        }
     }
 
     Label {
@@ -194,8 +211,8 @@ Rectangle {
                             break
                         }
 
-                        updateSlots()
-                        elements[i].updateSlots()
+//                        updateSlots()
+//                        elements[i].updateSlots()
                         canvas.baseCanvas.requestPaint()
                     })
                 }
@@ -221,6 +238,8 @@ Rectangle {
     function connectIn(item) {
         inCon.push(item)
         item.outCon.push(node)
+        item.updateSlots()
+        updateSlots()
     }
 
     /*! \brief Create an outgoing connection with the item
@@ -230,6 +249,8 @@ Rectangle {
     function connectOut(item) {
         outCon.push(item)
         item.inCon.push(node)
+        item.updateSlots()
+        updateSlots()
     }
 
     /*! \brief Break the incoming connection with the item.
@@ -237,8 +258,10 @@ Rectangle {
         Also break the connection from the item's side.
     */
     function disconnectIn(item) {
-        inCon.pop(item)
-        item.outCon.pop(node)
+        inCon.splice(inCon.indexOf(item), 1)
+        item.outCon.splice(item.outCon.indexOf(node), 1)
+        item.updateSlots()
+        updateSlots()
     }
 
     /*! \brief Break the outgoing connection with the item.
@@ -246,8 +269,10 @@ Rectangle {
         Also break the connection from the item's side.
     */
     function disconnectOut(item) {
-        outCon.pop(item)
-        item.inCon.pop(node)
+        outCon.splice(outCon.indexOf(item), 1)
+        item.inCon.splice(item.inCon.indexOf(node), 1)
+        item.updateSlots()
+        updateSlots()
     }
 
     /*! Return position of slot for outgoing connections. */
