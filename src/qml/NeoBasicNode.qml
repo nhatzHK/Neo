@@ -1,5 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.4
+import Neo.BasicNode.Data 1.0
 
 
 /*! \file Basic node to build more complex elements on
@@ -102,11 +103,11 @@ Rectangle {
         MenuItem {
             text: "Delete"
             onTriggered: {
-                for(var i = 0; i < inCon.length; ++i) {
+                for(var i = 0; i < inCon.length;) {
                     disconnectIn(inCon[i])
                 }
 
-                for(var j = 0; j < outCon.length; ++j) {
+                for(var j = 0; j < outCon.length;) {
                     disconnectOut(outCon[j])
                 }
 
@@ -115,6 +116,10 @@ Rectangle {
                 canvas.baseCanvas.requestPaint()
             }
         }
+    }
+
+    NeoBasicNodeData {
+        id: neodata
     }
 
     Label {

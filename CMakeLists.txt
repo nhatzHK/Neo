@@ -8,6 +8,7 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
-add_executable(${PROJECT_NAME} "src/cpp/main.cpp" "src/qml.qrc")
+add_executable(${PROJECT_NAME} "src/cpp/main.cpp" "src/cpp/neobasicnodedata.cpp" "include/neobasicnodedata.h" "src/qml.qrc")
 
+include_directories(include)
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick)
