@@ -25,10 +25,6 @@ ApplicationWindow {
     minimumWidth: width
     minimumHeight: height
 
-    // exported in
-
-    // exported in
-
     title: qsTr("Neo")
 
     //Finish necessary initializations

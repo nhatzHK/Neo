@@ -2,6 +2,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.4
 import Neo.BasicNode.Data 1.0
 
+
 /*! \file Basic node to build more complex elements on
     Basic node with a in and an out slot to connect.
 */
@@ -24,6 +25,7 @@ Rectangle {
         x: -4
         parent: node
     }
+
     property Item outSlot: NeoRadioButton {
         y: node.height / 2
         x: node.width - 5
@@ -69,7 +71,8 @@ Rectangle {
         }
     }
 
-    property NeoBasicNodeData backend: NeoBasicNodeData {}
+    property NeoBasicNodeData backend: NeoBasicNodeData {
+    }
 
     Column {
         anchors.fill: parent
@@ -86,7 +89,17 @@ Rectangle {
         Label {
             height: parent.height / 4 * 3
             width: parent.width
-            text: node.backend.data
+            text:  {
+                if (inCon.length > 0) {
+                    var s = 0
+                    for (var i = 0; i < inCon.length; ++i) {
+                        s += inCon[i].backend.data
+                    }
+                    node.backend.data = s
+                }
+                    node.backend.data
+            }
+
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.bold: true
@@ -103,16 +116,29 @@ Rectangle {
             title: qsTr("Connect")
             Menu {
                 id: menuConnectOut
-                title: "Send"
+                title: qsTr("Send")
 
                 onAboutToShow: updateConnectableList("out")
             }
 
             Menu {
                 id: menuConnectIn
-                title: "Receive"
+                title: qsTr("Receive")
 
                 onAboutToShow: updateConnectableList("in")
+            }
+        }
+
+        Menu {
+            title: qsTr("Apply functions")
+            Menu {
+                id: menuFilterIn
+                title: qsTr("Filer in")
+            }
+
+            Menu {
+                id: menuFilterOut
+                title: qsTr("Filter out")
             }
         }
 
