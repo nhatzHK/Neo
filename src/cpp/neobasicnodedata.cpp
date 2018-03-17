@@ -2,7 +2,9 @@
 
 NeoBasicNodeData::NeoBasicNodeData(QObject *parent) : QObject(parent)
 {
-
+    timer = new QTimer{this};
+    connect(timer, SIGNAL(timeout()), this, SLOT(incData()));
+    timer->start(1000);
 }
 
 qint64 NeoBasicNodeData::data() {
@@ -12,4 +14,8 @@ qint64 NeoBasicNodeData::data() {
 void NeoBasicNodeData::setData(const qint64 &data) {
     m_data = data;
     emit dataChanged();
+}
+
+void NeoBasicNodeData::incData() {
+     setData(rand() % 10);
 }

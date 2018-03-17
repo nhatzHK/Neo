@@ -2,14 +2,11 @@ import QtQuick 2.2
 import QtQuick.Controls 1.4
 import Neo.BasicNode.Data 1.0
 
-
 /*! \file Basic node to build more complex elements on
     Basic node with a in and an out slot to connect.
 */
 Rectangle {
     id: node
-    x: 210
-    y: 34
     width: 130
     height: 58
     color: "lightblue"
@@ -23,15 +20,15 @@ Rectangle {
 
     property Item inSlot: NeoRadioButton {
         visible: false
-        y: node.height / 4
-        x: -10
-        parent: group.contentItem // one group for the node
+        y: node.height / 2
+        x: -4
+        parent: node
     }
     property Item outSlot: NeoRadioButton {
-        y: node.height / 4
-        x: node.width - 13
+        y: node.height / 2
+        x: node.width - 5
         visible: false
-        parent: group.contentItem
+        parent: node
     }
 
     property NeoCanvas canvas: NeoCanvas {
@@ -72,10 +69,29 @@ Rectangle {
         }
     }
 
-    //! Parent of the radiobuttons used for incoming/outgoing connections
-    GroupBox {
-        id: group
+    property NeoBasicNodeData backend: NeoBasicNodeData {}
+
+    Column {
         anchors.fill: parent
+        Label {
+            font.bold: true
+            font.pointSize: 14
+            color: "green"
+            height: parent.height / 4
+            width: parent.width
+            text: node.name
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        Label {
+            height: parent.height / 4 * 3
+            width: parent.width
+            text: node.backend.data
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.bold: true
+            font.pointSize: 24
+        }
     }
 
     //! Context menu
@@ -103,11 +119,11 @@ Rectangle {
         MenuItem {
             text: "Delete"
             onTriggered: {
-                for(var i = 0; i < inCon.length;) {
+                for (var i = 0; i < inCon.length; ) {
                     disconnectIn(inCon[i])
                 }
 
-                for(var j = 0; j < outCon.length;) {
+                for (var j = 0; j < outCon.length; ) {
                     disconnectOut(outCon[j])
                 }
 
@@ -116,19 +132,6 @@ Rectangle {
                 canvas.baseCanvas.requestPaint()
             }
         }
-    }
-
-    NeoBasicNodeData {
-        id: neodata
-    }
-
-    Label {
-        anchors.fill: parent
-        text: name
-        x: parent.width / 2
-        y: parent.width / 2
-        font.bold: true
-        font.pointSize: 20
     }
 
     /*! \brief Clear content of a menu */
@@ -216,8 +219,6 @@ Rectangle {
                             break
                         }
 
-//                        updateSlots()
-//                        elements[i].updateSlots()
                         canvas.baseCanvas.requestPaint()
                     })
                 }
@@ -282,12 +283,12 @@ Rectangle {
 
     /*! Return position of slot for outgoing connections. */
     function getInPos() {
-        return Qt.point(x + inSlot.x + 8, y + inSlot.y - 6)
+        return Qt.point(x + inSlot.x, y + inSlot.y - 15)
     }
 
     /*! Return position of slot for incoming connection. */
     function getOutPos() {
-        return Qt.point(x + outSlot.x + 15, y + outSlot.y - 6)
+        return Qt.point(x + outSlot.x + 8, y + outSlot.y - 15)
     }
 
     /*! Dummy type error logging */

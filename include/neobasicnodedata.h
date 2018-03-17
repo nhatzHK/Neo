@@ -2,6 +2,8 @@
 #define NEOBASICNODEDATA_H
 
 #include <QObject>
+#include <QTimer>
+#include <cstdlib>
 
 class NeoBasicNodeData : public QObject
 {
@@ -16,8 +18,11 @@ public:
 signals:
     void dataChanged();
 
+private slots:
+    void incData();
 private:
     qint64 m_data = 0;
+    QTimer* timer;
 };
 
 #endif // NEOBASICNODEDATA_H

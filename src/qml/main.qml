@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 
+
 /*! \brief Main window of the program.
         This is the outmost layer.
         Every other component is a (direct or indirect child) of this.
@@ -24,11 +25,14 @@ ApplicationWindow {
     minimumWidth: width
     minimumHeight: height
 
+    // exported in
+
+    // exported in
+
     title: qsTr("Neo")
 
     //Finish necessary initializations
     Component.onCompleted: {
-
         basicNode = Qt.createComponent("NeoBasicNode.qml")
         menuBar.getMenu("file").insertItem(0, createMenu)
     }
@@ -88,7 +92,10 @@ ApplicationWindow {
         if (basicNode.status === Component.Ready) {
 
             // create node at click position
-            const node = basicNode.createObject(app, {"x": mouseEvent.x, "y": mouseEvent.y})
+            var node = basicNode.createObject(app, {
+                                                  x: mouseEvent.x,
+                                                  y: mouseEvent.y
+                                              })
             node.elements = elements
             node.name = String(count)
             node.canvas = canvas
