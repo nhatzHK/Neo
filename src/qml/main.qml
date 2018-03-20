@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
+import Neo.Node 1.0
 
 
 /*! \brief Main window of the program.
@@ -10,9 +11,8 @@ import QtQuick.Controls 1.4
 ApplicationWindow {
     id: app
 
-    property Component basicNode: Component.Null //! Base component used to create nodes
-    property var elements: [] //! Array containing all the nodes created
-    property variant mouseEvent: null //! Used to store the last state of the mouse
+    property Component nodeComponent: Component.Null //! Base component used to create nodes
+    //    property var elements: [] //! Array containing all the nodes created
     property int count: 0
 
     width: 480
@@ -27,10 +27,11 @@ ApplicationWindow {
 
     title: qsTr("Neo")
 
-    //Finish necessary initializations
+    //    //Finish necessary initializations
     Component.onCompleted: {
-        basicNode = Qt.createComponent("NeoBasicNode.qml")
+        nodeComponent = Qt.createComponent("NeoNode.qml")
         menuBar.getMenu("file").insertItem(0, createMenu)
+        console.log(menuBar.__menuBarComponent.height)
     }
 
     // exported in a file for readability
@@ -38,27 +39,33 @@ ApplicationWindow {
         id: menuBar
     }
 
-    //! Main canvas of the program
-    NeoCanvas {
-        id: canvas
-        nodes: elements
-    }
-
-    MouseArea {
-        id: mouseArea
-        x: 0
-        y: 0
+    ScrollView {
         anchors.fill: parent
-        drag.target: parent
+        Rectangle {
+            id: mainArea
+            width: 1000
+            height: 1000
+            property variant mouseEvent: null //! Used to store the last state of the mouse
+            //    //! Main canvas of the program
+            //    NeoCanvas {
+            //        id: canvas
+            //        nodes: elements
+            //    }
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                drag.target: parent
 
-        signal rightClick
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                signal rightClick
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-        //! On press show menu and save mouse state
-        onPressed: {
-            if (Qt.RightButton & pressedButtons) {
-                contextMenu.popup()
-                mouseEvent = mouse
+                //! On press show menu and save mouse state
+                onPressed: {
+                    if (Qt.RightButton & pressedButtons) {
+                        contextMenu.popup()
+                        parent.mouseEvent = mouse
+                    }
+                }
             }
         }
     }
@@ -74,30 +81,47 @@ ApplicationWindow {
             title: qsTr("Create")
 
             MenuItem {
-                text: "NeoBasicNode"
-                onTriggered: createBasicNode()
+                text: "Node"
+                onTriggered: createNode()
             }
         }
     }
 
-    /*! \brief Create a new node.
-        Use the previously loaded NeoBasicNode component to create new qml objects on demand
-        TODO: Fails silently if the NeoBasicNode component wasn't successfully loaded
-    */
-    function createBasicNode() {
-        if (basicNode.status === Component.Ready) {
+    //                onTriggered: createNode(
+    //                                 ) // FIXME: Add parameters to method for special case where x, y is not defined, like from File menu
+    //            }
+    //        }
+    //    }
 
-            // create node at click position
-            var node = basicNode.createObject(app, {
-                                                  x: mouseEvent.x,
-                                                  y: mouseEvent.y
-                                              })
-            node.elements = elements
+    //    /*! \brief Create a new node.
+    //        Use the previously loaded NeonodeComponent component to create new qml objects on demand
+    //        TODO: Fails silently if the NeonodeComponent component wasn't successfully loaded
+    //    */
+    //    function createNode() {
+    //        //        if (nodeComponent.status === Component.Ready) {
+
+    //        // create node at click position
+    //        var node = nodeComponent.createObject(app, {
+    //                                                  x: mouseEvent.x,
+    //                                                  y: mouseEvent.y
+    //                                              })
+    //        var node = Node.createObject()
+    //        node.elements = elements
+    //        node.name = String(count)
+    //        node.canvas = canvas
+    //        count += 1
+    //        elements.push(node)
+    //        canvas.baseCanvas.requestPaint()
+    //        //        }
+    //    }
+    function createNode() {
+        if (nodeComponent.status === Component.Ready) {
+            var node = nodeComponent.createObject(mainArea, {
+                                                      x: mainArea.mouseEvent.x,
+                                                      y: mainArea.mouseEvent.y
+                                                  })
             node.name = String(count)
-            node.canvas = canvas
             count += 1
-            elements.push(node)
-            canvas.baseCanvas.requestPaint()
         }
     }
 }

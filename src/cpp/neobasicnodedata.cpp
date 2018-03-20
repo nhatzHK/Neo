@@ -1,21 +1,21 @@
 #include "neobasicnodedata.h"
 
-NeoBasicNodeData::NeoBasicNodeData(QObject *parent) : QObject(parent)
+NeonodeComponentData::NeonodeComponentData(QObject *parent) : QObject(parent)
 {
     timer = new QTimer{this};
     connect(timer, SIGNAL(timeout()), this, SLOT(incData()));
     timer->start(1000);
 }
 
-qint64 NeoBasicNodeData::data() {
+qint64 NeonodeComponentData::data() {
     return m_data;
 }
 
-void NeoBasicNodeData::setData(const qint64 &data) {
+void NeonodeComponentData::setData(const qint64 &data) {
     m_data = data;
     emit dataChanged();
 }
 
-void NeoBasicNodeData::incData() {
+void NeonodeComponentData::incData() {
      setData(rand() % 10);
 }

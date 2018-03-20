@@ -1,17 +1,17 @@
-#ifndef NEOBASICNODEDATA_H
-#define NEOBASICNODEDATA_H
+#ifndef NEOnodeComponentDATA_H
+#define NEOnodeComponentDATA_H
 
 #include <QObject>
 #include <QTimer>
 #include <cstdlib>
 
-class NeoBasicNodeData : public QObject
+class NeonodeComponentData : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qint64 data READ data WRITE setData NOTIFY dataChanged)
 
 public:
-    explicit NeoBasicNodeData(QObject *parent = nullptr);
+    explicit NeonodeComponentData(QObject *parent = nullptr);
 
     qint64 data();
     void setData(const qint64 &data);
@@ -25,4 +25,4 @@ private:
     QTimer* timer;
 };
 
-#endif // NEOBASICNODEDATA_H
+#endif // NEOnodeComponentDATA_H
