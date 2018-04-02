@@ -14,6 +14,7 @@ class Node : public QObject
     Q_PROPERTY(Way way READ way WRITE setWay NOTIFY typeChanged)
     Q_PROPERTY(double value	READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(bool output READ output WRITE setOutput NOTIFY outputChanged)
 
     Q_PROPERTY(QPoint inPos READ inPos WRITE setInPos NOTIFY inPosChanged)
     Q_PROPERTY(QPoint outPos READ outPos WRITE setOutPos NOTIFY outPosChanged)
@@ -30,20 +31,23 @@ public:
 
     Q_ENUM(Way)
 
-    QPoint inPos();
+    QPoint inPos() const;
     void setInPos(const QPoint& p);
 
-    QPoint outPos();
+    QPoint outPos() const;
     void setOutPos(const QPoint& p);
 
     void setWay(const Way& t);
-    Way way();
+    Way way() const;
 
     void setValue(const double& v);
-    double value();
+    double value() const;
 
     void setName(const QString& n);
-    QString name();
+    QString name() const;
+
+    void setOutput(const bool& o);
+    bool output() const;
 
 private:
     QPoint m_in;
@@ -51,6 +55,7 @@ private:
     Way m_type = None;
     double m_value = 0.0;
     QString m_name = "Name";
+    bool m_output = false;
     QTimer* timer;
 
 signals:
@@ -60,6 +65,7 @@ signals:
     void connectionsMightHaveChanged();
     void inPosChanged();
     void outPosChanged();
+    void outputChanged();
 
 private slots:
     void randValue();

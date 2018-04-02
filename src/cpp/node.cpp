@@ -23,7 +23,7 @@ void Node::setWay(const Way &t) {
     emit typeChanged();
 }
 
-Node::Way Node::way() {
+Node::Way Node::way() const {
     return m_type;
 }
 
@@ -32,7 +32,7 @@ void Node::setValue(const double &v) {
     emit valueChanged();
 }
 
-double Node::value() {
+double Node::value() const {
     return m_value;
 }
 
@@ -40,7 +40,7 @@ void Node::randValue() {
     setValue(rand() % 100);
 }
 
-QString Node::name() {
+QString Node::name() const {
     return m_name;
 }
 
@@ -49,7 +49,7 @@ void Node::setName(const QString &n) {
     emit nameChanged();
 }
 
-QPoint Node::inPos() {
+QPoint Node::inPos() const {
     return m_in;
 }
 
@@ -58,11 +58,20 @@ void Node::setInPos(const QPoint &p) {
     emit inPosChanged();
 }
 
-QPoint Node::outPos() {
+QPoint Node::outPos() const {
     return m_out;
 }
 
 void Node::setOutPos(const QPoint &p) {
     m_out = p;
     emit outPosChanged();
+}
+
+void Node::setOutput(const bool& o) {
+    m_output = o;
+    emit outputChanged();
+}
+
+bool Node::output() const {
+    return m_output;
 }

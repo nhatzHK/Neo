@@ -1,37 +1,44 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.3
+//import QtQuick.Controls.Styles 1.4
 import Neo.Node 1.0
+import Neo.Room 1.0
 
 Item {
     id: popup
     focus: true
-    visible: true
+    visible: false
 
     //    width: 100
     //    height: 100
-    Component.onCompleted: {
-        visible = false
-    }
-
+    //    Component.onCompleted: {
+    //        visible = false
+    //    }
     property Node currentNode: dummyNode
     Node {
         id: dummyNode
     }
 
+    property Room currentRoom: dummyRoom
+    Room {
+        id: dummyRoom
+    }
+
     Column {
         anchors.fill: parent
-        Rectangle {
+        Text {
+            id: nameTag
             width: popup.width
             height: popup.height / 10
             color: "blue"
-            Text {
+            text: currentNode.name
+            font.bold: true
+            font.pointSize: 14
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            MouseArea {
                 anchors.fill: parent
-                id: nameTag
-                color: "white"
-                text: currentNode.name
-                font.bold: true
-                font.pointSize: 14
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
+                propagateComposedEvents: true
             }
         }
 
@@ -43,7 +50,6 @@ Item {
             Row {
                 anchors.fill: parent
                 Text {
-//                    anchors.fill: parent
                     id: data
                     height: parent.height
                     width: parent.width / 2
@@ -55,47 +61,92 @@ Item {
                     font.bold: true
                 }
 
-                Rectangle {
+                NeoOverrideButton {
                     id: overrideButton
-                    color: "red"
-                    height: parent.height
                     width: parent.width / 2
-                    border.width: 5
-                    border.color: "purple"
-                    radius: 100
-                    Text {
-                        anchors.centerIn: parent
-                        text: qsTr("Override")
-                        color: "rosybrown"
-                        font.bold: true
-                        font.pointSize: 30
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
+                    height: parent.height
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                propagateComposedEvents: true
+            }
+        }
+
+        Rectangle {
+            id: comRect
+            width: popup.width
+            height: popup.height / 10 * 2
+
+            Column {
+                anchors.fill: parent
+                NeoComboBox {
+                    id: inCom
+                    width: parent.width
+                    height: popup.height / 10
+                    model: currentRoom.nodes
+                    name: "Incoming connections"
+                    delegate: CheckBox {
+                        tristate: true
+                        checkState: {
+                            if (currentNode === modelData) {
+                                return Qt.PartiallyChecked
+                            } else if (currentRoom.connected(currentNode,
+                                                             modelData,
+                                                             Node.In)) {
+                                return Qt.Checked
+                            } else {
+                                return Qt.Unchecked
+                            }
+                        }
+                        text: modelData.value
+                        enabled: false
+                    }
+                }
+
+                NeoComboBox {
+                    id: outCom
+                    width: parent.width
+                    height: popup.height / 10
+                    model: currentRoom.nodes
+                    name: "Outgoing Connections"
+                    delegate: CheckBox {
+                        tristate: true
+                        checkState: {
+                            if (currentNode === modelData) {
+                                return Qt.PartiallyChecked
+                            } else if (currentRoom.connected(currentNode,
+                                                             modelData,
+                                                             Node.Out)) {
+                                return Qt.Checked
+                            } else {
+                                return Qt.Unchecked
+                            }
+                        }
+                        text: modelData.value
+                        enabled: false
                     }
                 }
             }
         }
 
         Rectangle {
-            id: idkman
-            color: "red"
-            width: parent.width
-            height: parent.height / 10 * 5
+            width: popup.width
+            height: popup.height / 10 * 3
+            color: "green"
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-    }
-
-    function showCard(node) {
+    function showCard(node, room) {
         currentNode = node
+        currentRoom = room
         visible = true
     }
 
     function hideCard() {
         currentNode = dummyNode
+        currentRoom = dummyRoom
         visible = false
     }
 }

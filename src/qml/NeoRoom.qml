@@ -100,7 +100,7 @@ Rectangle {
     }
 
     function showCard(n) {
-        popup.showCard(n)
+        popup.showCard(n, room.backend)
     }
 
     function popNode(n) {
