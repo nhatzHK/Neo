@@ -10,10 +10,12 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
 add_executable(${PROJECT_NAME}
   src/cpp/main.cpp
-  src/cpp/neobasicnodedata.cpp
   src/cpp/node.cpp
-  include/neobasicnodedata.h
+  src/cpp/connection.cpp
+  src/cpp/room.cpp
   include/node.h
+  include/room.h
+  include/connection.h
   src/qml.qrc)
 
 include_directories(include)

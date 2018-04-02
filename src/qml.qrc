@@ -7,5 +7,8 @@
         <file>qml/NeoRadioButton.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>qml/NeoMenuItem.qml</file>
+        <file>qml/NeoRoom.qml</file>
+        <file>qml/NeoConnection.qml</file>
+        <file>qml/NeoPopup.qml</file>
     </qresource>
 </RCC>

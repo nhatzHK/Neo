@@ -4,31 +4,40 @@
 #include <QObject>
 #include <QTimer>
 #include <QString>
-#include <cstdlib>
+#include <QPoint>
+#include <QDebug>
+#include <stdlib.h>
 
 class Node : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(Way way READ way WRITE setWay NOTIFY typeChanged)
     Q_PROPERTY(double value	READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+
+    Q_PROPERTY(QPoint inPos READ inPos WRITE setInPos NOTIFY inPosChanged)
+    Q_PROPERTY(QPoint outPos READ outPos WRITE setOutPos NOTIFY outPosChanged)
+
 public:
     explicit Node(QObject *parent = nullptr);
-    static Node* createNode() {
-        Node* n = new Node();
-        return n;
-    }
 
-    enum Type {
+    enum Way {
         None = 0,
         In = 1,
         Out = 2,
         Both = 11
     };
-    Q_ENUM(Type)
 
-    void setType(const Type& t);
-    Type type();
+    Q_ENUM(Way)
+
+    QPoint inPos();
+    void setInPos(const QPoint& p);
+
+    QPoint outPos();
+    void setOutPos(const QPoint& p);
+
+    void setWay(const Way& t);
+    Way way();
 
     void setValue(const double& v);
     double value();
@@ -37,7 +46,9 @@ public:
     QString name();
 
 private:
-    Type m_type = None;
+    QPoint m_in;
+    QPoint m_out;
+    Way m_type = None;
     double m_value = 0.0;
     QString m_name = "Name";
     QTimer* timer;
@@ -46,6 +57,9 @@ signals:
     void typeChanged();
     void valueChanged();
     void nameChanged();
+    void connectionsMightHaveChanged();
+    void inPosChanged();
+    void outPosChanged();
 
 private slots:
     void randValue();

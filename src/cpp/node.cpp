@@ -10,7 +10,7 @@ Node::Node(QObject *parent) : QObject(parent)
     }
 }
 
-void Node::setType(const Type &t) {
+void Node::setWay(const Way &t) {
 
     if(t == Out && t != m_type) {
         connect(timer, SIGNAL(timeout()), this, SLOT(randValue()));
@@ -23,7 +23,7 @@ void Node::setType(const Type &t) {
     emit typeChanged();
 }
 
-Node::Type Node::type() {
+Node::Way Node::way() {
     return m_type;
 }
 
@@ -47,4 +47,22 @@ QString Node::name() {
 void Node::setName(const QString &n) {
     m_name = n;
     emit nameChanged();
+}
+
+QPoint Node::inPos() {
+    return m_in;
+}
+
+void Node::setInPos(const QPoint &p) {
+    m_in = p;
+    emit inPosChanged();
+}
+
+QPoint Node::outPos() {
+    return m_out;
+}
+
+void Node::setOutPos(const QPoint &p) {
+    m_out = p;
+    emit outPosChanged();
 }
