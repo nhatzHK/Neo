@@ -26,19 +26,23 @@ Item {
 
     Column {
         anchors.fill: parent
-        Text {
-            id: nameTag
+        Rectangle {
             width: popup.width
             height: popup.height / 10
             color: "blue"
-            text: currentNode.name
-            font.bold: true
-            font.pointSize: 14
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            MouseArea {
+            Text {
+                id: nameTag
                 anchors.fill: parent
-                propagateComposedEvents: true
+                color: "white"
+                text: currentNode.name
+                font.bold: true
+                font.pointSize: 14
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                MouseArea {
+                    anchors.fill: parent
+                    propagateComposedEvents: true
+                }
             }
         }
 

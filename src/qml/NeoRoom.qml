@@ -91,7 +91,7 @@ Rectangle {
                                                       y: y,
                                                       room: room
                                                   })
-            node.name = String(count)
+            node.name = "node" + String(count)
             ++count
             backend.nodes.push(node.backend)
             node.forget.connect(popNode)

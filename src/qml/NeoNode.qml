@@ -54,7 +54,7 @@ Item {
         Rectangle {
             width: node.width
             height: node.height / 5
-            color: "blue"
+            color: textField.focus ? "green" : "blue"
             Text {
                 anchors.fill: parent
                 id: nameTag
@@ -64,6 +64,18 @@ Item {
                 font.pointSize: 14
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+            }
+
+            TextField {
+                id: textField
+                anchors.fill: parent
+                opacity: 0
+                anchors.centerIn: parent
+                text: backend.name
+                onTextChanged: backend.name = text
+                onEditingFinished: {
+                    focus = false
+                }
             }
         }
 
@@ -82,27 +94,27 @@ Item {
                 color: "black"
                 font.bold: true
             }
-        }
-    }
 
-    MouseArea {
-        id: drag_area
-        anchors.fill: parent
-        drag.target: parent
+            MouseArea {
+                id: drag_area
+                anchors.fill: parent
+                drag.target: node
+                propagateComposedEvents: true
+                signal rightClick
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-        signal rightClick
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                // show context menu on leftclick pressed over the node
+                onPressed: {
+                    if (Qt.RightButton & pressedButtons) {
+                        contextMenu.popup()
+                    }
+                }
 
-        // show context menu on leftclick pressed over the node
-        onPressed: {
-            if (Qt.RightButton & pressedButtons) {
-                contextMenu.popup()
-            }
-        }
-
-        onClicked: {
-            if (!mouse.wasHeld) {
-                showCard(backend)
+                onClicked: {
+                    if (!mouse.wasHeld) {
+                        showCard(backend)
+                    }
+                }
             }
         }
     }
