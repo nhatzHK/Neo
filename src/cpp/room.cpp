@@ -2,8 +2,11 @@
 #include <QDebug>
 
 Room::Room(QObject *parent) {
-
+    if(!mq_listId.prepare("SELECT id FROM components")) {
+        qDebug() << "DB PREPARE ERROR: (room - ctor)" << mq_listId.lastError().text() << '\n';
+    }
 }
+
 
 bool Room::connected(Node *a, Node *b, int t) {
     for(auto c: m_connections) {
@@ -136,4 +139,17 @@ QQmlListProperty<Connection> Room::connections() {
                                         &Room::countConnections,
                                         &Room::getConnection,
                                         &Room::clearConnections);
+}
+
+QStringList Room::ids() {
+    QStringList l;
+    if(!mq_listId.exec()) {
+        qDebug() << "DB EXEC ORDER: (listId)" << mq_listId.lastError().text() << '\n';
+    }
+
+    while (mq_listId.next()) {
+        l.append(mq_listId.value(0).toString());
+    }
+
+    return l;
 }

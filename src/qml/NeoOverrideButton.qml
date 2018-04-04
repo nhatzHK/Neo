@@ -7,7 +7,8 @@ Rectangle {
     width: parent.width / 2
     border.width: 5
     border.color: "purple"
-    radius: 100
+    radius: 150
+    signal clicked
     Text {
         anchors.centerIn: parent
         text: qsTr("Override")
@@ -25,7 +26,7 @@ Rectangle {
         preventStealing: true
         onClicked: {
             if (Qt.LeftButton & acceptedButtons) {
-                console.log("Overriding")
+                overrideButton.clicked()
             }
         }
     }

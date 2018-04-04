@@ -6,7 +6,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Quick REQUIRED)
+find_package(Qt5 COMPONENTS Core Quick Sql REQUIRED)
 
 add_executable(${PROJECT_NAME}
   src/cpp/main.cpp
@@ -19,4 +19,4 @@ add_executable(${PROJECT_NAME}
   src/qml.qrc)
 
 include_directories(include)
-target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick)
+target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Sql)

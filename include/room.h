@@ -11,17 +11,16 @@ class Room : public QObject {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<Connection> connections READ connections)
     Q_PROPERTY(QQmlListProperty<Node> nodes READ nodes)
+    Q_PROPERTY(QStringList ids READ ids)
 
 public:
     explicit Room(QObject * parent = nullptr);
 
     QQmlListProperty<Connection> connections();
     QQmlListProperty<Node> nodes();
+    QStringList ids();
 
-//    Q_INVOKABLE Node* createNode();
     Q_INVOKABLE bool deleteNode(Node* n);
-//    Q_INVOKABLE Connection* createConnection(Node* out, Node* in);
-//    Q_INVOKABLE void breakConnection(Connection* n);
     Q_INVOKABLE bool connected(Node* a, Node* b, int t);
     Q_INVOKABLE void removeAllConnections(Node* a, Node* b, int t);
     Q_INVOKABLE void createConnection(Node* a, Node* b, int t);
@@ -48,5 +47,6 @@ private:
 
     QList<Connection*> m_connections;
     QList<Node*> m_nodes;
+    QSqlQuery mq_listId;
 };
 #endif // ROOM_H

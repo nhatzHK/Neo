@@ -4,21 +4,16 @@ Node::Node(QObject *parent) : QObject(parent)
 {
     timer = new QTimer{this};
 
-    if(m_type == Out) {
-        connect(timer, SIGNAL(timeout()), this, SLOT(randValue()));
-        timer->start(1000);
+    connect(timer, SIGNAL(timeout()), this, SLOT(psl_readValue()));
+    connect (this, SIGNAL(rowIdChanged()), this, SLOT(psl_readValue()));
+    timer->start(1000);
+
+    if(!mq_readValue.prepare("SELECT value FROM components WHERE id = :id")) {
+        qDebug() << "DB PREPARE ERROR: (node - ctor) " << mq_readValue.lastError().text() << '\n';
     }
 }
 
 void Node::setWay(const Way &t) {
-
-    if(t == Out && t != m_type) {
-        connect(timer, SIGNAL(timeout()), this, SLOT(randValue()));
-        timer->start(1000);
-    } else if (t != Out) {
-        timer->stop();
-    }
-
     m_type = t;
     emit typeChanged();
 }
@@ -36,8 +31,15 @@ double Node::value() const {
     return m_value;
 }
 
-void Node::randValue() {
-    setValue(rand() % 100);
+void Node::psl_readValue() {
+    mq_readValue.bindValue (":id", m_rowId);
+    mq_readValue.exec();
+    mq_readValue.first();
+    auto v = mq_readValue.value(0).toDouble();
+    setValue(v);
+    while(mq_readValue.next()) {
+        qDebug() << mq_readValue.value (0).toString ();
+    }
 }
 
 QString Node::name() const {
@@ -47,6 +49,15 @@ QString Node::name() const {
 void Node::setName(const QString &n) {
     m_name = n;
     emit nameChanged();
+}
+
+QString Node::rowId() const {
+    return m_rowId;
+}
+
+void Node::setRowId(const QString &i) {
+    m_rowId = i;
+    emit rowIdChanged();
 }
 
 QPoint Node::inPos() const {

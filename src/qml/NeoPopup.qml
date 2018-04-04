@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
-//import QtQuick.Controls.Styles 1.4
 import Neo.Node 1.0
 import Neo.Room 1.0
 
@@ -9,11 +8,6 @@ Item {
     focus: true
     visible: false
 
-    //    width: 100
-    //    height: 100
-    //    Component.onCompleted: {
-    //        visible = false
-    //    }
     property Node currentNode: dummyNode
     Node {
         id: dummyNode
@@ -50,7 +44,7 @@ Item {
             id: mainArea
             width: popup.width
             height: popup.height / 10 * 4
-            color: "lightblue"
+
             Row {
                 anchors.fill: parent
                 Text {
@@ -63,25 +57,27 @@ Item {
                     text: String(currentNode.value)
                     color: "black"
                     font.bold: true
+
+                    MouseArea {
+                        anchors.fill: parent
+                    }
                 }
 
                 NeoOverrideButton {
                     id: overrideButton
                     width: parent.width / 2
                     height: parent.height
+                    onClicked: {
+                        console.log("Overriding")
+                    }
                 }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                propagateComposedEvents: true
             }
         }
 
         Rectangle {
             id: comRect
             width: popup.width
-            height: popup.height / 10 * 2
+            height: popup.height / 10 * 3
 
             Column {
                 anchors.fill: parent
@@ -92,20 +88,26 @@ Item {
                     model: currentRoom.nodes
                     name: "Incoming connections"
                     delegate: CheckBox {
-                        tristate: true
                         checkState: {
                             if (currentNode === modelData) {
-                                return Qt.PartiallyChecked
-                            } else if (currentRoom.connected(currentNode,
-                                                             modelData,
-                                                             Node.In)) {
+                                enabled = false
+                            }
+
+                            if (currentRoom.connected(currentNode, modelData,
+                                                      Node.In)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked
                             }
                         }
-                        text: modelData.value
-                        enabled: false
+
+                        onClicked: {
+                            currentNode.rowId = modelData
+                        }
+
+                        text: modelData.name
+                        font.bold: true
+                        font.pointSize: 14
                     }
                 }
 
@@ -116,20 +118,45 @@ Item {
                     model: currentRoom.nodes
                     name: "Outgoing Connections"
                     delegate: CheckBox {
-                        tristate: true
                         checkState: {
                             if (currentNode === modelData) {
-                                return Qt.PartiallyChecked
-                            } else if (currentRoom.connected(currentNode,
-                                                             modelData,
-                                                             Node.Out)) {
+                                enabled = false
+                            }
+
+                            if (currentRoom.connected(currentNode, modelData,
+                                                      Node.Out)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked
                             }
                         }
-                        text: modelData.value
-                        enabled: false
+                        text: modelData.name
+                        font.bold: true
+                        font.pointSize: 14
+                    }
+                }
+
+                NeoComboBox {
+                    id: componentList
+                    width: parent.width
+                    height: popup.height / 10
+                    model: currentRoom.ids
+                    name: "Component List"
+                    ButtonGroup{
+                        buttons: componentList.delegate
+                        exclusive: true
+                    }
+
+                    delegate: RadioButton {
+                        checked: currentNode.rowId === modelData
+
+                        onCheckedChanged: {
+                            if(checked) {
+                                currentNode.rowId = modelData
+                            }
+                        }
+
+                        text: modelData
                     }
                 }
             }
@@ -137,8 +164,12 @@ Item {
 
         Rectangle {
             width: popup.width
-            height: popup.height / 10 * 3
+            height: popup.height / 10 * 2
             color: "green"
+
+            MouseArea {
+                anchors.fill: parent
+            }
         }
     }
 
