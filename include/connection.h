@@ -2,7 +2,7 @@
 #define CONNECTION_H
 
 #include <QObject>
-#include "node.h"
+#include "inputnode.h"
 
 class Connection: public QObject {
     Q_OBJECT

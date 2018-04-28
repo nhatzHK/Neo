@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
-import Neo.Node 1.0
+import Neo.Node.Input 1.0
 import Neo.Room 1.0
 
 Item {
@@ -8,8 +8,8 @@ Item {
     focus: true
     visible: false
 
-    property Node currentNode: dummyNode
-    Node {
+    property InputNode currentNode: dummyNode
+    InputNode {
         id: dummyNode
     }
 
@@ -94,7 +94,7 @@ Item {
                             }
 
                             if (currentRoom.connected(currentNode, modelData,
-                                                      Node.In)) {
+                                                      InputNode.In)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked
@@ -124,7 +124,7 @@ Item {
                             }
 
                             if (currentRoom.connected(currentNode, modelData,
-                                                      Node.Out)) {
+                                                      InputNode.Out)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked

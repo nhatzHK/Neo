@@ -4,7 +4,7 @@
 #include <QQmlContext>
 #include <QtSql>
 
-#include "node.h"
+#include "inputnode.h"
 #include "connection.h"
 #include "room.h"
 
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         qDebug() << "DB Error: " << err.text();
     }
 
-    qmlRegisterType<Node>("Neo.Node", 1, 0, "Node");
+    qmlRegisterType<Node>("Neo.Node.Input", 1, 0, "InputNode");
     qmlRegisterType<Room>("Neo.Room", 1, 0, "Room");
     qmlRegisterType<Connection>("Neo.Connection", 1, 0, "Connection");
 

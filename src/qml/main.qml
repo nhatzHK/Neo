@@ -1,8 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
-import Neo.Node 1.0
-
 
 /*! \brief Main window of the program.
         This is the outmost layer.

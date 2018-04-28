@@ -1,4 +1,4 @@
-#include "node.h"
+#include "inputnode.h"
 
 Node::Node(QObject *parent) : QObject(parent)
 {

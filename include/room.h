@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QQmlListProperty>
 #include <QVariantList>
-#include "node.h"
+#include "inputnode.h"
 #include "connection.h"
 
 class Room : public QObject {

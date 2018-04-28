@@ -1,14 +1,14 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.4
-import Neo.Node 1.0
+import Neo.Node.Input 1.0
 
 Item {
     id: node
     width: 100
     height: 50
 
-    signal forget(Node n)
-    signal showCard(Node n)
+    signal forget(InputNode n)
+    signal showCard(InputNode n)
 
     property Component dynamicMenuItem: null //! Component used to create menu items on demand
 
@@ -38,9 +38,9 @@ Item {
         parent: node
     }
 
-    Node {
+    InputNode {
         id: backend
-        way: Node.Out
+        way: InputNode.Out
         onConnectionsMightHaveChanged: {
             outSlot.visible = room.backend.hasOutConnection(backend)
             inSlot.visible = room.backend.hasInConnection(backend)
@@ -139,7 +139,7 @@ Item {
                 title: qsTr("Send")
                 onAboutToShow: {
                     menuConnectOut.clear()
-                    updateConnectionList(Node.Out, menuConnectOut)
+                    updateConnectionList(InputNode.Out, menuConnectOut)
                 }
             }
 
@@ -148,7 +148,7 @@ Item {
                 title: qsTr("Receive")
                 onAboutToShow: {
                     menuConnectIn.clear()
-                    updateConnectionList(Node.In, menuConnectIn)
+                    updateConnectionList(InputNode.In, menuConnectIn)
                 }
             }
         }
@@ -176,7 +176,7 @@ Item {
     }
 
     function updateConnectionList(type, menu) {
-        if (type !== Node.In && type !== Node.Out) {
+        if (type !== InputNode.In && type !== InputNode.Out) {
             return
         }
 

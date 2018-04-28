@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import Neo.Room 1.0
-import Neo.Node 1.0
+import Neo.Node.Input 1.0
 
 Rectangle {
     id: room
@@ -10,7 +10,7 @@ Rectangle {
 
     Component.onCompleted: {
         connectionComponent = Qt.createComponent("NeoConnection.qml")
-        nodeComponent = Qt.createComponent("NeoNode.qml")
+        nodeComponent = Qt.createComponent("NeoInputNode.qml")
     }
 
     property int count: 0
@@ -96,6 +96,8 @@ Rectangle {
             backend.nodes.push(node.backend)
             node.forget.connect(popNode)
             node.showCard.connect(showCard)
+        } else {
+            console.log("Node not Ready")
         }
     }
 

@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/NeoCanvas.qml</file>
-        <file>qml/NeoNode.qml</file>
+        <file>qml/NeoInputNode.qml</file>
         <file>qml/NeoMenuBar.qml</file>
         <file>qml/NeoRadioButton.qml</file>
         <file>qtquickcontrols2.conf</file>
