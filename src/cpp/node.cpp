@@ -1,4 +1,4 @@
-#include "inputnode.h"
+#include "node.h"
 
 Node::Node(QObject *parent) : QObject(parent)
 {
@@ -13,12 +13,12 @@ Node::Node(QObject *parent) : QObject(parent)
     }
 }
 
-void Node::setWay(const Way &t) {
+void Node::setType(const Type &t) {
     m_type = t;
     emit typeChanged();
 }
 
-Node::Way Node::way() const {
+Node::Type Node::type() const {
     return m_type;
 }
 

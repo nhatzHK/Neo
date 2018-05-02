@@ -12,12 +12,12 @@ Node* Connection::out() {
     return m_out;
 }
 
-void Connection::setIn(Node *n) {
+void Connection::setIn(Node* n) {
     m_in = n;
     emit inChanged();
 }
 
-void Connection::setOut(Node *n) {
+void Connection::setOut(Node* n) {
     m_out = n;
     emit outChanged();
 }

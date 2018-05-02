@@ -1,10 +1,9 @@
-#ifndef ROOM_H
-#define ROOM_H
+#pragma once
 
 #include <QObject>
 #include <QQmlListProperty>
-#include <QVariantList>
-#include "inputnode.h"
+//#include "gate.h"
+#include "node.h"
 #include "connection.h"
 
 class Room : public QObject {
@@ -21,12 +20,19 @@ public:
     QStringList ids();
 
     Q_INVOKABLE bool deleteNode(Node* n);
-    Q_INVOKABLE bool connected(Node* a, Node* b, int t);
-    Q_INVOKABLE void removeAllConnections(Node* a, Node* b, int t);
-    Q_INVOKABLE void createConnection(Node* a, Node* b, int t);
-    Q_INVOKABLE bool hasOutConnection(Node* n);
-    Q_INVOKABLE bool hasInConnection(Node* n);
+
     void removeAllConnections(Node* n);
+
+    Q_INVOKABLE bool connected(Node* a, Node* b);
+
+    Q_INVOKABLE void removeAllConnections(Node* a, Node* b);
+
+    Q_INVOKABLE void createConnection(Node* a, Node* b, int t = Node::Input);
+
+    Q_INVOKABLE bool hasOutConnection(Node* n);
+
+    Q_INVOKABLE bool hasInConnection(Node* n);
+
 
 signals:
     void nodeDeleted();
@@ -49,4 +55,3 @@ private:
     QList<Node*> m_nodes;
     QSqlQuery mq_listId;
 };
-#endif // ROOM_H

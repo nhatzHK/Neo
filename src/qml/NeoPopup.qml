@@ -1,15 +1,15 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
-import Neo.Node.Input 1.0
 import Neo.Room 1.0
+import Neo.Node 1.0
 
 Item {
     id: popup
     focus: true
     visible: false
 
-    property InputNode currentNode: dummyNode
-    InputNode {
+    property Node currentNode: dummyNode
+    Node {
         id: dummyNode
     }
 
@@ -23,7 +23,7 @@ Item {
         Rectangle {
             width: popup.width
             height: popup.height / 10
-            color: "blue"
+            color: currentNode.type === Node.Input ? "blue" : "red"
             Text {
                 id: nameTag
                 anchors.fill: parent
@@ -94,7 +94,7 @@ Item {
                             }
 
                             if (currentRoom.connected(currentNode, modelData,
-                                                      InputNode.In)) {
+                                                      Node.Input)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked
@@ -124,7 +124,7 @@ Item {
                             }
 
                             if (currentRoom.connected(currentNode, modelData,
-                                                      InputNode.Out)) {
+                                                      Node.Output)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked

@@ -7,57 +7,6 @@ Room::Room(QObject *parent) {
     }
 }
 
-
-bool Room::connected(Node *a, Node *b, int t) {
-    for(auto c: m_connections) {
-        switch (t) {
-        case Node::In:
-            if(c->in() == a && c->out() == b) {
-                return true;
-            }
-            break;
-        case Node::Out:
-            if(c->out() == a && c->in() == b) {
-                return true;
-            }
-            break;
-        }
-    }
-
-    return false;
-}
-
-bool Room::hasInConnection(Node *n) {
-    for (auto c: m_connections) {
-        if (c->in() == n) {
-            return true;
-        }
-    }
-}
-
-bool Room::hasOutConnection(Node *n) {
-    for (auto c: m_connections) {
-        if(c->out() == n) {
-            return true;
-        }
-    }
-}
-
-bool Room::deleteNode(Node *n) {
-    removeAllConnections(n);
-    return m_nodes.removeOne(n);
-}
-
-void Room::removeAllConnections(Node* n) {
-   QMutableListIterator<Connection*> it(m_connections);
-   while (it.hasNext()) {
-       auto c =  it.next();
-       if (c->in() == n || c->out() == n) {
-           it.remove();
-       }
-   }
-}
-
 void Room::clearNodes(QQmlListProperty<Node>* l) {
     return ((Room*)l->object)->m_nodes.clear();
 }
@@ -72,41 +21,6 @@ void Room::addNode(QQmlListProperty<Node>* l,  Node* n) {
 
 void Room::addConnection(QQmlListProperty<Connection> *l, Connection *c) {
     ((Room*)l->object)->m_connections.append(c);
-}
-
-void Room::createConnection(Node* a, Node* b, int t) {
-    Connection* c = new Connection();
-    switch (t) {
-    case Node::In:
-        c->setIn(a);
-        c->setOut(b);
-        break;
-    case Node::Out:
-        c->setIn(b);
-        c->setOut(a);
-        break;
-    }
-
-    m_connections.append(c);
-}
-
-void Room::removeAllConnections(Node* a, Node* b, int t) {
-    QMutableListIterator<Connection*> it(m_connections);
-    while(it.hasNext()) {
-        auto c = it.next();
-        switch (t) {
-        case Node::In:
-            if(c->in() == a && c->out() == b) {
-                it.remove();
-            }
-            break;
-        case Node::Out:
-            if(c->out() == a && c->in() == b) {
-                it.remove();
-            }
-            break;
-        }
-    }
 }
 
 int Room::countNodes(QQmlListProperty<Node>* l) {
@@ -152,4 +66,104 @@ QStringList Room::ids() {
     }
 
     return l;
+}
+
+bool Room::deleteNode(Node *n) {
+    removeAllConnections(n);
+    return m_nodes.removeOne(n);
+}
+
+
+void Room::removeAllConnections(Node* n) {
+   QMutableListIterator<Connection*> it(m_connections);
+   while (it.hasNext()) {
+       auto c =  it.next();
+       if(c->in() == n || c->out () == n) {
+           it.remove();
+       }
+   }
+}
+
+void Room::createConnection(Node* a, Node* b, int t) {
+    Connection* c = new Connection();
+
+    QVariant av = QVariant::fromValue(a);
+    QVariant bv = QVariant::fromValue(b);
+
+    switch (a->type ()) {
+    case Node::Output:
+        c->setIn(a);
+        c->setOut(b);
+        break;
+    case Node::Input:
+        c->setIn(b);
+        c->setOut(a);
+        break;
+    default:
+        switch (t) {
+        case Node::Input:
+            c->setIn (a);
+            c->setOut (b);
+            break;
+        case Node::Output:
+            c->setIn (b);
+            c->setOut (a);
+            break;
+        }
+        break;
+    }
+
+    m_connections.append(c);
+
+}
+
+bool Room::connected(Node *a, Node *b) {
+    for(auto c: m_connections) {
+
+        if ((a == c->in () && b == c->out ()) || (a == c->out () && b == c->in ())) {
+            return true;
+        }
+    }
+   return false;
+}
+
+bool Room::hasInConnection(Node *n) {
+    if(n->type() == Node::Input) {
+        return false;
+    }
+
+    for (auto c: m_connections) {
+        if(c->in () == n) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Room::hasOutConnection(Node *n) {
+
+    if(n->type () == Node::Output) {
+        return false;
+    }
+
+    for (auto c: m_connections) {
+        if(c->out () == n) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Room::removeAllConnections(Node* a, Node* b) {
+    QMutableListIterator<Connection*> it(m_connections);
+
+    while(it.hasNext()) {
+        auto c = it.next();
+        if((c->in () == a && c->out () == b) ||
+                (c->out () == a && c->in () == a)) {
+            it.remove ();
+        }
+    }
 }

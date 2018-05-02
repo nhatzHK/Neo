@@ -1,16 +1,17 @@
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#pragma once
 
 #include <QObject>
-#include "inputnode.h"
+#include <QVariant>
+#include "node.h"
 
 class Connection: public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(Node* in READ in WRITE setIn NOTIFY inChanged)
-    Q_PROPERTY(Node* out READ out WRITE setOut NOTIFY outChanged)
+    Q_PROPERTY(Node* to READ in WRITE setIn NOTIFY inChanged)
+    Q_PROPERTY(Node* from READ out WRITE setOut NOTIFY outChanged)
 public:
     explicit Connection(QObject* parent = nullptr);
+
     Node* in();
     Node* out();
     void setIn(Node* n);
@@ -21,8 +22,7 @@ signals:
     void outChanged();
 
 private:
-    Node* m_in = nullptr;
-    Node* m_out = nullptr;
-};
 
-#endif // CONNECTION_H
+    Node* m_in;
+    Node* m_out;
+};

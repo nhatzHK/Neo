@@ -10,10 +10,10 @@ find_package(Qt5 COMPONENTS Core Quick Sql REQUIRED)
 
 add_executable(${PROJECT_NAME}
   src/cpp/main.cpp
-  src/cpp/inputnode.cpp
+  src/cpp/node.cpp
   src/cpp/connection.cpp
   src/cpp/room.cpp
-  include/inputnode.h
+  include/node.h
   include/room.h
   include/connection.h
   src/qml.qrc)

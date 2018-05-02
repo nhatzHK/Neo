@@ -1,7 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import Neo.Room 1.0
-import Neo.Node.Input 1.0
+import Neo.Node 1.0
+import Neo.Connection 1.0
 
 Rectangle {
     id: room
@@ -9,11 +10,15 @@ Rectangle {
     anchors.fill: parent
 
     Component.onCompleted: {
-        connectionComponent = Qt.createComponent("NeoConnection.qml")
-        nodeComponent = Qt.createComponent("NeoInputNode.qml")
+//        connectionComponent = Qt.createComponent("NeoConnection.qml")
+        nodeComponent = Qt.createComponent("NeoInput.qml")
+        gateComponent = Qt.createComponent("NeoGate.qml")
+        outputComponent = Qt.createComponent("NeoOutput.qml")
     }
 
-    property int count: 0
+    property int nodeCount: 0
+    property int gateCount: 0
+    property int  outputCount: 0
     property Room backend: Room {
         onNodeDeleted: console.log(nodes.length)
     }
@@ -22,7 +27,9 @@ Rectangle {
     property alias createNodeMenu: createNodeMenu
 
     property Component nodeComponent: Component.Null
-    property Component connectionComponent: Component.Null
+//    property Component connectionComponent: Component.Null
+    property Component gateComponent: Component.Null
+    property Component outputComponent: Component.Null
 
     ScrollView {
         anchors.fill: parent
@@ -65,13 +72,34 @@ Rectangle {
 
         Menu {
             id: createNodeMenu
-            title: qsTr("Create Node Menu")
+            title: qsTr("Create Node")
 
             MenuItem {
-                text: "Node"
-                onTriggered: createNode()
+                text: "Inpput"
+                onTriggered: createInput()
+            }
+
+            MenuItem {
+                text: "Output"
+                onTriggered: createOutput()
             }
         }
+
+        Menu {
+            id: createGateMenu
+            title: qsTr("Create Gate")
+
+            MenuItem {
+                text: qsTr("Or")
+                onTriggered: createGate(Node.OrGate)
+            }
+
+            MenuItem {
+                text: qsTr("And")
+                onTriggered: createGate(Node.AndGate)
+            }
+        }
+
     }
 
     NeoPopup {
@@ -82,7 +110,20 @@ Rectangle {
         height: room.height * 4 / 6
     }
 
-    function createNode() {
+//    Node {
+//        id: na
+//    }
+
+//    Node {
+//        id: nb
+//    }
+
+//    Connection {
+//        from: na
+//        to: nb
+//    }
+
+    function createInput(type) {
         if (nodeComponent.status === Component.Ready) {
             var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
             var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
@@ -91,14 +132,57 @@ Rectangle {
                                                       y: y,
                                                       room: room
                                                   })
-            node.name = "node" + String(count)
-            ++count
+            node.name = "node" + String(nodeCount)
+            ++nodeCount
             backend.nodes.push(node.backend)
             node.forget.connect(popNode)
             node.showCard.connect(showCard)
         } else {
-            console.log("Node not Ready")
+            console.log("Input not ready")
         }
+    }
+
+    function createGate(type) {
+        if (gateComponent.status === Component.Ready) {
+            var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
+            var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
+
+            var gate = gateComponent.createObject(mainArea, {
+                                                      x: x,
+                                                      y: y,
+                                                      room: room
+                                                  })
+
+            gate.name = "gate" + String(gateCount)
+            ++gateCount
+            backend.nodes.push(gate.backend)
+            gate.forget.connect(popNode)
+            gate.showCard.connect(showCard)
+            gate.backend.type = type
+        } else {
+            console.log("Gate not ready")
+        }
+    }
+
+    function createOutput() {
+       if (outputComponent.status === Component.Ready) {
+           var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
+           var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
+
+           var output = outputComponent.createObject(mainArea, {
+                                                         x: x,
+                                                         y: y,
+                                                         room: room
+                                                     })
+
+           output.name = "output" + String(outputCount)
+           ++outputCount
+           backend.nodes.push(output.backend)
+           output.forget.connect(popNode)
+           output.showCard.connect(showCard)
+       } else {
+           console.log("Output not ready")
+       }
     }
 
     function showCard(n) {
@@ -108,8 +192,9 @@ Rectangle {
     function popNode(n) {
         backend.deleteNode(n)
         for (var i = 0; i < backend.nodes.length; ++i) {
-            backend.nodes[i].connectionsMightHaveChanged()
+            backend.nodes[i].connectionsHaveChanged()
         }
+        paint()
     }
 
     function paint() {
