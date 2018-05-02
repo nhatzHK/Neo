@@ -33,6 +33,7 @@ public:
 
     Q_INVOKABLE bool hasInConnection(Node* n);
 
+    Q_INVOKABLE void evaluate(Node* n);
 
 signals:
     void nodeDeleted();

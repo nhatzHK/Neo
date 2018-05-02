@@ -15,6 +15,8 @@ Item {
     // finish initialization
     Component.onCompleted: {
         dynamicMenuItem = Qt.createComponent("NeoMenuItem.qml")
+        room.backend.evaluate(backend)
+        status.requestPaint()
     }
     property NeoRoom room: NeoRoom {
     }
@@ -36,24 +38,9 @@ Item {
         type: Node.Input
         onConnectionsHaveChanged: {
             outSlot.visible = room.backend.hasOutConnection(backend)
+            room.backend.evaluate(backend)
         }
         outPos: Qt.point(node.x + outSlot.x + 7, node.y + outSlot.y + 4)
-    }
-
-    Canvas {
-        width: 10
-        height: 10
-        x: node.width / 2
-        y: node.height / 2
-        id: status
-        onPaint: {
-            var ctx = getContext("2d")
-
-            ctx.fillStyle = backend.output ? "green" : "red"
-            ctx.beginPath()
-            ctx.arc(width / 2, height / 2, width / 2, 0, 2 * Math.PI)
-            ctx.fill()
-        }
     }
 
     Column {
@@ -109,6 +96,22 @@ Item {
                 text: backend.value
                 color: "black"
                 font.bold: true
+            }
+
+            Canvas {
+                width: 10
+                height: 10
+                x: node.width / 2 - 5
+                y: node.height / 2
+                id: status
+                onPaint: {
+                    var ctx = getContext("2d")
+
+                    ctx.fillStyle = backend.output ? "green" : "red"
+                    ctx.beginPath()
+                    ctx.arc(width / 2, height / 2, width / 2, 0, 2 * Math.PI)
+                    ctx.fill()
+                }
             }
 
             MouseArea {

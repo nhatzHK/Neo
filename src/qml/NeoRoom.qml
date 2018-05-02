@@ -10,7 +10,7 @@ Rectangle {
     anchors.fill: parent
 
     Component.onCompleted: {
-//        connectionComponent = Qt.createComponent("NeoConnection.qml")
+        //        connectionComponent = Qt.createComponent("NeoConnection.qml")
         nodeComponent = Qt.createComponent("NeoInput.qml")
         gateComponent = Qt.createComponent("NeoGate.qml")
         outputComponent = Qt.createComponent("NeoOutput.qml")
@@ -18,7 +18,7 @@ Rectangle {
 
     property int nodeCount: 0
     property int gateCount: 0
-    property int  outputCount: 0
+    property int outputCount: 0
     property Room backend: Room {
         onNodeDeleted: console.log(nodes.length)
     }
@@ -27,7 +27,7 @@ Rectangle {
     property alias createNodeMenu: createNodeMenu
 
     property Component nodeComponent: Component.Null
-//    property Component connectionComponent: Component.Null
+    //    property Component connectionComponent: Component.Null
     property Component gateComponent: Component.Null
     property Component outputComponent: Component.Null
 
@@ -75,7 +75,7 @@ Rectangle {
             title: qsTr("Create Node")
 
             MenuItem {
-                text: "Inpput"
+                text: "Input"
                 onTriggered: createInput()
             }
 
@@ -99,7 +99,6 @@ Rectangle {
                 onTriggered: createGate(Node.AndGate)
             }
         }
-
     }
 
     NeoPopup {
@@ -110,19 +109,19 @@ Rectangle {
         height: room.height * 4 / 6
     }
 
-//    Node {
-//        id: na
-//    }
 
-//    Node {
-//        id: nb
-//    }
+    //    Node {
+    //        id: na
+    //    }
 
-//    Connection {
-//        from: na
-//        to: nb
-//    }
+    //    Node {
+    //        id: nb
+    //    }
 
+    //    Connection {
+    //        from: na
+    //        to: nb
+    //    }
     function createInput(type) {
         if (nodeComponent.status === Component.Ready) {
             var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
@@ -165,24 +164,24 @@ Rectangle {
     }
 
     function createOutput() {
-       if (outputComponent.status === Component.Ready) {
-           var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
-           var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
+        if (outputComponent.status === Component.Ready) {
+            var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
+            var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
 
-           var output = outputComponent.createObject(mainArea, {
-                                                         x: x,
-                                                         y: y,
-                                                         room: room
-                                                     })
+            var output = outputComponent.createObject(mainArea, {
+                                                          x: x,
+                                                          y: y,
+                                                          room: room
+                                                      })
 
-           output.name = "output" + String(outputCount)
-           ++outputCount
-           backend.nodes.push(output.backend)
-           output.forget.connect(popNode)
-           output.showCard.connect(showCard)
-       } else {
-           console.log("Output not ready")
-       }
+            output.name = "output" + String(outputCount)
+            ++outputCount
+            backend.nodes.push(output.backend)
+            output.forget.connect(popNode)
+            output.showCard.connect(showCard)
+        } else {
+            console.log("Output not ready")
+        }
     }
 
     function showCard(n) {

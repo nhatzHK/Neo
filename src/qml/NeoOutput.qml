@@ -26,6 +26,7 @@ Canvas {
 
     Component.onCompleted: {
         dynamicMenuItem = Qt.createComponent("NeoMenuItem.qml")
+        room.backend.evaluate(backend)
     }
 
     Node {
@@ -33,6 +34,8 @@ Canvas {
         type: Node.Output
         onConnectionsHaveChanged: {
             inSlot.visible = room.backend.hasInConnection(backend)
+            room.backend.evaluate(backend)
+            status.requestPaint()
         }
         inPos: Qt.point(node.x + inSlot.x, node.y + inSlot.y + 4)
     }
@@ -40,8 +43,8 @@ Canvas {
     Canvas {
         width: 10
         height: 10
-        x: node.width / 2
-        y: node.height / 2
+        x: node.width / 2 - 5
+        y: node.height / 3 * 2
         id: status
         onPaint: {
             var ctx = getContext("2d")

@@ -167,3 +167,35 @@ void Room::removeAllConnections(Node* a, Node* b) {
         }
     }
 }
+
+void Room::evaluate (Node *n) {
+    switch (n->type ()) {
+    case Node::AndGate:
+    case Node::Output:
+        if(hasInConnection (n)) {
+            for (auto c: m_connections) {
+                if(!(c->out ()->output ()) && c->in () == n) {
+                    n->setOutput (false);
+                    return;
+                }
+            }
+            n->setOutput (true);
+            return;
+        }
+        n->setOutput (false);
+        break;
+    case Node::OrGate:
+        qDebug() << "Evaluating or gate\n";
+        if(hasInConnection (n)) {
+            for (auto c: m_connections) {
+                if ((c->out ()->output ()) && c->in () == n) {
+                    qDebug() << "Yup\n";
+                    n->setOutput (true);
+                    return;
+                }
+            }
+        }
+        n->setOutput (false);
+        break;
+    }
+}
