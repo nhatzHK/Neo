@@ -119,7 +119,7 @@ Canvas {
                 title: qsTr("Nodes")
                 onAboutToShow: {
                     menuConnectNode.clear()
-                    makeNodeList(menuConnectNode, Node.Input)
+                    makeNodeList(menuConnectNode)
                 }
             }
 
@@ -155,15 +155,15 @@ Canvas {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
                     mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend, nodes[i])
+                    mnuItem.checked = room.backend.connected(backend, nodes[i], Node.Output)
 
                     menu.insertItem(0, mnuItem)
 
                     mnuItem.toggled.connect(function (checked) {
                         if (checked) {
-                            room.backend.createConnection(backend, nodes[i])
+                            room.backend.createConnection(backend, nodes[i], Node.Output)
                         } else {
-                            room.backend.removeAllConnections(backend, nodes[i])
+                            room.backend.removeConnections(backend, nodes[i], Node.Output)
                         }
 
                         backend.connectionsHaveChanged()
@@ -189,15 +189,15 @@ Canvas {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
                     mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend, nodes[i])
+                    mnuItem.checked = room.backend.connected(backend, nodes[i], Node.Output)
 
                     menu.insertItem(0, mnuItem)
 
                     mnuItem.toggled.connect(function (checked) {
                         if (checked) {
-                            room.backend.createConnection(backend, nodes[i])
+                            room.backend.createConnection(backend, nodes[i], Node.Output)
                         } else {
-                            room.backend.removeAllConnections(backend, nodes[i])
+                            room.backend.removeConnections(backend, nodes[i], Node.Output)
                         }
 
                         backend.connectionsHaveChanged()

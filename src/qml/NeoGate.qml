@@ -159,8 +159,8 @@ Canvas {
                 title: qsTr("Gates")
                 onAboutToShow: {
                     menuSendGate.clear()
-                    makeGateList(menuSendGate, Node.OrGate, Node.Output)
-                    makeGateList(menuSendGate, Node.AndGate, Node.Output)
+                    makeGateList(menuSendGate, Node.OrGate)
+                    makeGateList(menuSendGate, Node.AndGate)
                 }
             }
 
@@ -169,7 +169,7 @@ Canvas {
                 title: qsTr("Nodes")
                 onAboutToShow: {
                     menuSendNode.clear()
-                    makeNodeList(menuSendNode, Node.Output, Node.Output)
+                    makeNodeList(menuSendNode, Node.Output)
                 }
             }
         }
@@ -182,8 +182,8 @@ Canvas {
                 title: qsTr("Gates")
                 onAboutToShow: {
                     menuReadGate.clear()
-                    makeGateList(menuReadGate, Node.OrGate)
-                    makeGateList(menuReadGate, Node.AndGate)
+                    makeGateList(menuReadGate, Node.OrGate, Node.Output)
+                    makeGateList(menuReadGate, Node.AndGate, Node.Output)
                 }
             }
 
@@ -192,7 +192,7 @@ Canvas {
                 title: qsTr("Nodes")
                 onAboutToShow: {
                     menuReadNode.clear()
-                    makeNodeList(menuReadNode, Node.Input)
+                    makeNodeList(menuReadNode, Node.Input, Node.Output)
                 }
             }
         }
@@ -207,6 +207,10 @@ Canvas {
     }
 
     function makeGateList(menu, type, way) {
+        if (way === undefined) {
+            way = Node.Input
+        }
+
         function rec_for(nodes, i) {
             if (i >= nodes.length) {
                 return
@@ -227,7 +231,7 @@ Canvas {
                             room.backend.createConnection(backend,
                                                           nodes[i], way)
                         } else {
-                            room.backend.removeAllConnections(backend,
+                            room.backend.removeConnections(backend,
                                                               nodes[i], way)
                         }
 
@@ -263,7 +267,7 @@ Canvas {
                         if (checked) {
                             room.backend.createConnection(backend, nodes[i], way)
                         } else {
-                            room.backend.removeAllConnections(backend, nodes[i])
+                            room.backend.removeConnections(backend, nodes[i])
                         }
 
                         backend.connectionsHaveChanged()

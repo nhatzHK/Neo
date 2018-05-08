@@ -21,11 +21,11 @@ public:
 
     Q_INVOKABLE bool deleteNode(Node* n);
 
-    void removeAllConnections(Node* n);
+    void removeConnections(Node* n);
 
-    Q_INVOKABLE bool connected(Node* a, Node* b);
+    Q_INVOKABLE bool connected(Node* a, Node* b, int t = Node::Input);
 
-    Q_INVOKABLE void removeAllConnections(Node* a, Node* b);
+    Q_INVOKABLE void removeConnections (Node* a, Node* b, int t = Node::Input);
 
     Q_INVOKABLE void createConnection(Node* a, Node* b, int t = Node::Input);
 
@@ -33,6 +33,7 @@ public:
 
     Q_INVOKABLE bool hasInConnection(Node* n);
 
+    Q_INVOKABLE bool getValue(Node *n);
     Q_INVOKABLE void evaluate(Node* n);
 
 signals:

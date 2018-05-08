@@ -201,7 +201,7 @@ Item {
                         if (checked) {
                             room.backend.createConnection(backend, nodes[i])
                         } else {
-                            room.backend.removeAllConnections(backend, nodes[i])
+                            room.backend.removeConnections(backend, nodes[i])
                         }
 
                         backend.connectionsHaveChanged()
@@ -236,7 +236,7 @@ Item {
                         if (checked) {
                             room.backend.createConnection(backend, nodes[i])
                         } else {
-                            room.backend.removeAllConnections(backend, nodes[i])
+                            room.backend.removeConnections(backend, nodes[i])
                         }
 
                         backend.connectionsHaveChanged()

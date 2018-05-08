@@ -73,7 +73,7 @@ QStringList Room::ids() {
 }
 
 bool Room::deleteNode(Node *n) {
-    removeAllConnections(n);
+    removeConnections(n);
     auto b = m_nodes.removeOne(n);
     nodesUpdated ();
     emit connectionsUpdated ();
@@ -81,15 +81,15 @@ bool Room::deleteNode(Node *n) {
 }
 
 
-void Room::removeAllConnections(Node* n) {
-   QMutableListIterator<Connection*> it(m_connections);
-   while (it.hasNext()) {
-       auto c =  it.next();
-       if(c->receiver() == n || c->sender () == n) {
-           it.remove();
-       }
-   }
-   emit connectionsUpdated();
+void Room::removeConnections(Node* n) {
+    QMutableListIterator<Connection*> it(m_connections);
+    while (it.hasNext()) {
+        auto c =  it.next();
+        if(c->receiver() == n || c->sender () == n) {
+            it.remove();
+        }
+    }
+    emit connectionsUpdated();
 }
 
 void Room::createConnection(Node* a, Node* b, int t) {
@@ -98,40 +98,37 @@ void Room::createConnection(Node* a, Node* b, int t) {
     QVariant av = QVariant::fromValue(a);
     QVariant bv = QVariant::fromValue(b);
 
-    switch (a->type ()) {
-    case Node::Output:
-        c->setReceiver(a);
-        c->setSender(b);
-        break;
+    switch (t) {
     case Node::Input:
-        c->setReceiver(b);
-        c->setSender(a);
+        c->setSender (a);
+        c->setReceiver (b);
         break;
-    default:
-        switch (t) {
-        case Node::Input:
-            c->setReceiver (a);
-            c->setSender (b);
-            break;
-        case Node::Output:
-            c->setReceiver (b);
-            c->setSender (a);
-            break;
-        }
+    case Node::Output:
+        c->setSender (b);
+        c->setReceiver (a);
         break;
     }
 
     m_connections.append(c);
 }
 
-bool Room::connected(Node *a, Node *b) {
+bool Room::connected(Node *a, Node *b, int t) {
     for(auto c: m_connections) {
 
-        if ((a == c->receiver () && b == c->sender ()) || (a == c->sender () && b == c->receiver ())) {
-            return true;
+        switch (t) {
+        case Node::Input:
+            if (c->sender () == a && c->receiver () == b) {
+                return true;
+            }
+            break;
+        case Node::Output:
+            if(c->sender () == b && c->receiver () == a) {
+                return true;
+            }
+            break;
         }
     }
-   return false;
+    return false;
 }
 
 bool Room::hasInConnection(Node *n) {
@@ -163,46 +160,75 @@ bool Room::hasOutConnection(Node *n) {
     return false;
 }
 
-void Room::removeAllConnections(Node* a, Node* b) {
+//void Room::removeAllConnections(Node* a, Node* b) {
+//    QMutableListIterator<Connection*> it(m_connections);
+
+//    while(it.hasNext()) {
+//        auto c = it.next();
+//        if((c->receiver () == a && c->sender () == b) ||
+//                (c->sender () == a && c->receiver () == b)) {
+//            it.remove ();
+//        }
+//    }
+
+//    emit connectionsUpdated();
+//}
+
+void Room::removeConnections (Node *a, Node *b, int t) {
     QMutableListIterator<Connection*> it(m_connections);
 
-    while(it.hasNext()) {
-        auto c = it.next();
-        if((c->receiver () == a && c->sender () == b) ||
-                (c->sender () == a && c->receiver () == b)) {
-            it.remove ();
+    while(it.hasNext ()) {
+        auto c = it.next ();
+        switch (t) {
+        case Node::Input:
+            if(c->sender () == a && c->receiver () == b) {
+                it.remove ();
+            }
+            break;
+        case Node::Output:
+            if(c->sender () == b && c->receiver () == a) {
+                it.remove ();
+            }
+            break;
         }
     }
-
-    emit connectionsUpdated();
 }
 
-void Room::evaluate (Node *n) {
+bool Room::getValue(Node *n) {
     switch (n->type ()) {
     case Node::AndGate:
     case Node::Output:
         if(hasInConnection (n)) {
             for (auto c: m_connections) {
                 if(!(c->sender ()->output ()) && c->receiver () == n) {
-                    n->setOutput (false);
-                    return;
+                    return false;
                 }
             }
-            n->setOutput (true);
-            return;
+            return true;
         }
-        n->setOutput (false);
         break;
     case Node::OrGate:
         if(hasInConnection (n)) {
             for (auto c: m_connections) {
                 if ((c->sender ()->output ()) && c->receiver () == n) {
-                    n->setOutput (true);
-                    return;
+                    return true;
                 }
             }
         }
-        n->setOutput (false);
         break;
+    case Node::Input:
+        return true;
+    }
+
+    return false;
+}
+
+void Room::evaluate (Node *n) {
+    n->setOutput (getValue(n));
+
+    for(auto c: m_connections) {
+        if(c->sender () == n) {
+            c->receiver ()->connectionsHaveChanged ();
+        }
     }
 }
