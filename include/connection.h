@@ -7,22 +7,22 @@
 class Connection: public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(Node* to READ in WRITE setIn NOTIFY inChanged)
-    Q_PROPERTY(Node* from READ out WRITE setOut NOTIFY outChanged)
+    Q_PROPERTY(Node* to READ receiver WRITE setReceiver NOTIFY receiverChanged)
+    Q_PROPERTY(Node* from READ sender WRITE setSender NOTIFY senderChanged)
 public:
     explicit Connection(QObject* parent = nullptr);
 
-    Node* in();
-    Node* out();
-    void setIn(Node* n);
-    void setOut(Node* n);
+    Node* receiver();
+    Node* sender();
+    void setReceiver(Node* n);
+    void setSender(Node* n);
 
 signals:
-    void inChanged();
-    void outChanged();
+    void receiverChanged();
+    void senderChanged();
 
 private:
 
-    Node* m_in;
-    Node* m_out;
+    Node* m_receiver;
+    Node* m_sender;
 };

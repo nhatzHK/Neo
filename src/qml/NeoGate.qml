@@ -88,7 +88,6 @@ Canvas {
         var ctx = getContext("2d")
 
         ctx.lineWidth = 3
-        ctx.fillStyle = backend.type === Node.OrGate ? 'purple' : 'orange'
 
         switch (backend.type) {
         case Node.AndGate:
@@ -101,6 +100,7 @@ Canvas {
     }
 
     function drawOrGate(ctx) {
+        ctx.fillStyle = 'purple'
         ctx.beginPath()
         ctx.arc(-width + 14 / 100 * width, height / 2, height,
                 -Math.PI, Math.PI)
@@ -113,6 +113,7 @@ Canvas {
     }
 
     function drawAndGate(ctx) {
+        ctx.fillStyle = 'orange'
         ctx.beginPath()
         ctx.arc(width / 2, height / 2, height / 2 - 2, -Math.PI / 2,
                 Math.PI / 2)
@@ -262,7 +263,7 @@ Canvas {
                         if (checked) {
                             room.backend.createConnection(backend, nodes[i], way)
                         } else {
-                            room.backend.removeAllConnections(backend, nodes[i], way)
+                            room.backend.removeAllConnections(backend, nodes[i])
                         }
 
                         backend.connectionsHaveChanged()

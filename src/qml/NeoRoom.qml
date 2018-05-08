@@ -57,7 +57,12 @@ Rectangle {
                         contextMenu.popup()
                         room.mouseEvent = mouse
                     } else if (Qt.LeftButton & pressedButtons) {
-                        popup.hideCard()
+                        if (inputPopup.visible)
+                            inputPopup.hideCard()
+                        if (gatePopup.visible)
+                            gatePopup.hideCard()
+                        if (outputPopup.visible)
+                            outputPopup.hideCard()
                     }
                 }
             }
@@ -101,28 +106,31 @@ Rectangle {
         }
     }
 
-    NeoPopup {
-        id: popup
+    NeoCardInput {
+        id: inputPopup
         x: room.width * 1 / 6
         y: room.height * 1 / 6
         width: room.width * 4 / 6
         height: room.height * 4 / 6
     }
 
+    NeoCardGate {
+        id: gatePopup
+        x: room.width * 1 / 6
+        y: room.height * 1 / 6
+        width: room.width * 4 / 6
+        height: room.height * 4 / 6
+    }
 
-    //    Node {
-    //        id: na
-    //    }
+    NeoCardOutput {
+        id: outputPopup
+        x: room.width * 1 / 6
+        y: room.height * 1 / 6
+        width: room.width * 4 / 6
+        height: room.height * 4 / 6
+    }
 
-    //    Node {
-    //        id: nb
-    //    }
-
-    //    Connection {
-    //        from: na
-    //        to: nb
-    //    }
-    function createInput(type) {
+    function createInput() {
         if (nodeComponent.status === Component.Ready) {
             var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
             var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
@@ -136,6 +144,7 @@ Rectangle {
             backend.nodes.push(node.backend)
             node.forget.connect(popNode)
             node.showCard.connect(showCard)
+            node.backend.type = Node.Input
         } else {
             console.log("Input not ready")
         }
@@ -179,13 +188,31 @@ Rectangle {
             backend.nodes.push(output.backend)
             output.forget.connect(popNode)
             output.showCard.connect(showCard)
+            output.backend.type = Node.Output
         } else {
             console.log("Output not ready")
         }
     }
 
     function showCard(n) {
-        popup.showCard(n, room.backend)
+        switch (n.type) {
+        case Node.Input:
+            gatePopup.hideCard()
+            outputPopup.hideCard()
+            inputPopup.showCard(n, room.backend)
+            break
+        case Node.OrGate:
+        case Node.AndGate:
+            inputPopup.hideCard()
+            outputPopup.hideCard()
+            gatePopup.showCard(n, room.backend)
+            break
+        case Node.Output:
+            inputPopup.hideCard()
+            gatePopup.hideCard()
+            outputPopup.showCard(n, room.backend)
+            break
+        }
     }
 
     function popNode(n) {

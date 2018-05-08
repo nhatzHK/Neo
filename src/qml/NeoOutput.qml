@@ -119,8 +119,7 @@ Canvas {
                 title: qsTr("Nodes")
                 onAboutToShow: {
                     menuConnectNode.clear()
-                    var type = backend.type === Node.Output ? Node.Input : Node.Output
-                    makeNodeList(menuConnectNode, type)
+                    makeNodeList(menuConnectNode, Node.Input)
                 }
             }
 
@@ -179,14 +178,13 @@ Canvas {
         rec_for(room.backend.nodes, 0)
     }
 
-    function makeNodeList(menu, type) {
-
+    function makeNodeList(menu) {
         function rec_for(nodes, i) {
             if (i >= nodes.length) {
                 return
             }
 
-            if (nodes[i] !== node.backend && nodes[i].type === type) {
+            if (nodes[i] !== node.backend && nodes[i].type === Node.Input) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name

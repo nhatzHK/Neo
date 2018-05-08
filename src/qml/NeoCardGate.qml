@@ -149,7 +149,6 @@ Item {
 
                     delegate: RadioButton {
                         checked: currentNode.rowId === modelData
-
                         onCheckedChanged: {
                             if(checked) {
                                 currentNode.rowId = modelData

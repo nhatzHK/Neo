@@ -8,9 +8,9 @@
 
 class Room : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<Connection> connections READ connections)
-    Q_PROPERTY(QQmlListProperty<Node> nodes READ nodes)
-    Q_PROPERTY(QStringList ids READ ids)
+    Q_PROPERTY(QQmlListProperty<Connection> connections READ connections NOTIFY connectionsUpdated)
+    Q_PROPERTY(QQmlListProperty<Node> nodes READ nodes NOTIFY nodesUpdated)
+    Q_PROPERTY(QStringList ids READ ids NOTIFY idsUpdated)
 
 public:
     explicit Room(QObject * parent = nullptr);
@@ -38,6 +38,10 @@ public:
 signals:
     void nodeDeleted();
     void connectionBroken();
+
+    void connectionsUpdated();
+    void nodesUpdated();
+    void idsUpdated();
 
 private:
     static void clearNodes(QQmlListProperty<Node>*);

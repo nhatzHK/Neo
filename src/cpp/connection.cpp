@@ -4,20 +4,20 @@ Connection::Connection(QObject *parent) {
 
 }
 
-Node* Connection::in() {
-    return m_in;
+Node* Connection::receiver() {
+    return m_receiver;
 }
 
-Node* Connection::out() {
-    return m_out;
+Node* Connection::sender() {
+    return m_sender;
 }
 
-void Connection::setIn(Node* n) {
-    m_in = n;
-    emit inChanged();
+void Connection::setReceiver(Node* n) {
+    m_receiver = n;
+    emit receiverChanged();
 }
 
-void Connection::setOut(Node* n) {
-    m_out = n;
-    emit outChanged();
+void Connection::setSender(Node* n) {
+    m_sender = n;
+    emit senderChanged();
 }

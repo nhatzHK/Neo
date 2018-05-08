@@ -8,11 +8,13 @@
         <file>qtquickcontrols2.conf</file>
         <file>qml/NeoMenuItem.qml</file>
         <file>qml/NeoRoom.qml</file>
-        <file>qml/NeoConnection.qml</file>
-        <file>qml/NeoPopup.qml</file>
+        <file>qml/NeoCardInput.qml</file>
         <file>qml/NeoOverrideButton.qml</file>
         <file>qml/NeoComboBox.qml</file>
         <file>qml/NeoGate.qml</file>
         <file>qml/NeoOutput.qml</file>
+        <file>qml/NeoCardGate.qml</file>
+        <file>qml/NeoCardOutput.qml</file>
+        <file>qml/NeoLabelField.qml</file>
     </qresource>
 </RCC>
