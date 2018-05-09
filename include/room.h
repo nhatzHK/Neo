@@ -2,7 +2,6 @@
 
 #include <QObject>
 #include <QQmlListProperty>
-//#include "gate.h"
 #include "node.h"
 #include "connection.h"
 
@@ -21,8 +20,6 @@ public:
 
     Q_INVOKABLE bool deleteNode(Node* n);
 
-    void removeConnections(Node* n);
-
     Q_INVOKABLE bool connected(Node* a, Node* b, int t = Node::Input);
 
     Q_INVOKABLE void removeConnections (Node* a, Node* b, int t = Node::Input);
@@ -33,7 +30,6 @@ public:
 
     Q_INVOKABLE bool hasInConnection(Node* n);
 
-    Q_INVOKABLE bool getValue(Node *n);
     Q_INVOKABLE void evaluate(Node* n);
 
 signals:
@@ -45,6 +41,9 @@ signals:
     void idsUpdated();
 
 private:
+    void removeConnections (Node *n);
+    bool getValue (Node *n);
+
     static void clearNodes(QQmlListProperty<Node>*);
     static void clearConnections(QQmlListProperty<Connection>*);
 

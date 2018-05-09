@@ -23,7 +23,7 @@ Item {
         Rectangle {
             width: popup.width
             height: popup.height / 10
-            color: currentNode.type === Node.Input ? "blue" : "red"
+            color: currentNode.output ? "green" : "red"
             Text {
                 id: nameTag
                 anchors.fill: parent
@@ -45,33 +45,33 @@ Item {
             width: popup.width
             height: popup.height / 10 * 4
 
-            Row {
-                anchors.fill: parent
-                Text {
-                    id: data
-                    height: parent.height
-                    width: parent.width / 2
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pointSize: 20
-                    text: String(currentNode.value)
-                    color: "black"
-                    font.bold: true
+//            Row {
+//                anchors.fill: parent
+//                Text {
+//                    id: data
+//                    height: parent.height
+//                    width: parent.width / 2
+//                    horizontalAlignment: Text.AlignHCenter
+//                    verticalAlignment: Text.AlignVCenter
+//                    font.pointSize: 20
+//                    text: String(currentNode.value)
+//                    color: "black"
+//                    font.bold: true
 
-                    MouseArea {
-                        anchors.fill: parent
-                    }
-                }
+//                    MouseArea {
+//                        anchors.fill: parent
+//                    }
+//                }
 
-                NeoOverrideButton {
-                    id: overrideButton
-                    width: parent.width / 2
-                    height: parent.height
-                    onClicked: {
-                        console.log("Overriding")
-                    }
-                }
-            }
+//                NeoOverrideButton {
+//                    id: overrideButton
+//                    width: parent.width / 2
+//                    height: parent.height
+//                    onClicked: {
+//                        console.log("Overriding")
+//                    }
+//                }
+//            }
         }
 
         Rectangle {
@@ -105,31 +105,6 @@ Item {
                             currentNode.rowId = modelData
                         }
 
-                        text: modelData.name
-                        font.bold: true
-                        font.pointSize: 14
-                    }
-                }
-
-                NeoComboBox {
-                    id: outCom
-                    width: parent.width
-                    height: popup.height / 10
-                    model: currentRoom.nodes
-                    name: "Outgoing Connections"
-                    delegate: CheckBox {
-                        checkState: {
-                            if (currentNode === modelData) {
-                                enabled = false
-                            }
-
-                            if (currentRoom.connected(currentNode, modelData,
-                                                      Node.Output)) {
-                                return Qt.Checked
-                            } else {
-                                return Qt.Unchecked
-                            }
-                        }
                         text: modelData.name
                         font.bold: true
                         font.pointSize: 14

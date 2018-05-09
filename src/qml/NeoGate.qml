@@ -267,7 +267,7 @@ Canvas {
                         if (checked) {
                             room.backend.createConnection(backend, nodes[i], way)
                         } else {
-                            room.backend.removeConnections(backend, nodes[i])
+                            room.backend.removeConnections(backend, nodes[i], way)
                         }
 
                         backend.connectionsHaveChanged()

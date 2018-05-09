@@ -217,7 +217,7 @@ bool Room::getValue(Node *n) {
         }
         break;
     case Node::Input:
-        return true;
+        return n->value () <= n->second () && n->value () >= n->first ();
     }
 
     return false;

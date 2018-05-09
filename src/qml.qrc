@@ -16,5 +16,6 @@
         <file>qml/NeoCardGate.qml</file>
         <file>qml/NeoCardOutput.qml</file>
         <file>qml/NeoLabelField.qml</file>
+        <file>qml/NeoRangeSlider.qml</file>
     </qresource>
 </RCC>

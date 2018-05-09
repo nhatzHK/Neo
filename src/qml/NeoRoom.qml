@@ -10,7 +10,6 @@ Rectangle {
     anchors.fill: parent
 
     Component.onCompleted: {
-        //        connectionComponent = Qt.createComponent("NeoConnection.qml")
         nodeComponent = Qt.createComponent("NeoInput.qml")
         gateComponent = Qt.createComponent("NeoGate.qml")
         outputComponent = Qt.createComponent("NeoOutput.qml")
@@ -20,14 +19,12 @@ Rectangle {
     property int gateCount: 0
     property int outputCount: 0
     property Room backend: Room {
-        onNodeDeleted: console.log(nodes.length)
     }
 
     property variant mouseEvent: null //! Used to store the last state of the mouse
     property alias createNodeMenu: createNodeMenu
 
     property Component nodeComponent: Component.Null
-    //    property Component connectionComponent: Component.Null
     property Component gateComponent: Component.Null
     property Component outputComponent: Component.Null
 
@@ -139,7 +136,7 @@ Rectangle {
                                                       y: y,
                                                       room: room
                                                   })
-            node.name = "node" + String(nodeCount)
+            node.name = "input" + String(nodeCount)
             ++nodeCount
             backend.nodes.push(node.backend)
             node.forget.connect(popNode)

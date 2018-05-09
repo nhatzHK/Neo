@@ -39,7 +39,34 @@ Item {
         onConnectionsHaveChanged: {
             outSlot.visible = room.backend.hasOutConnection(backend)
             room.backend.evaluate(backend)
+            status.requestPaint()
         }
+
+        onFirstChanged: {
+           room.backend.evaluate(backend)
+            status.requestPaint()
+        }
+
+        onSecondChanged: {
+            room.backend.evaluate(backend)
+            status.requestPaint()
+        }
+
+        onMinChanged: {
+            room.backend.evaluate(backend)
+            status.requestPaint()
+        }
+
+        onMaxChanged: {
+            room.backend.evaluate(backend)
+            status.requestPaint()
+        }
+
+        onValueChanged: {
+            room.backend.evaluate(backend)
+            status.requestPaint()
+        }
+
         outPos: Qt.point(node.x + outSlot.x + 7, node.y + outSlot.y + 4)
     }
 

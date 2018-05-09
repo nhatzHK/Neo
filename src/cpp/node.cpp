@@ -11,6 +11,7 @@ Node::Node(QObject *parent) : QObject(parent)
     if(!mq_readValue.prepare("SELECT value FROM components WHERE id = :id")) {
         qDebug() << "DB PREPARE ERROR: (node - ctor) " << mq_readValue.lastError().text() << '\n';
     }
+
 }
 
 void Node::setType(const Type &t) {
@@ -85,4 +86,40 @@ void Node::setOutput(const bool& o) {
 
 bool Node::output() const {
     return m_output;
+}
+
+void Node::setMin (const double &rs) {
+    m_min = rs;
+    emit minChanged();
+}
+
+double Node::min () const {
+    return m_min;
+}
+
+void Node::setMax (const double &re) {
+    m_max = re;
+    emit maxChanged();
+}
+
+double Node::max () const {
+    return m_max;
+}
+
+void Node::setFirst (const double &rm) {
+    m_first = rm;
+    emit firstChanged ();
+}
+
+double Node::first () const {
+    return m_first;
+}
+
+void Node::setSecond (const double &rm) {
+    m_second = rm;
+    emit secondChanged ();
+}
+
+double Node::second () const {
+    return m_second;
 }
