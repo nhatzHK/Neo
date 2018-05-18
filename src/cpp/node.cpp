@@ -2,16 +2,34 @@
 
 Node::Node(QObject *parent) : QObject(parent)
 {
-    timer = new QTimer{this};
+    m_dbReadTimer = new QTimer{this};
 
-    connect(timer, SIGNAL(timeout()), this, SLOT(psl_readValue()));
-    connect (this, SIGNAL(rowIdChanged()), this, SLOT(psl_readValue()));
-    timer->start(1000);
+    connect(m_dbReadTimer, &QTimer::timeout, this, &Node::psl_updateValue);
+    connect (this, &Node::rowIdChanged, this, &Node::psl_updateValue);
+    connect (this, &Node::conditionOverriden, this, &Node::psl_sendMessage);
+    connect (this, &Node::outputChanged, [=] () {
+        if(type () == Node::Output && output ()) {
+            psl_sendMessage ();
+        }
+    });
 
-    if(!mq_readValue.prepare("SELECT value FROM components WHERE id = :id")) {
-        qDebug() << "DB PREPARE ERROR: (node - ctor) " << mq_readValue.lastError().text() << '\n';
+    m_dbReadTimer->start(1000);
+
+    if(!mq_readLastWrite.prepare("SELECT args, time FROM messages "
+                                    "WHERE time = (SELECT max(time) FROM messages "
+                                        "WHERE recipient = :recipient AND method = \"SET\")")) {
+        qDebug() << "DB PREPARE ERROR: (mq_readLastWrite) (node - ctor) " << mq_readLastWrite.lastError().text() << '\n';
     }
 
+    if(!mq_setAsRead.prepare ("UPDATE messages SET seen = 1 WHERE id = :id")) {
+        qDebug() << "DB PREPARE ERROR: (mq_setAsRead) (node - ctor) " << mq_setAsRead.lastError ().text () << '\n';
+    }
+
+    if(!mq_sendMessage.prepare ("INSERT INTO "
+                                  "messages(recipient, method, args, time)"
+                                  "VALUES(?, ?, ?, ?)")) {
+        qDebug() << "DB PREPARE ERROR: (mq_sendMessage) (node - ctor) " << mq_sendMessage.lastError ().text () << '\n';
+    }
 }
 
 void Node::setType(const Type &t) {
@@ -32,15 +50,28 @@ double Node::value() const {
     return m_value;
 }
 
-void Node::psl_readValue() {
-    mq_readValue.bindValue (":id", m_rowId);
-    mq_readValue.exec();
-    mq_readValue.first();
-    auto v = mq_readValue.value(0).toDouble();
-    setValue(v);
-    while(mq_readValue.next()) {
-        qDebug() << mq_readValue.value (0).toString ();
+void Node::psl_updateValue() {
+    mq_readLastWrite.bindValue (":recipient", m_rowId);
+    mq_readLastWrite.exec();
+
+    if(mq_readLastWrite.first()) {
+        auto v = mq_readLastWrite.value(0).toDouble();
+        setValue(v);
     }
+
+    mq_readLastWrite.finish ();
+}
+
+void Node::psl_sendMessage() {
+    mq_sendMessage.addBindValue (m_rowId);
+    mq_sendMessage.addBindValue (m_method);
+    mq_sendMessage.addBindValue (m_args);
+    mq_sendMessage.addBindValue (QDateTime::currentMSecsSinceEpoch ());
+    if (!mq_sendMessage.exec ()) {
+        qDebug() << "DB SEND ERROR: (psl_sendMessage-" << m_name << ") " << mq_sendMessage.lastError ().text ();
+    }
+
+    mq_sendMessage.finish ();
 }
 
 QString Node::name() const {
@@ -88,6 +119,33 @@ bool Node::output() const {
     return m_output;
 }
 
+void Node::setBound (const bool& i) {
+    m_bound = i;
+    emit boundChanged ();
+}
+
+bool Node::bound () const {
+    return m_bound;
+}
+
+void Node::setOpened (const bool &o) {
+    m_opened = o;
+    emit openedChanged ();
+}
+
+bool Node::opened () const {
+    return m_opened;
+}
+
+void Node::setInverted (const bool &i) {
+    m_inverted = i;
+    emit invertedChanged ();
+}
+
+bool Node::inverted () const {
+    return m_inverted;
+}
+
 void Node::setMin (const double &rs) {
     m_min = rs;
     emit minChanged();
@@ -108,6 +166,12 @@ double Node::max () const {
 
 void Node::setFirst (const double &rm) {
     m_first = rm;
+
+    if(m_bound) {
+        m_second = rm;
+        emit secondChanged ();
+    }
+
     emit firstChanged ();
 }
 
@@ -117,9 +181,32 @@ double Node::first () const {
 
 void Node::setSecond (const double &rm) {
     m_second = rm;
+
+    if(m_bound) {
+        m_first = rm;
+        emit firstChanged ();
+    }
     emit secondChanged ();
 }
 
 double Node::second () const {
     return m_second;
+}
+
+void Node::setMethod (const QString &m) {
+    m_method = m;
+    emit methodChanged();
+}
+
+QString Node::method () const {
+    return m_method;
+}
+
+QString Node::args () const {
+    return m_args;
+}
+
+void Node::setArgs (const QString &a) {
+    m_args = a;
+    emit argsChanged ();
 }

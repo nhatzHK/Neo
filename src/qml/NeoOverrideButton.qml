@@ -3,18 +3,18 @@ import QtQuick 2.0
 Rectangle {
     id: overrideButton
     color: "red"
-    height: parent.height
-    width: parent.width / 2
+    height: 20
+    width: height
     border.width: 5
     border.color: "purple"
-    radius: 150
+    radius: width/2
     signal clicked
     Text {
         anchors.centerIn: parent
         text: qsTr("Override")
         color: "rosybrown"
         font.bold: true
-        font.pointSize: 30
+        font.pointSize: 18
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }

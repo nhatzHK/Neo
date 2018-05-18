@@ -19,6 +19,9 @@ Rectangle {
     property int gateCount: 0
     property int outputCount: 0
     property Room backend: Room {
+        onPaint: {
+            room.paint()
+        }
     }
 
     property variant mouseEvent: null //! Used to store the last state of the mouse

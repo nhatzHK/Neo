@@ -17,5 +17,7 @@
         <file>qml/NeoCardOutput.qml</file>
         <file>qml/NeoLabelField.qml</file>
         <file>qml/NeoRangeSlider.qml</file>
+        <file>qml/NeoBinderButton.qml</file>
+        <file>qml/NeoSwitch.qml</file>
     </qresource>
 </RCC>

@@ -5,48 +5,44 @@ import Neo.Node 1.0
 Column {
     id: range
 
-    height: parent.height / 2
-    width: parent.width / 2
+    height: 50
+    width: 50
 
     property Node currentNode: Node {
-
     }
 
     onCurrentNodeChanged: {
-        control.from = currentNode.min
-        control.to = currentNode.max
+        fromLabel.displayText = currentNode.min
+        toLabel.displayText = currentNode.max
+
+        control.setFrom(currentNode.min)
+        control.setTo(currentNode.max)
 
         control.setValues(currentNode.first, currentNode.second)
-    }
-
-    property alias first: control.fv
-    property alias second: control.sv
-
-    onFirstChanged: {
-        var cf = Number(String(control.first.value).substring(0, 5))
-
-        if(currentNode.first !== cf)
-            currentNode.first = cf
-    }
-
-    onSecondChanged: {
-        var cs = Number(String(control.second.value).substring(0, 5))
-
-        if(currentNode.second !== cs)
-            currentNode.second = cs
     }
 
     RangeSlider {
         id: control
         height: parent.height / 2
         width: parent.width
-        from: 0
-        to: 100
-        first.value: from
-        second.value: to
 
-        property real fv: first.value
-        property real sv: second.value
+        first.onValueChanged: {
+            currentNode.first = first.value
+            second.value = currentNode.second
+        }
+
+        second.onValueChanged: {
+            currentNode.second = second.value
+            first.value = currentNode.first
+        }
+
+        onFromChanged: {
+            currentNode.min = from
+        }
+
+        onToChanged: {
+            currentNode.max = to
+        }
 
         first.handle: Rectangle {
             x: control.leftPadding + control.first.visualPosition * (control.availableWidth - width)
@@ -90,13 +86,25 @@ Column {
             width: control.availableWidth
             height: implicitHeight
             radius: 2
-            color: "red"
+            color: {
+                if (currentNode.opened) {
+                    return currentNode.inverted ? "green" : "red"
+                } else {
+                    return "red"
+                }
+            }
 
             Rectangle {
                 x: control.first.visualPosition * parent.width
                 width: control.second.visualPosition * parent.width - x
                 height: parent.height
-                color: "green"
+                color: {
+                    if (currentNode.opened) {
+                        currentNode.inverted ? "red" : "green"
+                    } else {
+                        return "red"
+                    }
+                }
                 radius: 2
             }
         }
@@ -120,7 +128,7 @@ Column {
             id: fromLabel
             height: parent.height
             width: parent.width / 5
-            displayText: "0"
+            displayText: currentNode.min
             displayColor: "grey"
             editColor: "lightgrey"
             onTextChanged: {
@@ -128,17 +136,31 @@ Column {
             }
         }
 
-        Rectangle {
+        NeoBinderButton {
             height: parent.height
             width: parent.width / 5 * 3
             color: "green"
+
+            Component.onCompleted: {
+                checked = currentNode.bound
+            }
+
+            onClicked: {
+                currentNode.bound = checked
+
+                if (currentNode.bound) {
+                    var delta = control.second.value - control.first.value
+                    control.first.value += delta / 2
+                    control.second.value = control.first.value
+                }
+            }
         }
 
         NeoLabelField {
             id: toLabel
             width: parent.width / 5
             height: parent.height
-            displayText: "100"
+            displayText: currentNode.max
             displayColor: "grey"
             editColor: "lightgrey"
             onTextChanged: {

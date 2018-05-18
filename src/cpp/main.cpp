@@ -9,58 +9,18 @@
 #include "connection.h"
 #include "room.h"
 
-void addComponent(QSqlQuery& q, const QString& key, const qint64& ltime, const QString& lwrite, const qint8& seen) {
-    q.addBindValue(key);
-    q.addBindValue(ltime);
-    q.addBindValue(lwrite);
-    q.addBindValue(seen);
-    q.exec();
-}
-
-QSqlError dbTest() {
+QSqlError openDatabase(QString filename) {
 
     if (!QSqlDatabase::drivers().contains("QSQLITE")) {
         qDebug() << "No SQLITE driver.";
     }
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("APOCALYPSE");
+    db.setDatabaseName(filename);
 
     if (!db.open()) {
         return db.lastError();
     }
-
-    QStringList tables = db.tables();
-    if (tables.contains("components", Qt::CaseInsensitive)) {
-        return QSqlError();
-    }
-
-    QSqlQuery q;
-    if (!q.exec(QLatin1String("create table components(id varchar primary key, time integer, value real, seen integer)"))) {
-        return q.lastError();
-    }
-
-    if (!q.prepare(QLatin1String("insert into components(id, time, value, seen) values(?, ?, ?, ?)"))) {
-        return q.lastError();
-    }
-
-    addComponent(q,
-                 QLatin1String("FIRST"),
-                 QDateTime::currentMSecsSinceEpoch(),
-                 QString::number(14.3),
-                 false);
-
-    addComponent(q,
-                 QLatin1String("SECOND"),
-                 QDateTime::currentMSecsSinceEpoch(),
-                 QString::number(34.54),
-                 false);
-
-    addComponent(q,
-                 QLatin1String("DEFAULT"),
-                 QDateTime::currentMSecsSinceEpoch(),
-                 QString::number(389.76),
-                 false);
 
     return QSqlError();
 }
@@ -71,11 +31,10 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QFile f("APOCALYPSE");
-    f.remove();
-    QSqlError err = dbTest();
-    if (err.type() != QSqlError::NoError) {
-        qDebug() << "DB Error: " << err.text();
+    QString sqliteFilePath("/home/errpell/Code/Ressources/Neo/DB/APOCALYPSE");
+    QSqlError err = openDatabase (sqliteFilePath);
+    if (err.type () != QSqlError::NoError) {
+        qDebug() << "DB OPEN ERROR (main): " << err.text ();
     }
 
     qmlRegisterType<Node>("Neo.Node", 1, 0, "Node");

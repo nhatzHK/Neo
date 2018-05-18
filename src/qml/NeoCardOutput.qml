@@ -18,6 +18,15 @@ Item {
         id: dummyRoom
     }
 
+    onCurrentNodeChanged: {
+        openedSwitch.checked = currentNode.opened
+        invertedSwitch.checked = currentNode.inverted
+
+        openedSwitch.updateHandlePosition()
+        invertedSwitch.updateHandlePosition()
+    }
+
+
     Column {
         anchors.fill: parent
         Rectangle {
@@ -43,41 +52,111 @@ Item {
         Rectangle {
             id: mainArea
             width: popup.width
-            height: popup.height / 10 * 4
+            height: popup.height / 10 * 7
 
-//            Row {
-//                anchors.fill: parent
-//                Text {
-//                    id: data
-//                    height: parent.height
-//                    width: parent.width / 2
-//                    horizontalAlignment: Text.AlignHCenter
-//                    verticalAlignment: Text.AlignVCenter
-//                    font.pointSize: 20
-//                    text: String(currentNode.value)
-//                    color: "black"
-//                    font.bold: true
+            Row {
+                anchors.fill: parent
+                Column {
+                    height: parent.height
+                    width: parent.width / 2
+                    Label {
+                        width: parent.width
+                        height: parent.height / 4
+                        text: qsTr("Method")
+                        font.pointSize: 14
+                        font.bold: true
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        color: "white"
+                        background: Rectangle {
+                            color: "orange"
+                        }
+                    }
 
-//                    MouseArea {
-//                        anchors.fill: parent
-//                    }
-//                }
+                    TextField {
+                        id: methodInput
+                        width: parent.width
+                        height: parent.height / 4
+                        placeholderText: qsTr("Enter message to send here")
+                        text: currentNode.method
+                        onEditingFinished: currentNode.method = text
+                    }
 
-//                NeoOverrideButton {
-//                    id: overrideButton
-//                    width: parent.width / 2
-//                    height: parent.height
-//                    onClicked: {
-//                        console.log("Overriding")
-//                    }
-//                }
-//            }
+                    Label {
+                        id: argsLabel
+                        width: parent.width
+                        height: parent.height / 4
+                        text: qsTr("Args")
+                        font.pointSize: 14
+                        font.bold: true
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        color: "white"
+                        background: Rectangle {
+                            color: "orange"
+                        }
+                    }
+
+                    TextField {
+                        id: argsInput
+                        width: parent.width
+                        height: parent.height / 4
+                        placeholderText: qsTr("Enter arguments here here")
+                        text: currentNode.args
+                        onEditingFinished: currentNode.args = text
+                    }
+                }
+
+                Column {
+                    height: parent.height
+                    width: parent.width / 2
+                    Rectangle {
+                        width: parent.width
+                        height: parent.height / 4 * 2
+                        NeoOverrideButton {
+                            id: overrideButton
+                            height: parent.height > parent.width ? parent.width : parent.height
+                            anchors.centerIn: parent
+
+                            onClicked: {
+                                override()
+                            }
+                        }
+                    }
+
+                    NeoSwitch {
+                        id: invertedSwitch
+                        width: parent.width
+                        height: parent.height / 4
+                        enabledText: "Inverted"
+                        disabledText: "Normal"
+                        enabledColor: "#26a69a"
+                        onClicked: {
+                            currentNode.inverted = checked
+                            currentNode.connectionsHaveChanged()
+                        }
+                    }
+
+                    NeoSwitch {
+                        id: openedSwitch
+                        width: parent.width
+                        height: parent.height / 4
+                        enabledText: "On"
+                        disabledText: "Off"
+                        enabledColor: "#26a69a"
+                        onClicked: {
+                            currentNode.opened = checked
+                            currentNode.connectionsHaveChanged()
+                        }
+                    }
+                }
+            }
         }
 
         Rectangle {
             id: comRect
             width: popup.width
-            height: popup.height / 10 * 3
+            height: popup.height / 10 * 2
 
             Column {
                 anchors.fill: parent
@@ -86,15 +165,16 @@ Item {
                     width: parent.width
                     height: popup.height / 10
                     model: currentRoom.nodes
-                    name: "Incoming connections"
+                    name: "Connections"
                     delegate: CheckBox {
                         checkState: {
-                            if (currentNode === modelData) {
+                            if (currentNode === modelData
+                                    || modelData.type === Node.Output) {
                                 enabled = false
                             }
 
                             if (currentRoom.connected(currentNode, modelData,
-                                                      Node.Input)) {
+                                                      Node.Output)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked
@@ -102,7 +182,19 @@ Item {
                         }
 
                         onClicked: {
-                            currentNode.rowId = modelData
+                            if (checked) {
+                                currentRoom.createConnection(currentNode,
+                                                             modelData,
+                                                             Node.Output)
+                            } else {
+                                currentRoom.removeConnections(currentNode,
+                                                              modelData,
+                                                              Node.Output)
+                            }
+
+                            currentNode.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            currentRoom.paint()
                         }
 
                         text: modelData.name
@@ -116,8 +208,8 @@ Item {
                     width: parent.width
                     height: popup.height / 10
                     model: currentRoom.ids
-                    name: "Component List"
-                    ButtonGroup{
+                    name: "Components"
+                    ButtonGroup {
                         buttons: componentList.delegate
                         exclusive: true
                     }
@@ -125,24 +217,15 @@ Item {
                     delegate: RadioButton {
                         checked: currentNode.rowId === modelData
                         onCheckedChanged: {
-                            if(checked) {
+                            if (checked) {
                                 currentNode.rowId = modelData
+                                componentList.name = modelData
                             }
                         }
 
                         text: modelData
                     }
                 }
-            }
-        }
-
-        Rectangle {
-            width: popup.width
-            height: popup.height / 10 * 2
-            color: "green"
-
-            MouseArea {
-                anchors.fill: parent
             }
         }
     }
@@ -157,5 +240,9 @@ Item {
         currentNode = dummyNode
         currentRoom = dummyRoom
         visible = false
+    }
+
+    function override() {
+        currentNode.conditionOverriden()
     }
 }

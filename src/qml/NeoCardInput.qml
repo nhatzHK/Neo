@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
+import QtQuick.Extras 1.4
 import Neo.Room 1.0
 import Neo.Node 1.0
 
@@ -19,11 +20,19 @@ Item {
         id: dummyRoom
     }
 
+    onCurrentNodeChanged: {
+        openedSwitch.checked = currentNode.opened
+        invertedSwitch.checked = currentNode.inverted
+
+        openedSwitch.updateHandlePosition()
+        invertedSwitch.updateHandlePosition()
+    }
+
     Column {
         anchors.fill: parent
         Rectangle {
-            width: popup.width
-            height: popup.height / 10
+            width: parent.width
+            height: parent.height / 10
             color: currentNode.output ? "green" : "red"
             Text {
                 id: nameTag
@@ -43,8 +52,8 @@ Item {
 
         Rectangle {
             id: mainArea
-            width: popup.width
-            height: popup.height / 10 * 4
+            width: parent.width
+            height: parent.height / 10 * 7
 
             Row {
                 anchors.fill: parent
@@ -54,7 +63,7 @@ Item {
                     width: parent.width / 2
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.pointSize: 20
+                    font.pointSize: 40
                     text: String(currentNode.value)
                     color: "black"
                     font.bold: true
@@ -64,39 +73,83 @@ Item {
                     }
                 }
 
-                NeoRangeSlider {
-                    id: rangeSlider
-                    currentNode: popup.currentNode
+                Column {
+                    height: parent.height
+                    width: parent.width / 2
+                    NeoRangeSlider {
+                        width: parent.width
+                        height: parent.height / 2
+                        id: rangeSlider
+                        currentNode: popup.currentNode
+                    }
+
+                    NeoSwitch {
+                        id: invertedSwitch
+                        width: parent.width
+                        height: parent.height / 4
+                        enabledText: "Inverted"
+                        disabledText: "Normal"
+                        enabledColor: "#26a69a"
+                        onClicked: currentNode.inverted = checked
+                    }
+
+                    NeoSwitch {
+                        id: openedSwitch
+                        width: parent.width
+                        height: parent.height / 4
+                        enabledText: "On"
+                        disabledText: "Off"
+                        enabledColor: "#26a69a"
+                        onClicked: currentNode.opened = checked
+                    }
                 }
             }
         }
 
         Rectangle {
             id: comRect
-            width: popup.width
-            height: popup.height / 10 * 2
+            width: parent.width
+            height: parent.height / 10 * 2
 
             Column {
                 anchors.fill: parent
                 NeoComboBox {
                     id: outCom
                     width: parent.width
-                    height: popup.height / 10
+                    height: parent.height / 2
                     model: currentRoom.nodes
-                    name: "Outgoing Connections"
+                    name: "Connections"
                     delegate: CheckBox {
                         checkState: {
-                            if (currentNode === modelData) {
+                            if (currentNode === modelData
+                                    || modelData.type === Node.Input) {
                                 enabled = false
                             }
 
                             if (currentRoom.connected(currentNode, modelData,
-                                                      Node.Output)) {
+                                                      Node.Input)) {
                                 return Qt.Checked
                             } else {
                                 return Qt.Unchecked
                             }
                         }
+
+                        onClicked: {
+                            if (checked) {
+                                currentRoom.createConnection(currentNode,
+                                                             modelData,
+                                                             Node.Input)
+                            } else {
+                                currentRoom.removeConnections(currentNode,
+                                                              modelData,
+                                                              Node.Input)
+                            }
+
+                            currentNode.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            currentRoom.paint()
+                        }
+
                         text: modelData.name
                         font.bold: true
                         font.pointSize: 14
@@ -106,9 +159,9 @@ Item {
                 NeoComboBox {
                     id: componentList
                     width: parent.width
-                    height: popup.height / 10
+                    height: parent.height / 2
                     model: currentRoom.ids
-                    name: "Component List"
+                    name: "Components"
                     ButtonGroup {
                         buttons: componentList.delegate
                         exclusive: true
@@ -120,22 +173,13 @@ Item {
                         onCheckedChanged: {
                             if (checked) {
                                 currentNode.rowId = modelData
+                                componentList.name = modelData
                             }
                         }
 
                         text: modelData
                     }
                 }
-            }
-        }
-
-        Rectangle {
-            width: popup.width
-            height: popup.height / 10 * 3
-            color: "green"
-
-            MouseArea {
-                anchors.fill: parent
             }
         }
     }

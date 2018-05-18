@@ -43,6 +43,8 @@ Connection* Room::getConnection(QQmlListProperty<Connection> *l, int i) {
     return ((Room*)l->object)->m_connections.at(i);
 }
 
+
+
 QQmlListProperty<Node> Room::nodes() {
     return QQmlListProperty<Node>(this, &m_nodes,
                                   &Room::addNode,
@@ -160,20 +162,6 @@ bool Room::hasOutConnection(Node *n) {
     return false;
 }
 
-//void Room::removeAllConnections(Node* a, Node* b) {
-//    QMutableListIterator<Connection*> it(m_connections);
-
-//    while(it.hasNext()) {
-//        auto c = it.next();
-//        if((c->receiver () == a && c->sender () == b) ||
-//                (c->sender () == a && c->receiver () == b)) {
-//            it.remove ();
-//        }
-//    }
-
-//    emit connectionsUpdated();
-//}
-
 void Room::removeConnections (Node *a, Node *b, int t) {
     QMutableListIterator<Connection*> it(m_connections);
 
@@ -195,32 +183,47 @@ void Room::removeConnections (Node *a, Node *b, int t) {
 }
 
 bool Room::getValue(Node *n) {
+
+    if(!n->opened ()) {
+        return false;
+    }
+
+    bool res = false;
+    bool done = false;
     switch (n->type ()) {
     case Node::AndGate:
     case Node::Output:
         if(hasInConnection (n)) {
             for (auto c: m_connections) {
                 if(!(c->sender ()->output ()) && c->receiver () == n) {
-                    return false;
+                    res = false;
+                    done = true;
+                    break;
                 }
             }
-            return true;
+            if (!done) {
+                res = true;
+                done = true;
+            }
         }
         break;
     case Node::OrGate:
         if(hasInConnection (n)) {
             for (auto c: m_connections) {
                 if ((c->sender ()->output ()) && c->receiver () == n) {
-                    return true;
+                    res = true;
+                    done = true;
+                    break;
                 }
             }
         }
         break;
     case Node::Input:
-        return n->value () <= n->second () && n->value () >= n->first ();
+        res = n->value () <= n->second () && n->value () >= n->first ();
+        done = true;
     }
 
-    return false;
+    return res ^ n->inverted ();
 }
 
 void Room::evaluate (Node *n) {
@@ -230,5 +233,20 @@ void Room::evaluate (Node *n) {
         if(c->sender () == n) {
             c->receiver ()->connectionsHaveChanged ();
         }
+    }
+}
+
+void Room::initSocket() {
+    m_sock = new QUdpSocket(this);
+    m_sock->bind(QHostAddress::LocalHost, 7755);
+
+    connect(m_sock, SIGNAL(readyRead()),
+            this, SLOT(readPendingDatagrams()));
+}
+
+void Room::readPendingDatagrams() {
+    while (m_sock->hasPendingDatagrams()) {
+        QNetworkDatagram dg = m_sock->receiveDatagram ();
+        dg.data ().toDouble ();
     }
 }
