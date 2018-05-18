@@ -4,6 +4,8 @@
 #include <QQmlListProperty>
 #include "node.h"
 #include "connection.h"
+#include <QUdpSocket>
+#include <QNetworkDatagram>
 
 class Room : public QObject {
     Q_OBJECT
@@ -40,9 +42,12 @@ signals:
     void nodesUpdated();
     void idsUpdated();
 
+    void paint();
+
 private:
     void removeConnections (Node *n);
     bool getValue (Node *n);
+    void initSocket();
 
     static void clearNodes(QQmlListProperty<Node>*);
     static void clearConnections(QQmlListProperty<Connection>*);
@@ -59,4 +64,9 @@ private:
     QList<Connection*> m_connections;
     QList<Node*> m_nodes;
     QSqlQuery mq_listId;
+    QUdpSocket* m_sock;
+    QTimer* m_udpTimer;
+
+private slots:
+    void readPendingDatagrams();
 };
