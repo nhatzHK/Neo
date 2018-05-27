@@ -2,23 +2,31 @@
 
 #include <QObject>
 #include <QQmlListProperty>
-#include "node.h"
-#include "connection.h"
 #include <QUdpSocket>
 #include <QNetworkDatagram>
+#include <QException>
+
+#include "node.h"
+#include "connection.h"
+
+#include "osc/composer/OscMessageComposer.h"
+#include "osc/reader/OscReader.h"
+#include "osc/reader/OscMessage.h"
+#include "osc/reader/OscBundle.h"
+#include "osc/reader/OscContent.h"
+#include "osc/OscPatternMatching.h"
+
 
 class Room : public QObject {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<Connection> connections READ connections NOTIFY connectionsUpdated)
     Q_PROPERTY(QQmlListProperty<Node> nodes READ nodes NOTIFY nodesUpdated)
-    Q_PROPERTY(QStringList ids READ ids NOTIFY idsUpdated)
 
 public:
     explicit Room(QObject * parent = nullptr);
 
     QQmlListProperty<Connection> connections();
     QQmlListProperty<Node> nodes();
-    QStringList ids();
 
     Q_INVOKABLE bool deleteNode(Node* n);
 
@@ -34,20 +42,26 @@ public:
 
     Q_INVOKABLE void evaluate(Node* n);
 
+    Q_INVOKABLE void initSocket();
+
+    Q_INVOKABLE void save();
+
+
+    void processBundle(OscBundle* bundle);
+    void processMessage(OscMessage* message);
+
 signals:
     void nodeDeleted();
     void connectionBroken();
 
     void connectionsUpdated();
     void nodesUpdated();
-    void idsUpdated();
 
     void paint();
 
 private:
     void removeConnections (Node *n);
     bool getValue (Node *n);
-    void initSocket();
 
     static void clearNodes(QQmlListProperty<Node>*);
     static void clearConnections(QQmlListProperty<Connection>*);
@@ -63,10 +77,9 @@ private:
 
     QList<Connection*> m_connections;
     QList<Node*> m_nodes;
-    QSqlQuery mq_listId;
     QUdpSocket* m_sock;
-    QTimer* m_udpTimer;
 
 private slots:
     void readPendingDatagrams();
+    void sendMessage(Node*);
 };

@@ -1,29 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QDebug>
-#include <QQmlContext>
-#include <QtSql>
-#include <QPair>
-#include <QVariant>
 
 #include "connection.h"
 #include "room.h"
-
-QSqlError openDatabase(QString filename) {
-
-    if (!QSqlDatabase::drivers().contains("QSQLITE")) {
-        qDebug() << "No SQLITE driver.";
-    }
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(filename);
-
-    if (!db.open()) {
-        return db.lastError();
-    }
-
-    return QSqlError();
-}
 
 int main(int argc, char *argv[])
 {
@@ -31,11 +11,14 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QString sqliteFilePath("/home/errpell/Code/Ressources/Neo/DB/APOCALYPSE");
-    QSqlError err = openDatabase (sqliteFilePath);
-    if (err.type () != QSqlError::NoError) {
-        qDebug() << "DB OPEN ERROR (main): " << err.text ();
-    }
+//    int a = 0;
+//    int b = 0;
+//    int* aa = &a;
+//    int* bb = &b;
+
+//    qDebug() << OSCPatternMatching::osc_match("hello", "hello", aa, bb) << ' ' << a << ' ' << b << '\n';
+
+//    delete m;
 
     qmlRegisterType<Node>("Neo.Node", 1, 0, "Node");
     qmlRegisterType<Room>("Neo.Room", 1, 0, "Room");
@@ -43,6 +26,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+
+    auto win = engine.rootObjects ().at (0);
 
     if (engine.rootObjects().isEmpty())
         return -1;

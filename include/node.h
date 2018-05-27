@@ -9,20 +9,29 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <stdlib.h>
+#include <QHostAddress>
+
+#include "osc/reader/OscMessage.h"
 #include "node.h"
 
 class Node : public QObject
 {
     Q_OBJECT
+
     Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
+
     Q_PROPERTY(double value	READ value WRITE setValue NOTIFY valueChanged)
-    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(QString rowId READ rowId WRITE setRowId NOTIFY rowIdChanged)
     Q_PROPERTY(bool output READ output WRITE setOutput NOTIFY outputChanged)
+
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY addressChanged)
+    Q_PROPERTY(QString ip READ ip WRITE setIp NOTIFY ipChanged)
+
     Q_PROPERTY(bool bound READ bound WRITE setBound NOTIFY boundChanged)
     Q_PROPERTY(bool opened READ opened WRITE setOpened NOTIFY openedChanged)
     Q_PROPERTY(bool inverted READ inverted WRITE setInverted NOTIFY invertedChanged)
 
+    Q_PROPERTY(QPoint pos READ pos WRITE setPos NOTIFY posChanged)
     Q_PROPERTY(QPoint inPos READ inPos WRITE setInPos NOTIFY inPosChanged)
     Q_PROPERTY(QPoint outPos READ outPos WRITE setOutPos NOTIFY outPosChanged)
 
@@ -31,8 +40,7 @@ class Node : public QObject
     Q_PROPERTY(double first READ first WRITE setFirst NOTIFY firstChanged)
     Q_PROPERTY(double second READ second WRITE setSecond NOTIFY secondChanged)
 
-    Q_PROPERTY(QString method READ method WRITE setMethod NOTIFY methodChanged)
-    Q_PROPERTY(QString args READ args WRITE setArgs NOTIFY argsChanged)
+//    Q_PROPERTY(QString args READ args WRITE setArgs NOTIFY argsChanged)
 
 public:
     explicit Node(QObject *parent = nullptr);
@@ -45,6 +53,9 @@ public:
     };
 
     Q_ENUM(Type)
+
+    QPoint pos() const;
+    void setPos(const QPoint& p);
 
     QPoint inPos() const;
     void setInPos(const QPoint& p);
@@ -61,8 +72,8 @@ public:
     void setName(const QString& n);
     QString name() const;
 
-    void setRowId(const QString& i);
-    QString rowId() const;
+    void setAddress(const QString& i);
+    QString address() const;
 
     void setOutput(const bool& o);
     bool output() const;
@@ -88,15 +99,16 @@ public:
     void setSecond(const double& rm);
     double second() const;
 
-    void setArgs(const QString& a);
-    QString args() const;
+    void setIp(const QString& i);
+    QString ip() const;
 
-    void setMethod(const QString& m);
-    QString method() const;
+    QHostAddress getIp() const;
+    quint16 getPort() const;
 
 private:
     void updateId();
 
+    QPoint m_pos;
     QPoint m_in;
     QPoint m_out;
 
@@ -111,45 +123,39 @@ private:
 
     QString m_name = "Name";
 
-    QString m_rowId = "DEFAULT";
+    QString m_address = "/home/default";
 
-    QString m_method = "default";
-    QString m_args = "1, 2, 3";
+    QString m_ip = "127.0.0.1:8888";
 
     bool m_output = true;
     bool m_bound = false;
     bool m_opened = true;
     bool m_inverted = false;
 
-    QTimer* m_dbReadTimer;
-    QTimer* m_dbWriteTimer;
-
-    QSqlQuery mq_readLastWrite;
-    QSqlQuery mq_setAsRead;
-    QSqlQuery mq_sendMessage;
-
 signals:
+// basic
     void typeChanged();
-    void valueChanged();
     void nameChanged();
-    void rowIdChanged();
+    void addressChanged();
+    void ipChanged();
     void connectionsHaveChanged();
+    void posChanged();
     void inPosChanged();
     void outPosChanged();
     void outputChanged();
     void boundChanged();
     void openedChanged();
     void invertedChanged();
+    void messageReady(Node*);
+    void valueChanged();
+
+// input
     void minChanged();
     void maxChanged();
     void firstChanged();
     void secondChanged();
-    void methodChanged();
-    void argsChanged();
-    void conditionOverriden();
-    void messageSent();
 
-private slots:
-    void psl_updateValue();
-    void psl_sendMessage();
+// output
+    void methodChanged();
+    void conditionOverriden();
 };

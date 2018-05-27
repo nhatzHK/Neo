@@ -57,7 +57,7 @@ Column {
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                text: String(control.first.value).substring(0, 5)
+                text: control.first.value.toFixed(2)
             }
         }
 
@@ -74,7 +74,7 @@ Column {
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                text: String(control.second.value).substring(0, 5)
+                text: control.second.value.toFixed(2)
             }
         }
 
@@ -110,12 +110,12 @@ Column {
         }
 
         function setTo(t) {
-            to = Number(t) === NaN ? to : Number(t)
+            to = Number(t) === NaN ? to : Number(t).toFixed(2)
             setValues(first.value, second.value)
         }
 
         function setFrom(t) {
-            from = Number(t) === NaN ? from : Number(t)
+            from = Number(t) === NaN ? from : Number(t).toFixed(2)
             setValues(first.value, second.value)
         }
     }
@@ -139,7 +139,7 @@ Column {
         NeoBinderButton {
             height: parent.height
             width: parent.width / 5 * 3
-            color: "green"
+            color: "blue"
 
             Component.onCompleted: {
                 checked = currentNode.bound

@@ -9,8 +9,6 @@ import QtQuick.Controls 1.4
 ApplicationWindow {
     id: app
 
-    //    property var elements: [] //! Array containing all the nodes created
-    //    property int count: 0
     width: 480
     height: 360
     visible: true
@@ -23,18 +21,33 @@ ApplicationWindow {
 
     title: qsTr("Neo")
 
-    //Finish necessary initializations
+    // Finish necessary initializations
     Component.onCompleted: {
         menuBar.getMenu("file").insertItem(0, room.createNodeMenu)
         app.menuBar = mnuBar
     }
 
-    // exported in a file for readability
     menuBar: NeoMenuBar {
         id: mnuBar
+
+        onClear: {
+            room.clearAll()
+        }
+
+        onLoad: {
+            room.loadNodes()
+        }
+
+        onSave: {
+            room.backend.save()
+        }
     }
 
     NeoRoom {
         id: room
+
+        Component.onCompleted: {
+            backend.initSocket()
+        }
     }
 }

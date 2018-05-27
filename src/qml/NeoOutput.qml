@@ -2,11 +2,15 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import Neo.Node 1.0
 
-Canvas {
+Rectangle {
     id: node
 
     width: 100
     height: 100
+    radius: height
+    color: "#566c73"
+    border.width: 5
+    border.color: backend.output ? "green" : "red"
 
     signal forget(Node g)
     signal showCard(Node g)
@@ -35,25 +39,9 @@ Canvas {
         onConnectionsHaveChanged: {
             inSlot.visible = room.backend.hasInConnection(backend)
             room.backend.evaluate(backend)
-            status.requestPaint()
         }
         inPos: Qt.point(node.x + inSlot.x, node.y + inSlot.y + 4)
-    }
-
-    Canvas {
-        width: 10
-        height: 10
-        x: node.width / 2 - 5
-        y: node.height / 3 * 2
-        id: status
-        onPaint: {
-            var ctx = getContext("2d")
-
-            ctx.fillStyle = backend.output ? "green" : "red"
-            ctx.beginPath()
-            ctx.arc(width / 2, height / 2, width / 2, 0, 2 * Math.PI)
-            ctx.fill()
-        }
+        pos: Qt.point(node.x, node.y)
     }
 
     Text {
@@ -74,15 +62,6 @@ Canvas {
 
     onYChanged: {
         room.paint()
-    }
-    onPaint: {
-        var ctx = getContext("2d")
-
-        ctx.lineWidth = 3
-        ctx.fillStyle = 'blue'
-
-        ctx.arc(width / 2, height / 2, height / 2, 0, 2 * Math.PI)
-        ctx.fill()
     }
 
     MouseArea {
@@ -155,15 +134,18 @@ Canvas {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
                     mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend, nodes[i], Node.Output)
+                    mnuItem.checked = room.backend.connected(backend, nodes[i],
+                                                             Node.Output)
 
                     menu.insertItem(0, mnuItem)
 
                     mnuItem.toggled.connect(function (checked) {
                         if (checked) {
-                            room.backend.createConnection(backend, nodes[i], Node.Output)
+                            room.backend.createConnection(backend, nodes[i],
+                                                          Node.Output)
                         } else {
-                            room.backend.removeConnections(backend, nodes[i], Node.Output)
+                            room.backend.removeConnections(backend, nodes[i],
+                                                           Node.Output)
                         }
 
                         backend.connectionsHaveChanged()
@@ -189,15 +171,18 @@ Canvas {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
                     mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend, nodes[i], Node.Output)
+                    mnuItem.checked = room.backend.connected(backend, nodes[i],
+                                                             Node.Output)
 
                     menu.insertItem(0, mnuItem)
 
                     mnuItem.toggled.connect(function (checked) {
                         if (checked) {
-                            room.backend.createConnection(backend, nodes[i], Node.Output)
+                            room.backend.createConnection(backend, nodes[i],
+                                                          Node.Output)
                         } else {
-                            room.backend.removeConnections(backend, nodes[i], Node.Output)
+                            room.backend.removeConnections(backend, nodes[i],
+                                                           Node.Output)
                         }
 
                         backend.connectionsHaveChanged()

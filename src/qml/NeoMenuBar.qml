@@ -3,9 +3,28 @@ import QtQuick.Controls 1.4
 
 MenuBar {
 
+    signal clear
+    signal load
+    signal save
     Menu {
         id: fileMenu
         title: qsTr("File")
+
+        MenuItem {
+            text: qsTr("Clear room")
+            onTriggered: clear()
+        }
+
+        MenuItem {
+            text: qsTr("Save")
+            onTriggered: save()
+        }
+
+        MenuItem {
+            text: qsTr("Load room")
+            onTriggered: load()
+        }
+
         MenuItem {
             text: qsTr("Exit")
             onTriggered: Qt.quit()

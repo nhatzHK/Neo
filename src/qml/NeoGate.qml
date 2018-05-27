@@ -43,26 +43,11 @@ Canvas {
             outSlot.visible = room.backend.hasOutConnection(backend)
             inSlot.visible = room.backend.hasInConnection(backend)
             room.backend.evaluate(backend)
-            status.requestPaint()
+            node.requestPaint()
         }
         inPos: Qt.point(node.x + inSlot.x, node.y + inSlot.y + 4)
         outPos: Qt.point(node.x + outSlot.x + 7, node.y + outSlot.y + 4)
-    }
-
-    Canvas {
-        width: 10
-        height: 10
-        x: node.width / 4
-        y: node.height / 3 * 2
-        id: status
-        onPaint: {
-            var ctx = getContext("2d")
-
-            ctx.fillStyle = backend.output ? "green" : "red"
-            ctx.beginPath()
-            ctx.arc(width / 2, height / 2, width / 2, 0, 2 * Math.PI)
-            ctx.fill()
-        }
+        pos: Qt.point(node.x, node.y)
     }
 
     Text {
@@ -87,7 +72,9 @@ Canvas {
     onPaint: {
         var ctx = getContext("2d")
 
-        ctx.lineWidth = 3
+        ctx.lineWidth = 2
+        ctx.strokeStyle = backend.output ? "green" : "red"
+        ctx.fillStyle = "blue"
 
         switch (backend.type) {
         case Node.AndGate:
@@ -100,7 +87,6 @@ Canvas {
     }
 
     function drawOrGate(ctx) {
-        ctx.fillStyle = 'purple'
         ctx.beginPath()
         ctx.arc(-width + 14 / 100 * width, height / 2, height,
                 -Math.PI, Math.PI)
@@ -110,10 +96,10 @@ Canvas {
         ctx.lineTo(width / 2, height - 1)
         ctx.lineTo(0, height - 1)
         ctx.fill()
+        ctx.stroke()
     }
 
     function drawAndGate(ctx) {
-        ctx.fillStyle = 'orange'
         ctx.beginPath()
         ctx.arc(width / 2, height / 2, height / 2 - 2, -Math.PI / 2,
                 Math.PI / 2)
@@ -122,6 +108,7 @@ Canvas {
         ctx.lineTo(2, height - 2)
         ctx.lineTo(width / 2, height - 2)
         ctx.fill()
+        ctx.stroke()
     }
 
     MouseArea {
@@ -232,7 +219,7 @@ Canvas {
                                                           nodes[i], way)
                         } else {
                             room.backend.removeConnections(backend,
-                                                              nodes[i], way)
+                                                           nodes[i], way)
                         }
 
                         backend.connectionsHaveChanged()
@@ -259,15 +246,18 @@ Canvas {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
                     mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend, nodes[i], way)
+                    mnuItem.checked = room.backend.connected(backend,
+                                                             nodes[i], way)
 
                     menu.insertItem(0, mnuItem)
 
                     mnuItem.toggled.connect(function (checked) {
                         if (checked) {
-                            room.backend.createConnection(backend, nodes[i], way)
+                            room.backend.createConnection(backend,
+                                                          nodes[i], way)
                         } else {
-                            room.backend.removeConnections(backend, nodes[i], way)
+                            room.backend.removeConnections(backend,
+                                                           nodes[i], way)
                         }
 
                         backend.connectionsHaveChanged()

@@ -9,9 +9,9 @@ CheckBox {
 
     indicator: Rectangle {
         anchors.fill: parent
-        color: control.color
+        color: "#566c73"
         border.width: 1
-        border.color: control.down ? control.color : Qt.lighter(control.color)
+        border.color: control.down ? color : Qt.lighter(color)
 
         Canvas {
             anchors.fill: parent

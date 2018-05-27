@@ -2,9 +2,6 @@
 #include <QDebug>
 
 Room::Room(QObject *parent) {
-    if(!mq_listId.prepare("SELECT id FROM components")) {
-        qDebug() << "DB PREPARE ERROR: (room - ctor)" << mq_listId.lastError().text() << '\n';
-    }
 }
 
 void Room::clearNodes(QQmlListProperty<Node>* l) {
@@ -18,8 +15,10 @@ void Room::clearConnections(QQmlListProperty<Connection>* l) {
 }
 
 void Room::addNode(QQmlListProperty<Node>* l,  Node* n) {
-    ((Room*)l->object)->m_nodes.append(n);
-    emit ((Room*)l->object)->nodesUpdated();
+    auto r = (Room*)(l->object);
+    r->m_nodes.append(n);
+    connect (n, &Node::messageReady, r, &Room::sendMessage);
+    emit r->nodesUpdated();
 }
 
 void Room::addConnection(QQmlListProperty<Connection> *l, Connection *c) {
@@ -61,19 +60,6 @@ QQmlListProperty<Connection> Room::connections() {
                                         &Room::clearConnections);
 }
 
-QStringList Room::ids() {
-    QStringList l;
-    if(!mq_listId.exec()) {
-        qDebug() << "DB EXEC ORDER: (listId)" << mq_listId.lastError().text() << '\n';
-    }
-
-    while (mq_listId.next()) {
-        l.append(mq_listId.value(0).toString());
-    }
-
-    return l;
-}
-
 bool Room::deleteNode(Node *n) {
     removeConnections(n);
     auto b = m_nodes.removeOne(n);
@@ -81,7 +67,6 @@ bool Room::deleteNode(Node *n) {
     emit connectionsUpdated ();
     return b;
 }
-
 
 void Room::removeConnections(Node* n) {
     QMutableListIterator<Connection*> it(m_connections);
@@ -238,15 +223,65 @@ void Room::evaluate (Node *n) {
 
 void Room::initSocket() {
     m_sock = new QUdpSocket(this);
-    m_sock->bind(QHostAddress::LocalHost, 7755);
-
-    connect(m_sock, SIGNAL(readyRead()),
-            this, SLOT(readPendingDatagrams()));
+    if (m_sock->bind(QHostAddress::LocalHost, 8888)) {
+        connect(m_sock, SIGNAL(readyRead()),
+                this, SLOT(readPendingDatagrams()));
+    } else {
+        qDebug() << "BIND SOCKET ERROR: (room - initSocket)Failed to bind socket.\n";
+    }
 }
 
 void Room::readPendingDatagrams() {
+
     while (m_sock->hasPendingDatagrams()) {
-        QNetworkDatagram dg = m_sock->receiveDatagram ();
-        dg.data ().toDouble ();
+        QNetworkDatagram dg(m_sock->receiveDatagram ());
+
+        try{
+            OscReader reader(new QByteArray(dg.data ()));
+
+            if (reader.getContentType () == OscContent::Bundle) {
+                processBundle(reader.getBundle ());
+            } else {
+               processMessage(reader.getMessage ());
+            }
+        } catch(QException& qe) {
+            qDebug() << qe.what () << '\n';
+        }
     }
+}
+
+void Room::sendMessage(Node* n) {
+    OscMessageComposer mc(n->address ());
+    mc.pushDouble (n->value ());
+    m_sock->writeDatagram (*(mc.getBytes ()), n->getIp(), n->getPort());
+}
+
+void Room::processBundle(OscBundle* bundle) {
+    for(size_t i = 0; i < bundle->getNumEntries (); ++i) {
+        if(bundle->getType (i) == OscContent::Bundle) {
+            processBundle (bundle->getBundle (i));
+        } else {
+            processMessage (bundle->getMessage (i));
+        }
+    }
+}
+
+void Room::processMessage(OscMessage* message) {
+
+    int match_node = 0;
+    int match_message = 0;
+
+    for (auto n: m_nodes) {
+        int r = OSCPatternMatching::osc_match(n->address ().toStdString ().c_str (),
+                                                message->getAddress ().toStdString ().c_str (), match_node, match_message);
+
+        if (match_node == n->address ().length () && message->getNumValues () > 0) {
+            n->setValue (message->getValue (0)->toDouble ());
+        }
+    }
+}
+
+void Room::save () {
+    qDebug() << "Saving room\n";
+
 }

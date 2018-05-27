@@ -57,19 +57,47 @@ Item {
 
             Row {
                 anchors.fill: parent
-                Text {
-                    id: data
-                    height: parent.height
+                Column {
                     width: parent.width / 2
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pointSize: 40
-                    text: String(currentNode.value)
-                    color: "black"
-                    font.bold: true
+                    height: parent.height
+                    Text {
+                        id: data
+                        height: parent.height / 2
+                        width: parent.width
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.pointSize: 40
+                        text: currentNode.value.toFixed(2)
+                        color: "black"
+                        font.bold: true
 
-                    MouseArea {
-                        anchors.fill: parent
+                        MouseArea {
+                            anchors.fill: parent
+                        }
+                    }
+
+                    Label {
+                        id: addressLabel
+                        width: parent.width
+                        height: parent.height / 4
+                        text: qsTr("OSC Address")
+                        font.pointSize: 14
+                        font.bold: true
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        color: "white"
+                        background: Rectangle {
+                            color: "blue"
+                        }
+                    }
+
+                    TextField {
+                        id: addressInput
+                        width: parent.width
+                        height: parent.height / 4
+                        placeholderText: qsTr("Enter OSC address here")
+                        text: currentNode.address
+                        onEditingFinished: currentNode.address = text
                     }
                 }
 
@@ -89,8 +117,12 @@ Item {
                         height: parent.height / 4
                         enabledText: "Inverted"
                         disabledText: "Normal"
-                        enabledColor: "#26a69a"
-                        onClicked: currentNode.inverted = checked
+                        enabledColor: "blue"
+                        color: "#566c73"
+                        onClicked: {
+                            currentNode.inverted = checked
+                            currentNode.connectionsHaveChanged()
+                        }
                     }
 
                     NeoSwitch {
@@ -99,8 +131,12 @@ Item {
                         height: parent.height / 4
                         enabledText: "On"
                         disabledText: "Off"
-                        enabledColor: "#26a69a"
-                        onClicked: currentNode.opened = checked
+                        enabledColor: "blue"
+                        color: "#566c73"
+                        onClicked: {
+                            currentNode.opened = checked
+                            currentNode.connectionsHaveChanged()
+                        }
                     }
                 }
             }
@@ -116,7 +152,7 @@ Item {
                 NeoComboBox {
                     id: outCom
                     width: parent.width
-                    height: parent.height / 2
+                    height: parent.height
                     model: currentRoom.nodes
                     name: "Connections"
                     delegate: CheckBox {
@@ -153,31 +189,6 @@ Item {
                         text: modelData.name
                         font.bold: true
                         font.pointSize: 14
-                    }
-                }
-
-                NeoComboBox {
-                    id: componentList
-                    width: parent.width
-                    height: parent.height / 2
-                    model: currentRoom.ids
-                    name: "Components"
-                    ButtonGroup {
-                        buttons: componentList.delegate
-                        exclusive: true
-                    }
-
-                    delegate: RadioButton {
-                        checked: currentNode.rowId === modelData
-
-                        onCheckedChanged: {
-                            if (checked) {
-                                currentNode.rowId = modelData
-                                componentList.name = modelData
-                            }
-                        }
-
-                        text: modelData
                     }
                 }
             }

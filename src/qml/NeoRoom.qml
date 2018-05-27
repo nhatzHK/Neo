@@ -9,6 +9,31 @@ Rectangle {
     color: "red"
     anchors.fill: parent
 
+    signal clearAll
+    onClearAll: {
+        var n
+        while (createdNodes.length > 0) {
+            n = createdNodes.pop()
+            n.forget(n.backend)
+            n.destroy()
+        }
+    }
+
+    signal loadNodes
+    onLoadNodes: {
+        for(var i = 0; i < 10; ++i) {
+            if(i % 5 === 0) {
+                createGate(Node.AndGate)
+            } else if (i % 3 === 0) {
+                createGate(Node.OrGate)
+            } else if (i % 2 === 0) {
+                createInput()
+            } else {
+                createOutput()
+            }
+        }
+    }
+
     Component.onCompleted: {
         nodeComponent = Qt.createComponent("NeoInput.qml")
         gateComponent = Qt.createComponent("NeoGate.qml")
@@ -18,6 +43,7 @@ Rectangle {
     property int nodeCount: 0
     property int gateCount: 0
     property int outputCount: 0
+    property var createdNodes: []
     property Room backend: Room {
         onPaint: {
             room.paint()
@@ -139,12 +165,13 @@ Rectangle {
                                                       y: y,
                                                       room: room
                                                   })
-            node.name = "input" + String(nodeCount)
+            node.backend.name = "input" + String(nodeCount)
             ++nodeCount
             backend.nodes.push(node.backend)
             node.forget.connect(popNode)
             node.showCard.connect(showCard)
             node.backend.type = Node.Input
+            createdNodes.push(node)
         } else {
             console.log("Input not ready")
         }
@@ -167,6 +194,7 @@ Rectangle {
             gate.forget.connect(popNode)
             gate.showCard.connect(showCard)
             gate.backend.type = type
+            createdNodes.push(gate)
         } else {
             console.log("Gate not ready")
         }
@@ -189,6 +217,7 @@ Rectangle {
             output.forget.connect(popNode)
             output.showCard.connect(showCard)
             output.backend.type = Node.Output
+            createdNodes.push(output)
         } else {
             console.log("Output not ready")
         }

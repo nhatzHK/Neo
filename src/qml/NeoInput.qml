@@ -1,6 +1,8 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.4
 import Neo.Node 1.0
+//import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.1
 
 Item {
     id: node
@@ -16,14 +18,12 @@ Item {
     Component.onCompleted: {
         dynamicMenuItem = Qt.createComponent("NeoMenuItem.qml")
         room.backend.evaluate(backend)
-        status.requestPaint()
     }
+
     property NeoRoom room: NeoRoom {
     }
 
-    property color color: "lightblue"
-    property real indicatorHPart: 1 / 10
-    property alias name: backend.name
+    property color color: "#566c73"
     property alias backend: backend
 
     property Item outSlot: NeoRadioButton {
@@ -39,51 +39,38 @@ Item {
         onConnectionsHaveChanged: {
             outSlot.visible = room.backend.hasOutConnection(backend)
             room.backend.evaluate(backend)
-            status.requestPaint()
         }
 
         onFirstChanged: {
-           room.backend.evaluate(backend)
-            status.requestPaint()
+            room.backend.evaluate(backend)
         }
 
         onSecondChanged: {
             room.backend.evaluate(backend)
-            status.requestPaint()
         }
 
         onMinChanged: {
             room.backend.evaluate(backend)
-            status.requestPaint()
         }
 
         onMaxChanged: {
             room.backend.evaluate(backend)
-            status.requestPaint()
         }
 
         onValueChanged: {
             room.backend.evaluate(backend)
-            status.requestPaint()
         }
 
         outPos: Qt.point(node.x + outSlot.x + 7, node.y + outSlot.y + 4)
+        pos: Qt.point(node.x, node.y)
     }
 
     Column {
         anchors.fill: parent
         Rectangle {
-            width: node.width
-            height: node.height / 5
-            color: {
-                if (textField.focus) {
-                    return "green"
-                } else if (backend.type === Node.Input) {
-                    return "blue"
-                } else {
-                    return "red"
-                }
-            }
+            width: parent.width
+            height: parent.height / 5
+            color: backend.output ? "green" : "red"
 
             Text {
                 anchors.fill: parent
@@ -95,24 +82,12 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
-
-            TextField {
-                id: textField
-                anchors.fill: parent
-                opacity: 0
-                anchors.centerIn: parent
-                text: backend.name
-                onTextChanged: backend.name = text
-                onEditingFinished: {
-                    focus = false
-                }
-            }
         }
 
         Rectangle {
             id: dataArea
-            width: node.width
-            height: node.height / 5 * 4
+            width: parent.width
+            height: parent.height / 5 * 4
             color: node.color
             Text {
                 anchors.fill: parent
@@ -120,47 +95,30 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 20
-                text: backend.value
+                text: backend.value.toFixed(2)
                 color: "black"
                 font.bold: true
             }
+        }
+    }
+    MouseArea {
+        id: drag_area
+        anchors.fill: parent
+        drag.target: node
+        propagateComposedEvents: true
+        signal rightClick
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-            Canvas {
-                width: 10
-                height: 10
-                x: node.width / 2 - 5
-                y: node.height / 2
-                id: status
-                onPaint: {
-                    var ctx = getContext("2d")
-
-                    ctx.fillStyle = backend.output ? "green" : "red"
-                    ctx.beginPath()
-                    ctx.arc(width / 2, height / 2, width / 2, 0, 2 * Math.PI)
-                    ctx.fill()
-                }
+        // show context menu on leftclick pressed over the node
+        onPressed: {
+            if (Qt.RightButton & pressedButtons) {
+                contextMenu.popup()
             }
+        }
 
-            MouseArea {
-                id: drag_area
-                anchors.fill: parent
-                drag.target: node
-                propagateComposedEvents: true
-                signal rightClick
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-                // show context menu on leftclick pressed over the node
-                onPressed: {
-                    if (Qt.RightButton & pressedButtons) {
-                        contextMenu.popup()
-                    }
-                }
-
-                onClicked: {
-                    if (!mouse.wasHeld) {
-                        showCard(backend)
-                    }
-                }
+        onClicked: {
+            if (!mouse.wasHeld) {
+                showCard(backend)
             }
         }
     }

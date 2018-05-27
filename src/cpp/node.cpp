@@ -2,34 +2,14 @@
 
 Node::Node(QObject *parent) : QObject(parent)
 {
-    m_dbReadTimer = new QTimer{this};
-
-    connect(m_dbReadTimer, &QTimer::timeout, this, &Node::psl_updateValue);
-    connect (this, &Node::rowIdChanged, this, &Node::psl_updateValue);
-    connect (this, &Node::conditionOverriden, this, &Node::psl_sendMessage);
+    connect (this, &Node::conditionOverriden, [=] () {
+        emit messageReady (this);
+    });
     connect (this, &Node::outputChanged, [=] () {
         if(type () == Node::Output && output ()) {
-            psl_sendMessage ();
+            emit messageReady (this);
         }
     });
-
-    m_dbReadTimer->start(1000);
-
-    if(!mq_readLastWrite.prepare("SELECT args, time FROM messages "
-                                    "WHERE time = (SELECT max(time) FROM messages "
-                                        "WHERE recipient = :recipient AND method = \"SET\")")) {
-        qDebug() << "DB PREPARE ERROR: (mq_readLastWrite) (node - ctor) " << mq_readLastWrite.lastError().text() << '\n';
-    }
-
-    if(!mq_setAsRead.prepare ("UPDATE messages SET seen = 1 WHERE id = :id")) {
-        qDebug() << "DB PREPARE ERROR: (mq_setAsRead) (node - ctor) " << mq_setAsRead.lastError ().text () << '\n';
-    }
-
-    if(!mq_sendMessage.prepare ("INSERT INTO "
-                                  "messages(recipient, method, args, time)"
-                                  "VALUES(?, ?, ?, ?)")) {
-        qDebug() << "DB PREPARE ERROR: (mq_sendMessage) (node - ctor) " << mq_sendMessage.lastError ().text () << '\n';
-    }
 }
 
 void Node::setType(const Type &t) {
@@ -50,30 +30,6 @@ double Node::value() const {
     return m_value;
 }
 
-void Node::psl_updateValue() {
-    mq_readLastWrite.bindValue (":recipient", m_rowId);
-    mq_readLastWrite.exec();
-
-    if(mq_readLastWrite.first()) {
-        auto v = mq_readLastWrite.value(0).toDouble();
-        setValue(v);
-    }
-
-    mq_readLastWrite.finish ();
-}
-
-void Node::psl_sendMessage() {
-    mq_sendMessage.addBindValue (m_rowId);
-    mq_sendMessage.addBindValue (m_method);
-    mq_sendMessage.addBindValue (m_args);
-    mq_sendMessage.addBindValue (QDateTime::currentMSecsSinceEpoch ());
-    if (!mq_sendMessage.exec ()) {
-        qDebug() << "DB SEND ERROR: (psl_sendMessage-" << m_name << ") " << mq_sendMessage.lastError ().text ();
-    }
-
-    mq_sendMessage.finish ();
-}
-
 QString Node::name() const {
     return m_name;
 }
@@ -83,13 +39,22 @@ void Node::setName(const QString &n) {
     emit nameChanged();
 }
 
-QString Node::rowId() const {
-    return m_rowId;
+QString Node::address() const {
+    return m_address;
 }
 
-void Node::setRowId(const QString &i) {
-    m_rowId = i;
-    emit rowIdChanged();
+void Node::setAddress(const QString &i) {
+    m_address = i;
+    emit addressChanged();
+}
+
+QPoint Node::pos () const {
+    return m_pos;
+}
+
+void Node::setPos (const QPoint &p) {
+    m_pos = p;
+    emit posChanged ();
 }
 
 QPoint Node::inPos() const {
@@ -193,20 +158,19 @@ double Node::second () const {
     return m_second;
 }
 
-void Node::setMethod (const QString &m) {
-    m_method = m;
-    emit methodChanged();
+void Node::setIp (const QString &i) {
+    m_ip = i;
+    emit ipChanged();
 }
 
-QString Node::method () const {
-    return m_method;
+QString Node::ip () const {
+    return m_ip;
 }
 
-QString Node::args () const {
-    return m_args;
+QHostAddress Node::getIp () const {
+    return QHostAddress(m_ip.split (':').first ());
 }
 
-void Node::setArgs (const QString &a) {
-    m_args = a;
-    emit argsChanged ();
+quint16 Node::getPort () const {
+    return (m_ip.split (':').last ()).toInt();
 }

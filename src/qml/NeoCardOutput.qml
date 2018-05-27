@@ -26,7 +26,6 @@ Item {
         invertedSwitch.updateHandlePosition()
     }
 
-
     Column {
         anchors.fill: parent
         Rectangle {
@@ -60,50 +59,76 @@ Item {
                     height: parent.height
                     width: parent.width / 2
                     Label {
+                        id: addressLabel
                         width: parent.width
-                        height: parent.height / 4
-                        text: qsTr("Method")
+                        height: parent.height / 6
+                        text: qsTr("OSC address")
                         font.pointSize: 14
                         font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         color: "white"
                         background: Rectangle {
-                            color: "orange"
+                            color: "blue"
                         }
                     }
 
                     TextField {
-                        id: methodInput
+                        id: addressInput
                         width: parent.width
-                        height: parent.height / 4
-                        placeholderText: qsTr("Enter message to send here")
-                        text: currentNode.method
-                        onEditingFinished: currentNode.method = text
+                        height: parent.height / 6
+                        placeholderText: qsTr("Enter OSC address here")
+                        text: currentNode.address
+                        onEditingFinished: currentNode.address = text
                     }
 
                     Label {
                         id: argsLabel
                         width: parent.width
-                        height: parent.height / 4
-                        text: qsTr("Args")
+                        height: parent.height / 6
+                        text: qsTr("Arguments")
                         font.pointSize: 14
                         font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         color: "white"
                         background: Rectangle {
-                            color: "orange"
+                            color: "blue"
                         }
                     }
 
                     TextField {
                         id: argsInput
                         width: parent.width
-                        height: parent.height / 4
-                        placeholderText: qsTr("Enter arguments here here")
-                        text: currentNode.args
-                        onEditingFinished: currentNode.args = text
+                        height: parent.height / 6
+                        placeholderText: qsTr("Enter argument here")
+                        text: currentNode.value
+                        onEditingFinished: currentNode.value = Number(
+                                               text).toFixed(2)
+                    }
+
+                    Label {
+                        id: ipLabel
+                        width: parent.width
+                        height: parent.height / 6
+                        text: qsTr("IP Address")
+                        font.pointSize: 14
+                        font.bold: true
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        color: "white"
+                        background: Rectangle {
+                            color: "blue"
+                        }
+                    }
+
+                    TextField {
+                        id: ipInput
+                        width: parent.width
+                        height: parent.height / 6
+                        placeholderText: qsTr("ip:port")
+                        text: currentNode.ip
+                        onEditingFinished: currentNode.ip = text
                     }
                 }
 
@@ -130,7 +155,8 @@ Item {
                         height: parent.height / 4
                         enabledText: "Inverted"
                         disabledText: "Normal"
-                        enabledColor: "#26a69a"
+                        enabledColor: "blue"
+                        color: "#566c73"
                         onClicked: {
                             currentNode.inverted = checked
                             currentNode.connectionsHaveChanged()
@@ -143,7 +169,8 @@ Item {
                         height: parent.height / 4
                         enabledText: "On"
                         disabledText: "Off"
-                        enabledColor: "#26a69a"
+                        enabledColor: "blue"
+                        color: "#566c73"
                         onClicked: {
                             currentNode.opened = checked
                             currentNode.connectionsHaveChanged()
@@ -158,73 +185,44 @@ Item {
             width: popup.width
             height: popup.height / 10 * 2
 
-            Column {
+            NeoComboBox {
                 anchors.fill: parent
-                NeoComboBox {
-                    id: inCom
-                    width: parent.width
-                    height: popup.height / 10
-                    model: currentRoom.nodes
-                    name: "Connections"
-                    delegate: CheckBox {
-                        checkState: {
-                            if (currentNode === modelData
-                                    || modelData.type === Node.Output) {
-                                enabled = false
-                            }
-
-                            if (currentRoom.connected(currentNode, modelData,
-                                                      Node.Output)) {
-                                return Qt.Checked
-                            } else {
-                                return Qt.Unchecked
-                            }
+                id: inCom
+                model: currentRoom.nodes
+                name: "Connections"
+                delegate: CheckBox {
+                    checkState: {
+                        if (currentNode === modelData
+                                || modelData.type === Node.Output) {
+                            enabled = false
                         }
 
-                        onClicked: {
-                            if (checked) {
-                                currentRoom.createConnection(currentNode,
-                                                             modelData,
-                                                             Node.Output)
-                            } else {
-                                currentRoom.removeConnections(currentNode,
-                                                              modelData,
-                                                              Node.Output)
-                            }
+                        if (currentRoom.connected(currentNode, modelData,
+                                                  Node.Output)) {
+                            return Qt.Checked
+                        } else {
+                            return Qt.Unchecked
+                        }
+                    }
 
-                            currentNode.connectionsHaveChanged()
-                            modelData.connectionsHaveChanged()
-                            currentRoom.paint()
+                    onClicked: {
+                        if (checked) {
+                            currentRoom.createConnection(currentNode,
+                                                         modelData, Node.Output)
+                        } else {
+                            currentRoom.removeConnections(currentNode,
+                                                          modelData,
+                                                          Node.Output)
                         }
 
-                        text: modelData.name
-                        font.bold: true
-                        font.pointSize: 14
-                    }
-                }
-
-                NeoComboBox {
-                    id: componentList
-                    width: parent.width
-                    height: popup.height / 10
-                    model: currentRoom.ids
-                    name: "Components"
-                    ButtonGroup {
-                        buttons: componentList.delegate
-                        exclusive: true
+                        currentNode.connectionsHaveChanged()
+                        modelData.connectionsHaveChanged()
+                        currentRoom.paint()
                     }
 
-                    delegate: RadioButton {
-                        checked: currentNode.rowId === modelData
-                        onCheckedChanged: {
-                            if (checked) {
-                                currentNode.rowId = modelData
-                                componentList.name = modelData
-                            }
-                        }
-
-                        text: modelData
-                    }
+                    text: modelData.name
+                    font.bold: true
+                    font.pointSize: 14
                 }
             }
         }

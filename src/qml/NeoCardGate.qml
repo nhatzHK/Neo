@@ -23,7 +23,7 @@ Item {
         Rectangle {
             width: popup.width
             height: popup.height / 10
-            color: currentNode.type === Node.Input ? "blue" : "red"
+            color: currentNode.output ? "green" : "red"
             Text {
                 id: nameTag
                 anchors.fill: parent
