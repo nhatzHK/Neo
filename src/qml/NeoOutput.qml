@@ -14,6 +14,7 @@ Rectangle {
 
     signal forget(Node g)
     signal showCard(Node g)
+    signal forgetAll
 
     property Component dynamicMenuItem: null
     property NeoRoom room: NeoRoom {
@@ -31,6 +32,11 @@ Rectangle {
     Component.onCompleted: {
         dynamicMenuItem = Qt.createComponent("NeoMenuItem.qml")
         room.backend.evaluate(backend)
+    }
+
+    onForgetAll: {
+        node.forget(backend)
+        node.destroy()
     }
 
     Node {
@@ -128,8 +134,7 @@ Rectangle {
                 return
             }
 
-            if (nodes[i].type === type) {
-                console.log(nodes[i])
+            if (room.backend.canConnect(backend, nodes[i]) && nodes[i].type === type) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
@@ -166,7 +171,7 @@ Rectangle {
                 return
             }
 
-            if (nodes[i] !== node.backend && nodes[i].type === Node.Input) {
+            if (room.backend.canConnect(backend, nodes[i], Node.Output) && nodes[i].type === Node.Input) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
@@ -195,5 +200,10 @@ Rectangle {
         }
 
         rec_for(room.backend.nodes, 0)
+    }
+
+    function setPosition(x, y) {
+        node.x = x
+        node.y = y
     }
 }

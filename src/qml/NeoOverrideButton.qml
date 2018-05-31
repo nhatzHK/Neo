@@ -5,7 +5,7 @@ Rectangle {
     color: "red"
     height: 20
     width: height
-    border.width: 5
+    border.width: area.pressed ? 0 : 5
     border.color: "#566c73"
     radius: width/2
     signal clicked
@@ -20,6 +20,7 @@ Rectangle {
     }
 
     MouseArea {
+        id: area
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         hoverEnabled: true

@@ -10,6 +10,7 @@ Canvas {
 
     signal forget(Node g)
     signal showCard(Node g)
+    signal forgetAll
 
     property Component dynamicMenuItem: null
     property NeoRoom room: NeoRoom {
@@ -34,6 +35,11 @@ Canvas {
     Component.onCompleted: {
         dynamicMenuItem = Qt.createComponent("NeoMenuItem.qml")
         room.backend.evaluate(backend)
+    }
+
+    onForgetAll: {
+        node.forget(backend)
+        node.destroy()
     }
 
     Node {
@@ -203,7 +209,7 @@ Canvas {
                 return
             }
 
-            if (nodes[i] !== backend && nodes[i].type === type) {
+            if (room.backend.canConnect(backend, nodes[i], way) && nodes[i].type === type) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
@@ -241,7 +247,7 @@ Canvas {
                 return
             }
 
-            if (nodes[i].type === type) {
+            if (room.backend.canConnect(backend, nodes[i], way) && nodes[i].type === type) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
@@ -270,5 +276,10 @@ Canvas {
         }
 
         rec_for(room.backend.nodes, 0)
+    }
+
+    function setPosition(x, y) {
+        node.x = x
+        node.y = y
     }
 }

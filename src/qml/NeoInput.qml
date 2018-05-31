@@ -11,6 +11,7 @@ Item {
 
     signal forget(Node n)
     signal showCard(Node n)
+    signal forgetAll
 
     property Component dynamicMenuItem: null //! Component used to create menu items on demand
 
@@ -18,12 +19,20 @@ Item {
     Component.onCompleted: {
         dynamicMenuItem = Qt.createComponent("NeoMenuItem.qml")
         room.backend.evaluate(backend)
+        x = backend.pos.x
+        y = backend.pos.y
+    }
+
+    onForgetAll: {
+        node.forget(backend)
+        node.destroy()
     }
 
     property NeoRoom room: NeoRoom {
     }
 
     property color color: "#566c73"
+    property alias name: backend.name
     property alias backend: backend
 
     property Item outSlot: NeoRadioButton {
@@ -173,7 +182,7 @@ Item {
                 return
             }
 
-            if (nodes[i].type === type) {
+            if (room.backend.canConnect(backend, nodes[i]) && nodes[i].type === type) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
@@ -208,7 +217,7 @@ Item {
                 return
             }
 
-            if (nodes[i] !== node.backend && nodes[i].type === Node.Output) {
+            if (room.backend.canConnect(backend, nodes[i]) && nodes[i].type === Node.Output) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
@@ -234,5 +243,14 @@ Item {
         }
 
         rec_for(room.backend.nodes, 0)
+    }
+
+    function updateBackend(backend) {
+        node.backend.change(backend)
+    }
+
+    function setPosition(x, y) {
+        node.x = x
+        node.y = y
     }
 }

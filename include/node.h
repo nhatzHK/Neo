@@ -10,6 +10,7 @@
 #include <QSqlError>
 #include <stdlib.h>
 #include <QHostAddress>
+#include <QJsonObject>
 
 #include "osc/reader/OscMessage.h"
 #include "node.h"
@@ -39,8 +40,6 @@ class Node : public QObject
     Q_PROPERTY(double max READ max WRITE setMax NOTIFY maxChanged)
     Q_PROPERTY(double first READ first WRITE setFirst NOTIFY firstChanged)
     Q_PROPERTY(double second READ second WRITE setSecond NOTIFY secondChanged)
-
-//    Q_PROPERTY(QString args READ args WRITE setArgs NOTIFY argsChanged)
 
 public:
     explicit Node(QObject *parent = nullptr);
@@ -105,8 +104,18 @@ public:
     QHostAddress getIp() const;
     quint16 getPort() const;
 
+    qulonglong id() const;
+
+    void read(const QJsonObject& json);
+    QJsonObject write() const;
+
+    QPoint readPoint(const QJsonObject&) const;
+    QJsonObject writePoint(const QPoint&) const;
+
 private:
-    void updateId();
+    QString m_name = "Name";
+    QString m_address = "/home/default";
+    QString m_ip = "127.0.0.1:8888";
 
     QPoint m_pos;
     QPoint m_in;
@@ -115,23 +124,18 @@ private:
     Type m_type = Node::Input;
 
     double m_value = 0.0;
-
     double m_min = 0.0;
     double m_max = 100.0;
     double m_first = 25.0;
     double m_second = 75.0;
 
-    QString m_name = "Name";
-
-    QString m_address = "/home/default";
-
-    QString m_ip = "127.0.0.1:8888";
 
     bool m_output = true;
     bool m_bound = false;
     bool m_opened = true;
     bool m_inverted = false;
 
+    qulonglong m_id;
 signals:
 // basic
     void typeChanged();
@@ -148,6 +152,7 @@ signals:
     void invertedChanged();
     void messageReady(Node*);
     void valueChanged();
+    void nodeHaveChanged();
 
 // input
     void minChanged();

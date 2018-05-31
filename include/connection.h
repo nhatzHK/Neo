@@ -1,7 +1,8 @@
 #pragma once
 
 #include <QObject>
-#include <QVariant>
+#include <QJsonObject>
+#include <QHash>
 #include "node.h"
 
 class Connection: public QObject {
@@ -12,10 +13,13 @@ class Connection: public QObject {
 public:
     explicit Connection(QObject* parent = nullptr);
 
-    Node* receiver();
-    Node* sender();
+    Node* receiver() const;
+    Node* sender() const;
     void setReceiver(Node* n);
     void setSender(Node* n);
+
+    void read(const QJsonObject& json, const QHash<qulonglong, Node*>& hash);
+    QJsonObject write() const;
 
 signals:
     void receiverChanged();

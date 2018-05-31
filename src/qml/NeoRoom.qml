@@ -6,34 +6,12 @@ import Neo.Connection 1.0
 
 Rectangle {
     id: room
-    color: "red"
+    color: "transparent"
     anchors.fill: parent
 
     signal clearAll
-    onClearAll: {
-        var n
-        while (createdNodes.length > 0) {
-            n = createdNodes.pop()
-            n.forget(n.backend)
-            n.destroy()
-        }
-    }
 
     signal loadNodes
-    onLoadNodes: {
-        for(var i = 0; i < 10; ++i) {
-            if(i % 5 === 0) {
-                createGate(Node.AndGate)
-            } else if (i % 3 === 0) {
-                createGate(Node.OrGate)
-            } else if (i % 2 === 0) {
-                createInput()
-            } else {
-                createOutput()
-            }
-        }
-    }
-
     Component.onCompleted: {
         nodeComponent = Qt.createComponent("NeoInput.qml")
         gateComponent = Qt.createComponent("NeoGate.qml")
@@ -43,10 +21,10 @@ Rectangle {
     property int nodeCount: 0
     property int gateCount: 0
     property int outputCount: 0
-    property var createdNodes: []
+    //    property var createdNodes: []
     property Room backend: Room {
-        onPaint: {
-            room.paint()
+        onRoomLoaded: {
+            loadVisualNodes()
         }
     }
 
@@ -156,68 +134,89 @@ Rectangle {
         height: room.height * 4 / 6
     }
 
-    function createInput() {
+    function createInput(fromJson) {
+
         if (nodeComponent.status === Component.Ready) {
             var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
             var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
             var node = nodeComponent.createObject(mainArea, {
-                                                      x: x,
-                                                      y: y,
                                                       room: room
                                                   })
-            node.backend.name = "input" + String(nodeCount)
+
+            if (fromJson === undefined || !fromJson) {
+                node.backend.name = "input" + String(nodeCount)
+                room.backend.nodes.push(node.backend)
+                node.backend.type = Node.Input
+                node.x = x
+                node.y = y
+            } else {
+                room.backend.loadNextNode(node.backend)
+                node.setPosition(node.backend.pos.x, node.backend.pos.y)
+            }
+
             ++nodeCount
-            backend.nodes.push(node.backend)
             node.forget.connect(popNode)
+            room.clearAll.connect(node.forgetAll)
             node.showCard.connect(showCard)
-            node.backend.type = Node.Input
-            createdNodes.push(node)
         } else {
             console.log("Input not ready")
         }
     }
 
-    function createGate(type) {
+    function createGate(type, fromJson) {
         if (gateComponent.status === Component.Ready) {
             var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
             var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
 
             var gate = gateComponent.createObject(mainArea, {
-                                                      x: x,
-                                                      y: y,
                                                       room: room
                                                   })
 
-            gate.name = "gate" + String(gateCount)
+            if (fromJson === undefined || !fromJson) {
+                gate.backend.name = "gate" + String(gateCount)
+                room.backend.nodes.push(gate.backend)
+                gate.backend.type = type
+                gate.x = x
+                gate.y = y
+            } else {
+                room.backend.loadNextNode(gate.backend)
+                gate.setPosition(gate.backend.pos.x, gate.backend.pos.y)
+            }
+
             ++gateCount
-            backend.nodes.push(gate.backend)
             gate.forget.connect(popNode)
+            room.clearAll.connect(gate.forgetAll)
             gate.showCard.connect(showCard)
-            gate.backend.type = type
-            createdNodes.push(gate)
+            gate.name = gate.backend.name
         } else {
             console.log("Gate not ready")
         }
     }
 
-    function createOutput() {
+    function createOutput(fromJson) {
         if (outputComponent.status === Component.Ready) {
             var x = mouseEvent === null ? room.width / 2 : mouseEvent.x
             var y = mouseEvent === null ? room.height / 2 : mouseEvent.y
 
             var output = outputComponent.createObject(mainArea, {
-                                                          x: x,
-                                                          y: y,
                                                           room: room
                                                       })
 
-            output.name = "output" + String(outputCount)
+            if (fromJson === undefined || !fromJson) {
+                output.backend.name = "output" + String(outputCount)
+                room.backend.nodes.push(output.backend)
+                output.backend.type = Node.Output
+                output.x = x
+                output.y = y
+            } else {
+                room.backend.loadNextNode(output.backend)
+                output.setPosition(output.backend.pos.x, output.backend.pos.y)
+            }
+
             ++outputCount
-            backend.nodes.push(output.backend)
             output.forget.connect(popNode)
+            room.clearAll.connect(output.forgetAll)
             output.showCard.connect(showCard)
-            output.backend.type = Node.Output
-            createdNodes.push(output)
         } else {
             console.log("Output not ready")
         }
@@ -254,5 +253,23 @@ Rectangle {
 
     function paint() {
         canvas.requestPaint()
+    }
+
+    function loadVisualNodes() {
+        while (backend.hasMoreLoaded()) {
+            switch (backend.nextType()) {
+            case Node.Input:
+                createInput(true)
+                break
+            case Node.Output:
+                createOutput(true)
+                break
+            case Node.OrGate:
+            case Node.AndGate:
+                createGate(backend.nextType(), true)
+                break
+            }
+        }
+        backend.loadConnections()
     }
 }

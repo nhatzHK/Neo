@@ -76,3 +76,6 @@ Thumbs.db
 
 # QML
 *.qmlc
+
+# Neo files
+*.neo

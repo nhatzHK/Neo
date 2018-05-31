@@ -6,8 +6,12 @@ MenuBar {
     signal clear
     signal load
     signal save
+    signal saveAs
+    signal quit
+
     Menu {
         id: fileMenu
+
         title: qsTr("File")
 
         MenuItem {
@@ -21,13 +25,18 @@ MenuBar {
         }
 
         MenuItem {
+            text: qsTr("Save as...")
+            onTriggered: saveAs()
+        }
+
+        MenuItem {
             text: qsTr("Load room")
             onTriggered: load()
         }
 
         MenuItem {
             text: qsTr("Exit")
-            onTriggered: Qt.quit()
+            onTriggered: quit()
         }
     }
 

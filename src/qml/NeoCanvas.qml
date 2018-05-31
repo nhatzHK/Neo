@@ -39,9 +39,6 @@ Canvas {
         ctx.beginPath()
 
         for (var i = 0; i < room.connections.length; ++i) {
-//            console.log(room.connections[i].from + ' ' + room.connections[i].to)
-//            console.log(room.connections[i].from.outPos + ' ' + room.connections[i].to.inPos)
-//            console.log(room.connections[i].from.type + ' ' + room.connections[i].to.type)
             do_spline(room.connections[i].from.outPos, room.connections[i].to.inPos, ctx)
         }
 
