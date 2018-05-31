@@ -415,9 +415,9 @@ Room::readPendingDatagrams()
 void
 Room::sendMessage(Node* n)
 {
-  //    OscMessageComposer mc(n->address ());
-  //    mc.pushDouble (n->value ());
-  //    m_sock->writeDatagram (*(mc.getBytes ()), n->getIp(), n->getPort());
+  OscMessageComposer mc(n->address());
+  mc.pushDouble(n->value());
+  m_sock->writeDatagram(*(mc.getBytes()), n->getIp(), n->getPort());
 }
 
 void
@@ -435,17 +435,8 @@ Room::processBundle(OscBundle* bundle)
 void
 Room::processMessage(OscMessage* message)
 {
-
-  int match_node = 0;
-  int match_message = 0;
-
   for (auto n : m_nodes) {
-    OSCPatternMatching::osc_match(n->address().toStdString().c_str(),
-                                  message->getAddress().toStdString().c_str(),
-                                  match_node,
-                                  match_message);
-
-    if (n->type() == Node::Input && match_node == n->address().length() &&
+    if (n->type() == Node::Input && n->address() == message->getAddress() &&
         message->getNumValues() > 0) {
       n->setValue(message->getValue(0)->toDouble());
     }

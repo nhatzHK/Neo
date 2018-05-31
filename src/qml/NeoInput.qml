@@ -1,7 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.4
 import Neo.Node 1.0
-//import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 
 Item {
