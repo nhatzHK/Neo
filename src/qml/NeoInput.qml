@@ -115,7 +115,6 @@ Item {
         anchors.fill: parent
         drag.target: node
         propagateComposedEvents: true
-        signal rightClick
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         property int mouseButtonClicked: Qt.NoButton
 
@@ -163,7 +162,6 @@ Item {
                         checkable: true
                         checked: room.backend.connected(backend, modelData)
                         onToggled: {
-                            console.log("Toggled")
                             if (checked) {
                                 room.backend.createConnection(backend,
                                                               modelData)

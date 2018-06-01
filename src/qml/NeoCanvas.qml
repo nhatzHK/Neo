@@ -35,18 +35,14 @@ Canvas {
         var ctx = getContext("2d")
         ctx.clearRect(0, 0, width, height)
         ctx.lineWidth = 1
+        ctx.beginPath()
+        ctx.strokeStyle = "#2979ff"
 
         for (var i = 0; i < room.connections.length; ++i) {
-            ctx.beginPath()
-            if (room.connections[i].from.output) {
-                ctx.strokeStyle = Qt.rgba(0, 1, 0, 1)
-            } else {
-                ctx.strokeStyle = Qt.rgba(1, 0, 0, 1)
-            }
 
             do_spline(room.connections[i].from.outPos,
                       room.connections[i].to.inPos, ctx)
-            ctx.stroke()
         }
+        ctx.stroke()
     }
 }

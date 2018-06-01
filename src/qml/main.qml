@@ -2,9 +2,6 @@ import QtQuick 2.10
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.3
 import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.3
-import Qt.labs.settings 1.0
-
 
 /*! \brief Main window of the program.
         This is the outmost layer.
@@ -87,6 +84,8 @@ ApplicationWindow {
     }
 
     NeoRoom {
+        width: 500
+        height: 500
         id: room
 
         Component.onCompleted: {

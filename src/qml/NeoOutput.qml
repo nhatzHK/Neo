@@ -76,7 +76,6 @@ Rectangle {
         anchors.fill: parent
         drag.target: node
         propagateComposedEvents: true
-        signal rightClick
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         property int mouseButtonClicked: Qt.NoButton
 
@@ -105,22 +104,77 @@ Rectangle {
 
         NeoMenu {
             title: qsTr("Connect To")
+
             NeoMenu {
-                id: menuConnectNode
-                title: qsTr("Nodes")
+                id: menuReadGate
+                title: qsTr("Gates")
+
+                Repeater {
+                    id: readGateRepeater
+                    NeoMenuItem {
+                        text: modelData.name
+                        checkable: true
+                        checked: room.backend.connected(backend, modelData,
+                                                        Node.Output)
+                        onToggled: {
+                            if (checked) {
+                                room.backend.createConnection(backend,
+                                                              modelData,
+                                                              Node.Output)
+                            } else {
+                                room.backend.removeConnections(backend,
+                                                               modelData,
+                                                               Node.Output)
+                            }
+
+                            backend.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            room.paint()
+                            checked = room.backend.connected(backend,
+                                                             modelData,
+                                                             Node.Output)
+                        }
+                    }
+                }
                 onAboutToShow: {
-                    menuConnectNode.clear()
-                    makeNodeList(menuConnectNode)
+                    readGateRepeater.model = makeGateList(Node.Output)
                 }
             }
 
             NeoMenu {
-                id: menuConnectGate
-                title: qsTr("Gates")
+                id: menuReadNode
+                title: qsTr("Nodes")
+
+                Repeater {
+                    id: readNodeRepeater
+                    NeoMenuItem {
+                        text: modelData.name
+                        checkable: true
+                        checked: room.backend.connected(backend, modelData,
+                                                        Node.Output)
+                        onToggled: {
+                            if (checked) {
+                                room.backend.createConnection(backend,
+                                                              modelData,
+                                                              Node.Output)
+                            } else {
+                                room.backend.removeConnections(backend,
+                                                               modelData,
+                                                               Node.Output)
+                            }
+
+                            backend.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            room.paint()
+                            checked = room.backend.connected(backend,
+                                                             modelData,
+                                                             Node.Output)
+                        }
+                    }
+                }
+
                 onAboutToShow: {
-                    menuConnectGate.clear()
-                    makeGateList(menuConnectGate, Node.OrGate)
-                    makeGateList(menuConnectGate, Node.AndGate)
+                    readNodeRepeater.model = makeNodeList(Node.Output)
                 }
             }
         }
@@ -134,80 +188,37 @@ Rectangle {
         }
     }
 
-    function makeGateList(menu, type) {
-        function rec_for(nodes, i) {
-            if (i >= nodes.length) {
-                return
-            }
-
-            if (room.backend.canConnect(backend,
-                                        nodes[i]) && nodes[i].type === type) {
-                if (dynamicMenuItem.status === Component.Ready) {
-                    var mnuItem = dynamicMenuItem.createObject(menu)
-                    mnuItem.text = nodes[i].name
-                    mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend, nodes[i],
-                                                             Node.Output)
-
-                    menu.insertItem(0, mnuItem)
-
-                    mnuItem.toggled.connect(function (checked) {
-                        if (checked) {
-                            room.backend.createConnection(backend, nodes[i],
-                                                          Node.Output)
-                        } else {
-                            room.backend.removeConnections(backend, nodes[i],
-                                                           Node.Output)
-                        }
-
-                        backend.connectionsHaveChanged()
-                        nodes[i].connectionsHaveChanged()
-                        room.paint()
-                    })
-                }
-            }
-            rec_for(nodes, i + 1)
+    function makeGateList(way) {
+        if (way === undefined) {
+            way = Node.Input
         }
 
-        rec_for(room.backend.nodes, 0)
+        var l = []
+        for (var i = 0; i < room.backend.nodes.length; ++i) {
+            if (room.backend.canConnect(backend, room.backend.nodes[i], way)
+                    && (room.backend.nodes[i].type === Node.OrGate
+                        || room.backend.nodes[i].type === Node.AndGate)) {
+                l.push(room.backend.nodes[i])
+            }
+        }
+        return l
     }
 
-    function makeNodeList(menu) {
-        function rec_for(nodes, i) {
-            if (i >= nodes.length) {
-                return
-            }
-
-            if (room.backend.canConnect(backend, nodes[i], Node.Output)
-                    && nodes[i].type === Node.Input) {
-                if (dynamicMenuItem.status === Component.Ready) {
-                    var mnuItem = dynamicMenuItem.createObject(menu)
-                    mnuItem.text = nodes[i].name
-                    mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend, nodes[i],
-                                                             Node.Output)
-
-                    menu.insertItem(0, mnuItem)
-
-                    mnuItem.toggled.connect(function (checked) {
-                        if (checked) {
-                            room.backend.createConnection(backend, nodes[i],
-                                                          Node.Output)
-                        } else {
-                            room.backend.removeConnections(backend, nodes[i],
-                                                           Node.Output)
-                        }
-
-                        backend.connectionsHaveChanged()
-                        nodes[i].connectionsHaveChanged()
-                        room.paint()
-                    })
-                }
-            }
-            rec_for(nodes, i + 1)
+    function makeNodeList(way) {
+        if (way === undefined) {
+            way = Node.Input
         }
 
-        rec_for(room.backend.nodes, 0)
+        var type = way === Node.Input ? Node.Output : Node.Input
+
+        var l = []
+        for (var i = 0; i < room.backend.nodes.length; ++i) {
+            if (room.backend.canConnect(backend, room.backend.nodes[i], way)
+                    && room.backend.nodes[i].type === type) {
+                l.push(room.backend.nodes[i])
+            }
+        }
+        return l
     }
 
     function setPosition(x, y) {

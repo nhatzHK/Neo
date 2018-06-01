@@ -18,9 +18,11 @@ MenuBar {
         title: qsTr("File")
 
         NeoMenuItem {
-            text: qsTr("Clear room")
-            onTriggered: clear()
+            text: qsTr("Open room ...")
+            onTriggered: load()
         }
+
+        NeoMenuSeparator{}
 
         NeoMenuItem {
             text: qsTr("Save")
@@ -32,10 +34,14 @@ MenuBar {
             onTriggered: saveAs()
         }
 
+        NeoMenuSeparator {}
+
         NeoMenuItem {
-            text: qsTr("Load room")
-            onTriggered: load()
+            text: qsTr("Clear room")
+            onTriggered: clear()
         }
+
+        NeoMenuSeparator{}
 
         NeoMenuItem {
             text: qsTr("Exit")

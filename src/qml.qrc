@@ -20,5 +20,6 @@
         <file>qml/NeoBinderButton.qml</file>
         <file>qml/NeoSwitch.qml</file>
         <file>qml/NeoMenu.qml</file>
+        <file>qml/NeoMenuSeparator.qml</file>
     </qresource>
 </RCC>

@@ -545,6 +545,8 @@ Room::loadNextNode(Node* n)
     n->read(m_jsonNodes.takeAt(0).toObject());
     m_nodeHash.insert(n->id(), n);
     m_nodes.append(n);
+    connect(n, &Node::messageReady, this, &Room::sendMessage);
+    connect(n, &Node::nodeHaveChanged, this, &Room::roomHaveChanged);
   }
 }
 

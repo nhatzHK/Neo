@@ -1,12 +1,12 @@
 import QtQuick 2.10
-import QtQuick.Controls 2.3
+import QtQuick.Controls 1.4 // kept for scrollview
 import Neo.Room 1.0
 import Neo.Node 1.0
 import Neo.Connection 1.0
 
 Rectangle {
     id: room
-    color: "transparent"
+    color: "lightgray"
     anchors.fill: parent
 
     signal clearAll
@@ -19,9 +19,9 @@ Rectangle {
     }
 
     property int nodeCount: 0
+
     property int gateCount: 0
     property int outputCount: 0
-    //    property var createdNodes: []
     property Room backend: Room {
         onRoomLoaded: {
             loadVisualNodes()
@@ -41,18 +41,19 @@ Rectangle {
             id: mainArea
             width: 1500
             height: 1500
+            color: "transparent"
 
             NeoCanvas {
                 id: canvas
                 room: backend
                 anchors.fill: parent
+                opacity: 0.9
             }
 
             MouseArea {
                 id: mouseArea
                 anchors.fill: parent
 
-                signal rightClick
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
 
                 //! On press show menu and save mouse state

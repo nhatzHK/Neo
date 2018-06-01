@@ -26,28 +26,18 @@ Item {
 
         openedSwitch.updateHandlePosition()
         invertedSwitch.updateHandlePosition()
+        nameTag.displayText = currentNode.name
     }
 
     Column {
         anchors.fill: parent
-        Rectangle {
+        NeoLabelField {
+            id: nameTag
             width: parent.width
             height: parent.height / 10
-            color: currentNode.output ? "green" : "red"
-            Text {
-                id: nameTag
-                anchors.fill: parent
-                color: "white"
-                text: currentNode.name
-                font.bold: true
-                font.pointSize: 14
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                MouseArea {
-                    anchors.fill: parent
-                    propagateComposedEvents: true
-                }
-            }
+            displayColor: currentNode.output ? "green" : "red"
+            editColor: "#2979ff"
+            onTextChanged: currentNode.name = displayText
         }
 
         Rectangle {

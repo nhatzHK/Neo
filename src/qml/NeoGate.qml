@@ -124,7 +124,6 @@ Canvas {
         anchors.fill: parent
         drag.target: node
         propagateComposedEvents: true
-        signal rightClick
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         property int mouseButtonClicked: Qt.NoButton
 
@@ -228,7 +227,7 @@ Canvas {
                 title: qsTr("Gates")
 
                 Repeater {
-                    id: readGateRpeater
+                    id: readGateRepeater
                     NeoMenuItem {
                         text: modelData.name
                         checkable: true
@@ -255,7 +254,7 @@ Canvas {
                     }
                 }
                 onAboutToShow: {
-                    readGateRpeater.model = makeGateList(Node.Output)
+                    readGateRepeater.model = makeGateList(Node.Output)
                 }
             }
 
@@ -304,6 +303,7 @@ Canvas {
             }
         }
     }
+
     function makeGateList(way) {
         if (way === undefined) {
             way = Node.Input

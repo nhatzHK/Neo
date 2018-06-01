@@ -18,26 +18,19 @@ Item {
         id: dummyRoom
     }
 
+    onCurrentNodeChanged: {
+        nameTag.displayText = currentNode.name
+    }
+
     Column {
         anchors.fill: parent
-        Rectangle {
+        NeoLabelField {
+            id: nameTag
             width: popup.width
             height: popup.height / 10
-            color: currentNode.output ? "green" : "red"
-            Text {
-                id: nameTag
-                anchors.fill: parent
-                color: "white"
-                text: currentNode.name
-                font.bold: true
-                font.pointSize: 14
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                MouseArea {
-                    anchors.fill: parent
-                    propagateComposedEvents: true
-                }
-            }
+            displayColor: currentNode.output ? "green" : "red"
+            editColor: "#2979ff"
+            onTextChanged: currentNode.name = displayText
         }
 
         Rectangle {
@@ -55,7 +48,8 @@ Item {
                     name: "Incoming connections"
                     delegate: CheckBox {
                         checkState: {
-                            if (currentNode === modelData || modelData.type === Node.Output) {
+                            if (currentNode === modelData
+                                    || modelData.type === Node.Output) {
                                 enabled = false
                             }
 
@@ -97,7 +91,8 @@ Item {
                     name: "Outgoing Connections"
                     delegate: CheckBox {
                         checkState: {
-                            if (currentNode === modelData || modelData.type === Node.Inputn) {
+                            if (currentNode === modelData
+                                    || modelData.type === Node.Inputn) {
                                 enabled = false
                             }
 
