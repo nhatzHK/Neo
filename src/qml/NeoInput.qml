@@ -225,21 +225,14 @@ Item {
     }
 
     function makeGateList() {
-        function rec_for(nodes, i, l) {
-            if (i >= nodes.length) {
-                return
-            }
-
-            if (room.backend.canConnect(backend, nodes[i])
-                    && (nodes[i].type === Node.AndGate
-                        || nodes[i].type === Node.OrGate)) {
-                l.push(nodes[i])
-            }
-            rec_for(nodes, i + 1, l)
-        }
-
         var l = []
-        rec_for(room.backend.nodes, 0, l)
+        for(var i = 0; i < room.backend.nodes.length; ++i) {
+            if (room.backend.canConnect(backend, room.backend.nodes[i])
+                    && (room.backend.nodes[i].type === Node.AndGate
+                        || room.backend.nodes[i].type === Node.OrGate)) {
+                l.push(room.backend.nodes[i])
+            }
+        }
         return l
     }
 
