@@ -1,7 +1,10 @@
-import QtQuick 2.9
-import QtQuick.Controls 1.4
+import QtQuick 2.10
+import QtQuick.Controls 2.3
 
 MenuBar {
+    id: menuBar
+    property color color: "#2979ff"
+
 
     signal clear
     signal load
@@ -9,47 +12,59 @@ MenuBar {
     signal saveAs
     signal quit
 
-    Menu {
+    NeoMenu {
         id: fileMenu
 
         title: qsTr("File")
 
-        MenuItem {
+        NeoMenuItem {
             text: qsTr("Clear room")
             onTriggered: clear()
         }
 
-        MenuItem {
+        NeoMenuItem {
             text: qsTr("Save")
             onTriggered: save()
         }
 
-        MenuItem {
+        NeoMenuItem {
             text: qsTr("Save as...")
             onTriggered: saveAs()
         }
 
-        MenuItem {
+        NeoMenuItem {
             text: qsTr("Load room")
             onTriggered: load()
         }
 
-        MenuItem {
+        NeoMenuItem {
             text: qsTr("Exit")
             onTriggered: quit()
         }
     }
 
-    /*! Return a menu from the bar
-        FIXME: HARDCODED
-        \param menu Lowercase name of the menu to return
-    */
-    function getMenu(menu) {
-        switch (menu) {
-        case "file":
-            return fileMenu
-        default:
-            console.warn("[NeoMenuBar] Menu " + menu + " not found.")
+    delegate: MenuBarItem {
+        id: menuBarItem
+
+        contentItem: Text {
+            text: menuBarItem.text
+            color: menuBarItem.highlighted ? "#ffffff" : menuBar.color
+        }
+
+        background: Rectangle {
+            opacity: enabled ? 1 : 0.3
+            color: menuBarItem.highlighted ? menuBar.color : "transparent"
+        }
+    }
+
+    background: Rectangle {
+        color: "#ffffff"
+
+        Rectangle {
+            color: menuBar.color
+            width: parent.width
+            height: 1
+            anchors.bottom: parent.bottom
         }
     }
 }

@@ -4,7 +4,7 @@
         <file>qml/NeoCanvas.qml</file>
         <file>qml/NeoInput.qml</file>
         <file>qml/NeoMenuBar.qml</file>
-        <file>qml/NeoRadioButton.qml</file>
+        <file>qml/NeoSlot.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>qml/NeoMenuItem.qml</file>
         <file>qml/NeoRoom.qml</file>
@@ -19,5 +19,6 @@
         <file>qml/NeoRangeSlider.qml</file>
         <file>qml/NeoBinderButton.qml</file>
         <file>qml/NeoSwitch.qml</file>
+        <file>qml/NeoMenu.qml</file>
     </qresource>
 </RCC>

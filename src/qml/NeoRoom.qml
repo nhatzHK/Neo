@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick 2.10
+import QtQuick.Controls 2.3
 import Neo.Room 1.0
 import Neo.Node 1.0
 import Neo.Connection 1.0
@@ -74,36 +74,36 @@ Rectangle {
     }
 
     //! Context menu accessible by clicking directly on the canvas
-    Menu {
+    NeoMenu {
         id: contextMenu
 
         title: qsTr("Canvas Menu")
 
-        Menu {
+        NeoMenu {
             id: createNodeMenu
             title: qsTr("Create Node")
 
-            MenuItem {
+            NeoMenuItem {
                 text: "Input"
                 onTriggered: createInput()
             }
 
-            MenuItem {
+            NeoMenuItem {
                 text: "Output"
                 onTriggered: createOutput()
             }
         }
 
-        Menu {
+        NeoMenu {
             id: createGateMenu
             title: qsTr("Create Gate")
 
-            MenuItem {
+            NeoMenuItem {
                 text: qsTr("Or")
                 onTriggered: createGate(Node.OrGate)
             }
 
-            MenuItem {
+            NeoMenuItem {
                 text: qsTr("And")
                 onTriggered: createGate(Node.AndGate)
             }

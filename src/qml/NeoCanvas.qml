@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.10
 import Neo.Room 1.0
 
 
@@ -8,7 +8,7 @@ import Neo.Room 1.0
 Canvas {
     id: canvas
     anchors.fill: parent
-    property Room room: Room{
+    property Room room: Room {
     }
 
     /*! \brief Draw bezier curve between two nodes (in -> out)
@@ -34,14 +34,19 @@ Canvas {
     onPaint: {
         var ctx = getContext("2d")
         ctx.clearRect(0, 0, width, height)
-        ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
         ctx.lineWidth = 1
-        ctx.beginPath()
 
         for (var i = 0; i < room.connections.length; ++i) {
-            do_spline(room.connections[i].from.outPos, room.connections[i].to.inPos, ctx)
-        }
+            ctx.beginPath()
+            if (room.connections[i].from.output) {
+                ctx.strokeStyle = Qt.rgba(0, 1, 0, 1)
+            } else {
+                ctx.strokeStyle = Qt.rgba(1, 0, 0, 1)
+            }
 
-        ctx.stroke()
+            do_spline(room.connections[i].from.outPos,
+                      room.connections[i].to.inPos, ctx)
+            ctx.stroke()
+        }
     }
 }

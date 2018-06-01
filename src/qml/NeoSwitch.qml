@@ -1,5 +1,5 @@
-import QtQuick 2.6
-import QtQuick.Controls 2.1
+import QtQuick 2.10
+import QtQuick.Controls 2.3
 import Neo.Node 1.0
 
 CheckBox {

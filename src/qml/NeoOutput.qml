@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick 2.10
+import QtQuick.Controls 2.3
 import Neo.Node 1.0
 
 Rectangle {
@@ -22,9 +22,10 @@ Rectangle {
     property alias name: backend.name
     property alias backend: backend
 
-    property Item inSlot: NeoRadioButton {
+    property Item inSlot: NeoSlot {
         y: node.height / 2
         x: -4
+        fillColor: backend.output ? "green" : "red"
         visible: false
         parent: node
     }
@@ -77,29 +78,34 @@ Rectangle {
         propagateComposedEvents: true
         signal rightClick
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        property int mouseButtonClicked: Qt.NoButton
 
         // show context menu on leftclick pressed over the gate
         onPressed: {
-            if (Qt.RightButton & pressedButtons) {
-                contextMenu.popup()
+            if (pressedButtons & Qt.LeftButton) {
+                mouseButtonClicked = Qt.LeftButton
+            } else if (pressedButtons & Qt.RightButton) {
+                mouseButtonClicked = Qt.RightButton
             }
         }
 
         onClicked: {
-            if (!mouse.wasHeld) {
+            if (mouseButtonClicked === Qt.LeftButton) {
                 showCard(backend)
+            } else if (mouseButtonClicked === Qt.RightButton) {
+                contextMenu.popup()
             }
         }
     }
 
     // ! Context menu
-    Menu {
+    NeoMenu {
         id: contextMenu
         title: qsTr("Gate menu")
 
-        Menu {
+        NeoMenu {
             title: qsTr("Connect To")
-            Menu {
+            NeoMenu {
                 id: menuConnectNode
                 title: qsTr("Nodes")
                 onAboutToShow: {
@@ -108,7 +114,7 @@ Rectangle {
                 }
             }
 
-            Menu {
+            NeoMenu {
                 id: menuConnectGate
                 title: qsTr("Gates")
                 onAboutToShow: {
@@ -119,7 +125,7 @@ Rectangle {
             }
         }
 
-        MenuItem {
+        NeoMenuItem {
             text: qsTr("Delete")
             onTriggered: {
                 node.forget(backend)
@@ -134,7 +140,8 @@ Rectangle {
                 return
             }
 
-            if (room.backend.canConnect(backend, nodes[i]) && nodes[i].type === type) {
+            if (room.backend.canConnect(backend,
+                                        nodes[i]) && nodes[i].type === type) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name
@@ -171,7 +178,8 @@ Rectangle {
                 return
             }
 
-            if (room.backend.canConnect(backend, nodes[i], Node.Output) && nodes[i].type === Node.Input) {
+            if (room.backend.canConnect(backend, nodes[i], Node.Output)
+                    && nodes[i].type === Node.Input) {
                 if (dynamicMenuItem.status === Component.Ready) {
                     var mnuItem = dynamicMenuItem.createObject(menu)
                     mnuItem.text = nodes[i].name

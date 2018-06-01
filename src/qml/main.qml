@@ -1,6 +1,6 @@
-import QtQuick 2.9
+import QtQuick 2.10
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
@@ -25,14 +25,7 @@ ApplicationWindow {
 
     title: qsTr("Neo")
 
-    // Finish necessary initializations
-    Component.onCompleted: {
-        menuBar.getMenu("file").insertItem(0, room.createNodeMenu)
-        app.menuBar = mnuBar
-    }
-
     menuBar: NeoMenuBar {
-        id: mnuBar
 
         onClear: {
             if (room.backend.changesSaved()) {
@@ -77,16 +70,6 @@ ApplicationWindow {
                                 "Your changes aren't saved.\nQuit without saving?"))
             } else {
                 Qt.quit()
-            }
-        }
-    }
-
-    statusBar: StatusBar {
-
-        RowLayout {
-            anchors.fill: parent
-            Label {
-                text: "Read Only"
             }
         }
     }

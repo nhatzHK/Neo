@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick 2.10
+import QtQuick.Controls 2.3
 import Neo.Node 1.0
 
 Canvas {
@@ -18,16 +18,18 @@ Canvas {
     property alias name: backend.name
     property alias backend: backend
 
-    property Item inSlot: NeoRadioButton {
-        y: node.height / 2 - 4
+    property Item inSlot: NeoSlot {
+        y: node.height / 2 - height / 2
         x: backend.type === Node.OrGate ? 4 : -2
+        fillColor: backend.output ? "green" : "red"
         visible: false
         parent: node
     }
 
-    property Item outSlot: NeoRadioButton {
+    property Item outSlot: NeoSlot {
         y: node.height / 2 - 4
         x: node.width - 6
+        fillColor: backend.output ? "green" : "red"
         visible: false
         parent: node
     }
@@ -124,73 +126,177 @@ Canvas {
         propagateComposedEvents: true
         signal rightClick
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        property int mouseButtonClicked: Qt.NoButton
 
-        // show context menu on leftclick pressed over the gate
         onPressed: {
-            if (Qt.RightButton & pressedButtons) {
-                contextMenu.popup()
+            if (pressedButtons & Qt.LeftButton) {
+                mouseButtonClicked = Qt.LeftButton
+            } else if (pressedButtons & Qt.RightButton) {
+                mouseButtonClicked = Qt.RightButton
             }
         }
 
         onClicked: {
-            if (!mouse.wasHeld) {
+            if (mouseButtonClicked === Qt.LeftButton) {
                 showCard(backend)
+            } else if (mouseButtonClicked === Qt.RightButton) {
+                contextMenu.popup()
             }
         }
     }
 
     // ! Context menu
-    Menu {
+    NeoMenu {
         id: contextMenu
         title: qsTr("Gate menu")
 
-        Menu {
+        NeoMenu {
             title: qsTr("Send To")
 
-            Menu {
+            NeoMenu {
                 id: menuSendGate
                 title: qsTr("Gates")
+
+                Repeater {
+                    id: sendGateRepeater
+
+                    NeoMenuItem {
+                        text: modelData.name
+                        checkable: true
+                        checked: room.backend.connected(backend, modelData)
+                        onToggled: {
+                            if (checked) {
+                                room.backend.createConnection(backend,
+                                                              modelData)
+                            } else {
+                                room.backend.removeConnections(backend,
+                                                               modelData)
+                            }
+
+                            backend.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            room.paint()
+                            checked = room.backend.connected(backend, modelData)
+                        }
+                    }
+                }
+
                 onAboutToShow: {
-                    menuSendGate.clear()
-                    makeGateList(menuSendGate, Node.OrGate)
-                    makeGateList(menuSendGate, Node.AndGate)
+                    sendGateRepeater.model = makeGateList()
                 }
             }
 
-            Menu {
+            NeoMenu {
                 id: menuSendNode
                 title: qsTr("Nodes")
+
+                Repeater {
+                    id: sendNodeRepeater
+
+                    NeoMenuItem {
+                        text: modelData.name
+                        checkable: true
+                        checked: room.backend.connected(backend, modelData)
+                        onToggled: {
+                            if (checked) {
+                                room.backend.createConnection(backend,
+                                                              modelData)
+                            } else {
+                                room.backend.removeConnections(backend,
+                                                               modelData)
+                            }
+
+                            backend.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            room.paint()
+                            checked = room.backend.connected(backend, modelData)
+                        }
+                    }
+                }
+
                 onAboutToShow: {
-                    menuSendNode.clear()
-                    makeNodeList(menuSendNode, Node.Output)
+                    sendNodeRepeater.model = makeNodeList()
                 }
             }
         }
 
-        Menu {
+        NeoMenu {
             title: qsTr("Read from")
 
-            Menu {
+            NeoMenu {
                 id: menuReadGate
                 title: qsTr("Gates")
+
+                Repeater {
+                    id: readGateRpeater
+                    NeoMenuItem {
+                        text: modelData.name
+                        checkable: true
+                        checked: room.backend.connected(backend, modelData,
+                                                        Node.Output)
+                        onToggled: {
+                            if (checked) {
+                                room.backend.createConnection(backend,
+                                                              modelData,
+                                                              Node.Output)
+                            } else {
+                                room.backend.removeConnections(backend,
+                                                               modelData,
+                                                               Node.Output)
+                            }
+
+                            backend.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            room.paint()
+                            checked = room.backend.connected(backend,
+                                                             modelData,
+                                                             Node.Output)
+                        }
+                    }
+                }
                 onAboutToShow: {
-                    menuReadGate.clear()
-                    makeGateList(menuReadGate, Node.OrGate, Node.Output)
-                    makeGateList(menuReadGate, Node.AndGate, Node.Output)
+                    readGateRpeater.model = makeGateList(Node.Output)
                 }
             }
 
-            Menu {
+            NeoMenu {
                 id: menuReadNode
                 title: qsTr("Nodes")
+
+                Repeater {
+                    id: readNodeRepeater
+                    NeoMenuItem {
+                        text: modelData.name
+                        checkable: true
+                        checked: room.backend.connected(backend, modelData,
+                                                        Node.Output)
+                        onToggled: {
+                            if (checked) {
+                                room.backend.createConnection(backend,
+                                                              modelData,
+                                                              Node.Output)
+                            } else {
+                                room.backend.removeConnections(backend,
+                                                               modelData,
+                                                               Node.Output)
+                            }
+
+                            backend.connectionsHaveChanged()
+                            modelData.connectionsHaveChanged()
+                            room.paint()
+                            checked = room.backend.connected(backend,
+                                                             modelData,
+                                                             Node.Output)
+                        }
+                    }
+                }
+
                 onAboutToShow: {
-                    menuReadNode.clear()
-                    makeNodeList(menuReadNode, Node.Input, Node.Output)
+                    readNodeRepeater.model = makeNodeList(Node.Output)
                 }
             }
         }
-
-        MenuItem {
+        NeoMenuItem {
             text: qsTr("Delete")
             onTriggered: {
                 node.forget(backend)
@@ -198,84 +304,37 @@ Canvas {
             }
         }
     }
-
-    function makeGateList(menu, type, way) {
+    function makeGateList(way) {
         if (way === undefined) {
             way = Node.Input
         }
 
-        function rec_for(nodes, i) {
-            if (i >= nodes.length) {
-                return
+        var l = []
+        for (var i = 0; i < room.backend.nodes.length; ++i) {
+            if (room.backend.canConnect(backend, room.backend.nodes[i], way)
+                    && (room.backend.nodes[i].type === Node.OrGate
+                        || room.backend.nodes[i].type === Node.AndGate)) {
+                l.push(room.backend.nodes[i])
             }
-
-            if (room.backend.canConnect(backend, nodes[i], way) && nodes[i].type === type) {
-                if (dynamicMenuItem.status === Component.Ready) {
-                    var mnuItem = dynamicMenuItem.createObject(menu)
-                    mnuItem.text = nodes[i].name
-                    mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend,
-                                                             nodes[i], way)
-
-                    menu.insertItem(0, mnuItem)
-
-                    mnuItem.toggled.connect(function (checked) {
-                        if (checked) {
-                            room.backend.createConnection(backend,
-                                                          nodes[i], way)
-                        } else {
-                            room.backend.removeConnections(backend,
-                                                           nodes[i], way)
-                        }
-
-                        backend.connectionsHaveChanged()
-                        nodes[i].connectionsHaveChanged()
-                        room.paint()
-                    })
-                }
-            }
-            rec_for(nodes, i + 1)
         }
-
-        rec_for(room.backend.nodes, 0)
+        return l
     }
 
-    function makeNodeList(menu, type, way) {
-
-        function rec_for(nodes, i) {
-            if (i >= nodes.length) {
-                return
-            }
-
-            if (room.backend.canConnect(backend, nodes[i], way) && nodes[i].type === type) {
-                if (dynamicMenuItem.status === Component.Ready) {
-                    var mnuItem = dynamicMenuItem.createObject(menu)
-                    mnuItem.text = nodes[i].name
-                    mnuItem.checkable = true
-                    mnuItem.checked = room.backend.connected(backend,
-                                                             nodes[i], way)
-
-                    menu.insertItem(0, mnuItem)
-
-                    mnuItem.toggled.connect(function (checked) {
-                        if (checked) {
-                            room.backend.createConnection(backend,
-                                                          nodes[i], way)
-                        } else {
-                            room.backend.removeConnections(backend,
-                                                           nodes[i], way)
-                        }
-
-                        backend.connectionsHaveChanged()
-                        nodes[i].connectionsHaveChanged()
-                        room.paint()
-                    })
-                }
-            }
-            rec_for(nodes, i + 1)
+    function makeNodeList(way) {
+        if (way === undefined) {
+            way = Node.Input
         }
 
-        rec_for(room.backend.nodes, 0)
+        var type = way === Node.Input ? Node.Output : Node.Input
+
+        var l = []
+        for (var i = 0; i < room.backend.nodes.length; ++i) {
+            if (room.backend.canConnect(backend, room.backend.nodes[i], way)
+                    && room.backend.nodes[i].type === type) {
+                l.push(room.backend.nodes[i])
+            }
+        }
+        return l
     }
 
     function setPosition(x, y) {
