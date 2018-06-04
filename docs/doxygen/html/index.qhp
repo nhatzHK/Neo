@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+  <namespace>me.errpell.neo</namespace>
+  <virtualFolder>doc</virtualFolder>
+  <customFilter name="neo1.0">
+  </customFilter>
+  <filterSection>
+    <filterAttribute>doxygen</filterAttribute>
+    <toc>
+      <section title="Neo 1.0" ref="index.html">
+        <section title="Classes" ref="annotated.html">
+          <section title="Class List" ref="annotated.html">
+            <section title="Connection" ref="classConnection.html">
+              <section title="Connection" ref="classConnection.html#a8afe63c8ac9873d6e01e2ca19218344e" />
+              <section title="receiver" ref="classConnection.html#ab510cb0a3cf64e4d98f624e73728bec0" />
+              <section title="sender" ref="classConnection.html#af28434b67e1e6c6930f5363612dda233" />
+              <section title="setReceiver" ref="classConnection.html#ac7e9230266e557439f1597d14d92bd41" />
+              <section title="setSender" ref="classConnection.html#aab3e0207b72d5af2dfbf6c0757ecc4da" />
+              <section title="read" ref="classConnection.html#ad75ed4e7c64886d0a7b1b229da1087a6" />
+              <section title="write" ref="classConnection.html#a8e141967a494f7e3d577fe018cfa5178" />
+              <section title="receiverChanged" ref="classConnection.html#a33165f69da60f638d3d8412e3ccc4312" />
+              <section title="senderChanged" ref="classConnection.html#acd694eeb6ad7e287aacd356b95fe6dd9" />
+              <section title="m_receiver" ref="classConnection.html#a508ae4ca471baad98e9ace730e8ab500" />
+              <section title="m_sender" ref="classConnection.html#aa6eb9bca71cf1144595325a4c47182b9" />
+              <section title="to" ref="classConnection.html#a801ac88d7985062c01ebff75ca3845a7" />
+              <section title="from" ref="classConnection.html#a9e0992b9aebf3307aa05ef797ed8426d" />
+            </section>
+            <section title="Node" ref="classNode.html">
+              <section title="Type" ref="classNode.html#a8dad370be1595f49e0a7c2406a91e867">
+                <section title="Input" ref="classNode.html#a8dad370be1595f49e0a7c2406a91e867abfc31e6ac0c7555046bb280292d12a06" />
+                <section title="Output" ref="classNode.html#a8dad370be1595f49e0a7c2406a91e867a2b2b65a2a92feda8449359871f125967" />
+                <section title="OrGate" ref="classNode.html#a8dad370be1595f49e0a7c2406a91e867a7d9dc50485b15cda533db8c73f7f4df2" />
+                <section title="AndGate" ref="classNode.html#a8dad370be1595f49e0a7c2406a91e867a3782d4e5a3caa0541cd408558d9d7e30" />
+              </section>
+              <section title="Node" ref="classNode.html#a96f101eb67925097d69051a242b8e5a7" />
+              <section title="pos" ref="classNode.html#a16da82741d426eed77c481ab13a2fb7c" />
+              <section title="setPos" ref="classNode.html#a31619f2d1580d4c97d1c454c04a3ce7e" />
+              <section title="inPos" ref="classNode.html#a7f2ad8fdb2afa9c0369c35a2270d93f1" />
+              <section title="setInPos" ref="classNode.html#aa34d51c11117d2e01e707f84d7c5c2a0" />
+              <section title="outPos" ref="classNode.html#a1caba8cbccfaf15e73ffe620e3e293fc" />
+              <section title="setOutPos" ref="classNode.html#aa5db2e2bc6aef41e31f1977d9b487c1c" />
+              <section title="setType" ref="classNode.html#a347703417d88a057b631fb88e6251fe7" />
+              <section title="type" ref="classNode.html#a2cd393eb2422071ed2af7e026e61c7cb" />
+              <section title="setValue" ref="classNode.html#a05a2a996157abda66ef7da3baf2f5db3" />
+              <section title="value" ref="classNode.html#a508e7ab9a2c9feed1ab311606e9e1b68" />
+              <section title="setName" ref="classNode.html#a8c58d22a60a161c24f5668be303a11c5" />
+              <section title="name" ref="classNode.html#ac40f16db9ad108a3d8a029802899104c" />
+              <section title="setAddress" ref="classNode.html#a501c58ee4e1197e670459a80ccc121f7" />
+              <section title="address" ref="classNode.html#a51460cca215d98243c8efd817713b7e3" />
+              <section title="setOutput" ref="classNode.html#a1141569603eaccd819188c5dbfa9a9f9" />
+              <section title="output" ref="classNode.html#a8c4ed49f3a1033f0ebd945170e780231" />
+              <section title="setBound" ref="classNode.html#ac0827ecef276b83a1b24306f69258ca4" />
+              <section title="bound" ref="classNode.html#a9540c4684a7d3d94d08ea673762488b5" />
+              <section title="setOpened" ref="classNode.html#ae6c46260f6887d83837ed895cc24c9c4" />
+              <section title="opened" ref="classNode.html#abe055b7d4469fcce0b3550a2096ab256" />
+              <section title="setInverted" ref="classNode.html#a75733c30a1b1f73e439e6030702bc516" />
+              <section title="inverted" ref="classNode.html#a1f3f2f1e2a3d58b480a9896d14c925ed" />
+              <section title="setMin" ref="classNode.html#a9281d0e024c9dba7e3ce4ac7f0929a09" />
+              <section title="min" ref="classNode.html#ab3916a71937c0f290096ba5ceb83e446" />
+              <section title="setMax" ref="classNode.html#a4f72734abbd068beab2bb5efa325239d" />
+              <section title="max" ref="classNode.html#a5e3869dd6d197f443d15aedec21653a4" />
+              <section title="setFirst" ref="classNode.html#a95b19867e7793bd169a5338f109656b1" />
+              <section title="first" ref="classNode.html#ada611ffb36ad9b6cadc81a8287c6d10f" />
+              <section title="setSecond" ref="classNode.html#ae39defb336f6881f50fce60e88ce76be" />
+              <section title="second" ref="classNode.html#a6c71292db71aac8c9742f13583f915ad" />
+              <section title="setIp" ref="classNode.html#a2222f4650793659e8579c2eb725f029d" />
+              <section title="ip" ref="classNode.html#a42fea6791a936f0255c5a8207e6a778e" />
+              <section title="getIp" ref="classNode.html#a4479a7c2e0f48ed75133ca45b42ad339" />
+              <section title="getPort" ref="classNode.html#a114811570f6e6b2711635747af138e68" />
+              <section title="id" ref="classNode.html#a8f3da5e81c2e206943236b3bf77589a1" />
+              <section title="read" ref="classNode.html#abcfc7dbcab27b9ffd29830b599337529" />
+              <section title="write" ref="classNode.html#a30c4929b3a320cdab5e4e7e60126de5c" />
+              <section title="readPoint" ref="classNode.html#a86f94f425dbee2eff2e43c22f5a2dc45" />
+              <section title="writePoint" ref="classNode.html#adfa903ce53347a33484770e92787fb37" />
+              <section title="typeChanged" ref="classNode.html#adcbfe89009445eca17b8d9e122c504f4" />
+              <section title="nameChanged" ref="classNode.html#ab1a77a5a5faea93bbf412647885688f9" />
+              <section title="addressChanged" ref="classNode.html#aacc34a3cf4a311bf9d655c8b90098f6a" />
+              <section title="ipChanged" ref="classNode.html#ae985827a18c3c371a4979e93fd18f6a6" />
+              <section title="connectionsHaveChanged" ref="classNode.html#a8454690655da62155f182fcc1e523bfb" />
+              <section title="posChanged" ref="classNode.html#a7ef0676f32b351a179a0ef09491b7dbd" />
+              <section title="inPosChanged" ref="classNode.html#a71aeb141261b0cacb7e4562f9d3e3584" />
+              <section title="outPosChanged" ref="classNode.html#a672f3bac02b8d931dbc70221bcec5f82" />
+              <section title="outputChanged" ref="classNode.html#a9d5d3ed653b8334849f3c0738dc6000e" />
+              <section title="boundChanged" ref="classNode.html#a64a8638185a74040be7526961bf60dca" />
+              <section title="openedChanged" ref="classNode.html#a9e9cd320a947a1d2ee154430295a5081" />
+              <section title="invertedChanged" ref="classNode.html#a03a32d400001bc8871a6bd5f31c70b19" />
+              <section title="messageReady" ref="classNode.html#a1f66a3111cc14cd1fc8ca4db3741429b" />
+              <section title="valueChanged" ref="classNode.html#a3644e5a194e3f4d83860cd7118d49fe3" />
+              <section title="nodeHaveChanged" ref="classNode.html#a0110e86c6ae22ba29fc5660d142416d1" />
+              <section title="minChanged" ref="classNode.html#a9ae68ff6254a48d2d11f72161fecf67e" />
+              <section title="maxChanged" ref="classNode.html#ab05844c4ab39602e886f19c72cc49763" />
+              <section title="firstChanged" ref="classNode.html#a5fec832ac372cd32eb5724cdac8be048" />
+              <section title="secondChanged" ref="classNode.html#ae62835ad14946daf008cdd2887e2af8c" />
+              <section title="methodChanged" ref="classNode.html#a457f927fed0506072d24960cc69a8c58" />
+              <section title="conditionOverriden" ref="classNode.html#a25cfd54debef015217a521dabfcb9f79" />
+              <section title="m_name" ref="classNode.html#a212e46e3de8f152be26c55810f504bd0" />
+              <section title="m_address" ref="classNode.html#a229782743d15a6963d87ba406bac67c4" />
+              <section title="m_ip" ref="classNode.html#a9eef6ea1453c387e542e23e85a571fdf" />
+              <section title="m_pos" ref="classNode.html#a43c294b967c1b5a6b73060d51824aa4d" />
+              <section title="m_in" ref="classNode.html#a8dc9a65d78186e49bbc5fe817b1104f2" />
+              <section title="m_out" ref="classNode.html#ab8f3fbda818d7454fa5cb34e078418f3" />
+              <section title="m_type" ref="classNode.html#a82da945ee34133f197fd8dcefc9070a0" />
+              <section title="m_value" ref="classNode.html#a7dc02eca908f23a9bf1286d64e9d85c6" />
+              <section title="m_min" ref="classNode.html#a6c5c7957cd96ee186cd172f0ca160cff" />
+              <section title="m_max" ref="classNode.html#a989f95ea5a316010c4e10f8f4b9dda9f" />
+              <section title="m_first" ref="classNode.html#ab7660bde372ab02cedcbb810ed878216" />
+              <section title="m_second" ref="classNode.html#a9a2c75b4e1cc47bb465b6e032d6aa11e" />
+              <section title="m_output" ref="classNode.html#a5c0e1404f737864c62e810fe595c7bde" />
+              <section title="m_bound" ref="classNode.html#aad787043f0df6d527c391ea50583250a" />
+              <section title="m_opened" ref="classNode.html#adb24661af93e1a2749cf360191781d5f" />
+              <section title="m_inverted" ref="classNode.html#af1127c01cdf01117e053022ab8777768" />
+              <section title="m_id" ref="classNode.html#a5c1c0ff28c4d71f57d44400cba820caa" />
+              <section title="type" ref="classNode.html#a2d594c1fd5e6bb196ac972950b3b003f" />
+              <section title="value" ref="classNode.html#a91f9e234953a33d2bd876a7a748c85ec" />
+              <section title="output" ref="classNode.html#a4eb46a970b73d2edf10cb289f3df8e01" />
+              <section title="name" ref="classNode.html#ad864ab24f394b18f2ed1fdb56b3340eb" />
+              <section title="address" ref="classNode.html#af5b57623b505b9471206ddd8e25831e9" />
+              <section title="ip" ref="classNode.html#ad9404669683d5d12c819c646753d9428" />
+              <section title="bound" ref="classNode.html#a36ff894ab042668791da153b7141e6de" />
+              <section title="opened" ref="classNode.html#a0ec5043d06a7b57d2649d9a7b4f85643" />
+              <section title="inverted" ref="classNode.html#a4f9c4c86f80c90e5082df3f9bb5c8d40" />
+              <section title="pos" ref="classNode.html#a17543f5c5b9eaf3cb47317d9abc2e1d2" />
+              <section title="inPos" ref="classNode.html#a94d763fca0bb262a443eb8954c29cca3" />
+              <section title="outPos" ref="classNode.html#a68f8844b5a417d24a73c5a42053f7b83" />
+              <section title="min" ref="classNode.html#a13a0780efbfb45fa05f71db05101d0b5" />
+              <section title="max" ref="classNode.html#a12dde336ea8459ddb531efcdd0efccae" />
+              <section title="first" ref="classNode.html#a649bdd5c69dfb539bc129d2c074f03ea" />
+              <section title="second" ref="classNode.html#a4fb62aa24764bae14627d3afc4039572" />
+            </section>
+            <section title="Room" ref="classRoom.html">
+              <section title="Room" ref="classRoom.html#a58d54cc7a80930812d780f101c1dc4bc" />
+              <section title="connections" ref="classRoom.html#a95230e582f089891ea8a8f6febfaf2fa" />
+              <section title="nodes" ref="classRoom.html#a9ed01ab71422acf2c22b46d7f582f878" />
+              <section title="file" ref="classRoom.html#ab6644a3874458fbeffd5fa2951d281ab" />
+              <section title="setFile" ref="classRoom.html#afe61f8f1359a431ef906ee2ff485eb80" />
+              <section title="deleteNode" ref="classRoom.html#adbcc976eefed696d0536773e75c4f7d2" />
+              <section title="connected" ref="classRoom.html#aaaeb040b9fa13894f4c19fb1eecbefd2" />
+              <section title="canConnect" ref="classRoom.html#a085e1c1c95f6d30dded1ace857a3ec09" />
+              <section title="removeConnections" ref="classRoom.html#a0b0b13f4ebd1c45353090b6ac64ed433" />
+              <section title="createConnection" ref="classRoom.html#a3a88ea31e062677f1d245960b20a6e97" />
+              <section title="hasOutConnection" ref="classRoom.html#ad942f0c7132818f36a4de16fe2ca477a" />
+              <section title="hasInConnection" ref="classRoom.html#aeffeac1d449a9a713efcf94efb2432e0" />
+              <section title="evaluate" ref="classRoom.html#a0f8b282b43bd3115e24f6b9bd95d92a9" />
+              <section title="initSocket" ref="classRoom.html#a4d01284c86cb970b25b0fcfa45cdd38e" />
+              <section title="save" ref="classRoom.html#ad795aa64d503519ba0777e3f1d81e54c" />
+              <section title="save" ref="classRoom.html#a10b12560a3fbd161c0175a2f6edb9a9d" />
+              <section title="load" ref="classRoom.html#a26065830b40a3a127ee2686d9feb4b74" />
+              <section title="savedBefore" ref="classRoom.html#a05135b32eee12b1f69ce0a0497ce6f9e" />
+              <section title="changesSaved" ref="classRoom.html#af51c094a0286a3312b05e2e8425d10f1" />
+              <section title="hasMoreLoaded" ref="classRoom.html#abb662577c7ec3ea46d023a845e726cfa" />
+              <section title="loadNextNode" ref="classRoom.html#ab1f1a0f0b4db3483b0f09667d81f2d61" />
+              <section title="loadConnections" ref="classRoom.html#a55b3be4272343997434bd5f690ba954e" />
+              <section title="nextType" ref="classRoom.html#a20e9c4082ae977586a53f4f909869592" />
+              <section title="read" ref="classRoom.html#acb99b086249086eef4878fc315aadb91" />
+              <section title="write" ref="classRoom.html#a7e9c3212f3282b514b75a92d68727940" />
+              <section title="connectionsUpdated" ref="classRoom.html#a4fad3e109783442157bb775ef417a57b" />
+              <section title="nodesUpdated" ref="classRoom.html#a8261085c6843f3b85d403284b39f92ba" />
+              <section title="fileChanged" ref="classRoom.html#abc28a6555cb3e3543eecb65095ee89b7" />
+              <section title="roomHaveChanged" ref="classRoom.html#ae37847fde9763f0561150f8bcfa0b550" />
+              <section title="roomLoaded" ref="classRoom.html#abe1f81891e69cd6b511bbf18d7ce38c2" />
+              <section title="removeConnections" ref="classRoom.html#ae87a5e306907216bd57a90ea2a2a5a46" />
+              <section title="getValue" ref="classRoom.html#a5b197766e033600e4358c65781e11e73" />
+              <section title="processBundle" ref="classRoom.html#a700df071feffa282696e156791dd0d87" />
+              <section title="processMessage" ref="classRoom.html#ab498f123e988e3596722b0e088507b80" />
+              <section title="looping" ref="classRoom.html#a95534f9e0c13a8b75c643c985c851400" />
+              <section title="networkLoop" ref="classRoom.html#aa6f4b7dbdc18771ef12aeeba412414c0" />
+              <section title="chained" ref="classRoom.html#a27f7c8a9f47e96223a443c73516a2e36" />
+              <section title="readPendingDatagrams" ref="classRoom.html#af50ca900545ad2f106ef15f984424b44" />
+              <section title="sendMessage" ref="classRoom.html#a3abfcc9def908c1a0acaf286fc325454" />
+              <section title="m_connections" ref="classRoom.html#ad63f36cb6664087c6c74dddeb032e711" />
+              <section title="m_nodes" ref="classRoom.html#ab5be7998bc742a4bf931c81f044d7aae" />
+              <section title="m_jsonNodes" ref="classRoom.html#a98b8568422738036941daf95be83a9e3" />
+              <section title="m_jsonConnections" ref="classRoom.html#a9d19c870844f064eb724412ec10ef7f2" />
+              <section title="m_nodeHash" ref="classRoom.html#ace06dd46446e3ca79533f99b1723cf97" />
+              <section title="m_sock" ref="classRoom.html#a726013d07c3e655f21822f720a89cea7" />
+              <section title="m_file" ref="classRoom.html#a66ea178fb6c6c69842498b87abac816a" />
+              <section title="m_changeSaved" ref="classRoom.html#aa6a3c11ef8f5d0253f4ddb763cfc3f53" />
+              <section title="connections" ref="classRoom.html#a393b843ae2ef099ee92633a17f560ec8" />
+              <section title="nodes" ref="classRoom.html#a775521f64541cbe3a8ae8a37a008a3c2" />
+              <section title="file" ref="classRoom.html#a13e2ceb7b9470a01114bb50890b41ab7" />
+            </section>
+          </section>
+          <section title="Class Index" ref="classes.html" />
+          <section title="Class Hierarchy" ref="hierarchy.html">
+            <section title="QObject">
+              <section title="Connection" ref="classConnection.html" />
+              <section title="Node" ref="classNode.html" />
+              <section title="Room" ref="classRoom.html" />
+            </section>
+          </section>
+          <section title="Class Members" ref="functions.html">
+            <section title="All" ref="functions.html" />
+            <section title="Functions" ref="functions_func.html" />
+            <section title="Variables" ref="functions_vars.html" />
+            <section title="Properties" ref="functions_prop.html" />
+          </section>
+        </section>
+        <section title="Files" ref="files.html">
+          <section title="File List" ref="files.html">
+            <section title="include" ref="dir_d44c64559bbebec7f509842c48db8b23.html">
+              <section title="connection.h" ref="connection_8h_source.html" />
+              <section title="node.h" ref="node_8h_source.html" />
+              <section title="room.h" ref="room_8h_source.html" />
+            </section>
+          </section>
+        </section>
+      </section>
+    </toc>
+    <keywords>
+      <keyword name="Connection" id="Connection" ref="classConnection.html" />
+      <keyword name="receiverChanged" id="Connection::receiverChanged" ref="classConnection.html#a33165f69da60f638d3d8412e3ccc4312" />
+      <keyword name="senderChanged" id="Connection::senderChanged" ref="classConnection.html#acd694eeb6ad7e287aacd356b95fe6dd9" />
+      <keyword name="Connection" id="Connection::Connection" ref="classConnection.html#a8afe63c8ac9873d6e01e2ca19218344e" />
+      <keyword name="receiver" id="Connection::receiver" ref="classConnection.html#ab510cb0a3cf64e4d98f624e73728bec0" />
+      <keyword name="sender" id="Connection::sender" ref="classConnection.html#af28434b67e1e6c6930f5363612dda233" />
+      <keyword name="setReceiver" id="Connection::setReceiver" ref="classConnection.html#ac7e9230266e557439f1597d14d92bd41" />
+      <keyword name="setSender" id="Connection::setSender" ref="classConnection.html#aab3e0207b72d5af2dfbf6c0757ecc4da" />
+      <keyword name="read" id="Connection::read" ref="classConnection.html#ad75ed4e7c64886d0a7b1b229da1087a6" />
+      <keyword name="write" id="Connection::write" ref="classConnection.html#a8e141967a494f7e3d577fe018cfa5178" />
+      <keyword name="to" id="Connection::to" ref="classConnection.html#a801ac88d7985062c01ebff75ca3845a7" />
+      <keyword name="from" id="Connection::from" ref="classConnection.html#a9e0992b9aebf3307aa05ef797ed8426d" />
+      <keyword name="m_receiver" id="Connection::m_receiver" ref="classConnection.html#a508ae4ca471baad98e9ace730e8ab500" />
+      <keyword name="m_sender" id="Connection::m_sender" ref="classConnection.html#aa6eb9bca71cf1144595325a4c47182b9" />
+      <keyword name="Node" id="Node" ref="classNode.html" />
+      <keyword name="typeChanged" id="Node::typeChanged" ref="classNode.html#adcbfe89009445eca17b8d9e122c504f4" />
+      <keyword name="nameChanged" id="Node::nameChanged" ref="classNode.html#ab1a77a5a5faea93bbf412647885688f9" />
+      <keyword name="addressChanged" id="Node::addressChanged" ref="classNode.html#aacc34a3cf4a311bf9d655c8b90098f6a" />
+      <keyword name="ipChanged" id="Node::ipChanged" ref="classNode.html#ae985827a18c3c371a4979e93fd18f6a6" />
+      <keyword name="connectionsHaveChanged" id="Node::connectionsHaveChanged" ref="classNode.html#a8454690655da62155f182fcc1e523bfb" />
+      <keyword name="posChanged" id="Node::posChanged" ref="classNode.html#a7ef0676f32b351a179a0ef09491b7dbd" />
+      <keyword name="inPosChanged" id="Node::inPosChanged" ref="classNode.html#a71aeb141261b0cacb7e4562f9d3e3584" />
+      <keyword name="outPosChanged" id="Node::outPosChanged" ref="classNode.html#a672f3bac02b8d931dbc70221bcec5f82" />
+      <keyword name="outputChanged" id="Node::outputChanged" ref="classNode.html#a9d5d3ed653b8334849f3c0738dc6000e" />
+      <keyword name="boundChanged" id="Node::boundChanged" ref="classNode.html#a64a8638185a74040be7526961bf60dca" />
+      <keyword name="openedChanged" id="Node::openedChanged" ref="classNode.html#a9e9cd320a947a1d2ee154430295a5081" />
+      <keyword name="invertedChanged" id="Node::invertedChanged" ref="classNode.html#a03a32d400001bc8871a6bd5f31c70b19" />
+      <keyword name="messageReady" id="Node::messageReady" ref="classNode.html#a1f66a3111cc14cd1fc8ca4db3741429b" />
+      <keyword name="valueChanged" id="Node::valueChanged" ref="classNode.html#a3644e5a194e3f4d83860cd7118d49fe3" />
+      <keyword name="nodeHaveChanged" id="Node::nodeHaveChanged" ref="classNode.html#a0110e86c6ae22ba29fc5660d142416d1" />
+      <keyword name="minChanged" id="Node::minChanged" ref="classNode.html#a9ae68ff6254a48d2d11f72161fecf67e" />
+      <keyword name="maxChanged" id="Node::maxChanged" ref="classNode.html#ab05844c4ab39602e886f19c72cc49763" />
+      <keyword name="firstChanged" id="Node::firstChanged" ref="classNode.html#a5fec832ac372cd32eb5724cdac8be048" />
+      <keyword name="secondChanged" id="Node::secondChanged" ref="classNode.html#ae62835ad14946daf008cdd2887e2af8c" />
+      <keyword name="methodChanged" id="Node::methodChanged" ref="classNode.html#a457f927fed0506072d24960cc69a8c58" />
+      <keyword name="conditionOverriden" id="Node::conditionOverriden" ref="classNode.html#a25cfd54debef015217a521dabfcb9f79" />
+      <keyword name="Node" id="Node::Node" ref="classNode.html#a96f101eb67925097d69051a242b8e5a7" />
+      <keyword name="pos" id="Node::pos" ref="classNode.html#a16da82741d426eed77c481ab13a2fb7c" />
+      <keyword name="setPos" id="Node::setPos" ref="classNode.html#a31619f2d1580d4c97d1c454c04a3ce7e" />
+      <keyword name="inPos" id="Node::inPos" ref="classNode.html#a7f2ad8fdb2afa9c0369c35a2270d93f1" />
+      <keyword name="setInPos" id="Node::setInPos" ref="classNode.html#aa34d51c11117d2e01e707f84d7c5c2a0" />
+      <keyword name="outPos" id="Node::outPos" ref="classNode.html#a1caba8cbccfaf15e73ffe620e3e293fc" />
+      <keyword name="setOutPos" id="Node::setOutPos" ref="classNode.html#aa5db2e2bc6aef41e31f1977d9b487c1c" />
+      <keyword name="setType" id="Node::setType" ref="classNode.html#a347703417d88a057b631fb88e6251fe7" />
+      <keyword name="type" id="Node::type" ref="classNode.html#a2cd393eb2422071ed2af7e026e61c7cb" />
+      <keyword name="setValue" id="Node::setValue" ref="classNode.html#a05a2a996157abda66ef7da3baf2f5db3" />
+      <keyword name="value" id="Node::value" ref="classNode.html#a508e7ab9a2c9feed1ab311606e9e1b68" />
+      <keyword name="setName" id="Node::setName" ref="classNode.html#a8c58d22a60a161c24f5668be303a11c5" />
+      <keyword name="name" id="Node::name" ref="classNode.html#ac40f16db9ad108a3d8a029802899104c" />
+      <keyword name="setAddress" id="Node::setAddress" ref="classNode.html#a501c58ee4e1197e670459a80ccc121f7" />
+      <keyword name="address" id="Node::address" ref="classNode.html#a51460cca215d98243c8efd817713b7e3" />
+      <keyword name="setOutput" id="Node::setOutput" ref="classNode.html#a1141569603eaccd819188c5dbfa9a9f9" />
+      <keyword name="output" id="Node::output" ref="classNode.html#a8c4ed49f3a1033f0ebd945170e780231" />
+      <keyword name="setBound" id="Node::setBound" ref="classNode.html#ac0827ecef276b83a1b24306f69258ca4" />
+      <keyword name="bound" id="Node::bound" ref="classNode.html#a9540c4684a7d3d94d08ea673762488b5" />
+      <keyword name="setOpened" id="Node::setOpened" ref="classNode.html#ae6c46260f6887d83837ed895cc24c9c4" />
+      <keyword name="opened" id="Node::opened" ref="classNode.html#abe055b7d4469fcce0b3550a2096ab256" />
+      <keyword name="setInverted" id="Node::setInverted" ref="classNode.html#a75733c30a1b1f73e439e6030702bc516" />
+      <keyword name="inverted" id="Node::inverted" ref="classNode.html#a1f3f2f1e2a3d58b480a9896d14c925ed" />
+      <keyword name="setMin" id="Node::setMin" ref="classNode.html#a9281d0e024c9dba7e3ce4ac7f0929a09" />
+      <keyword name="min" id="Node::min" ref="classNode.html#ab3916a71937c0f290096ba5ceb83e446" />
+      <keyword name="setMax" id="Node::setMax" ref="classNode.html#a4f72734abbd068beab2bb5efa325239d" />
+      <keyword name="max" id="Node::max" ref="classNode.html#a5e3869dd6d197f443d15aedec21653a4" />
+      <keyword name="setFirst" id="Node::setFirst" ref="classNode.html#a95b19867e7793bd169a5338f109656b1" />
+      <keyword name="first" id="Node::first" ref="classNode.html#ada611ffb36ad9b6cadc81a8287c6d10f" />
+      <keyword name="setSecond" id="Node::setSecond" ref="classNode.html#ae39defb336f6881f50fce60e88ce76be" />
+      <keyword name="second" id="Node::second" ref="classNode.html#a6c71292db71aac8c9742f13583f915ad" />
+      <keyword name="setIp" id="Node::setIp" ref="classNode.html#a2222f4650793659e8579c2eb725f029d" />
+      <keyword name="ip" id="Node::ip" ref="classNode.html#a42fea6791a936f0255c5a8207e6a778e" />
+      <keyword name="getIp" id="Node::getIp" ref="classNode.html#a4479a7c2e0f48ed75133ca45b42ad339" />
+      <keyword name="getPort" id="Node::getPort" ref="classNode.html#a114811570f6e6b2711635747af138e68" />
+      <keyword name="id" id="Node::id" ref="classNode.html#a8f3da5e81c2e206943236b3bf77589a1" />
+      <keyword name="read" id="Node::read" ref="classNode.html#abcfc7dbcab27b9ffd29830b599337529" />
+      <keyword name="write" id="Node::write" ref="classNode.html#a30c4929b3a320cdab5e4e7e60126de5c" />
+      <keyword name="readPoint" id="Node::readPoint" ref="classNode.html#a86f94f425dbee2eff2e43c22f5a2dc45" />
+      <keyword name="writePoint" id="Node::writePoint" ref="classNode.html#adfa903ce53347a33484770e92787fb37" />
+      <keyword name="type" id="Node::type" ref="classNode.html#a2d594c1fd5e6bb196ac972950b3b003f" />
+      <keyword name="value" id="Node::value" ref="classNode.html#a91f9e234953a33d2bd876a7a748c85ec" />
+      <keyword name="output" id="Node::output" ref="classNode.html#a4eb46a970b73d2edf10cb289f3df8e01" />
+      <keyword name="name" id="Node::name" ref="classNode.html#ad864ab24f394b18f2ed1fdb56b3340eb" />
+      <keyword name="address" id="Node::address" ref="classNode.html#af5b57623b505b9471206ddd8e25831e9" />
+      <keyword name="ip" id="Node::ip" ref="classNode.html#ad9404669683d5d12c819c646753d9428" />
+      <keyword name="bound" id="Node::bound" ref="classNode.html#a36ff894ab042668791da153b7141e6de" />
+      <keyword name="opened" id="Node::opened" ref="classNode.html#a0ec5043d06a7b57d2649d9a7b4f85643" />
+      <keyword name="inverted" id="Node::inverted" ref="classNode.html#a4f9c4c86f80c90e5082df3f9bb5c8d40" />
+      <keyword name="pos" id="Node::pos" ref="classNode.html#a17543f5c5b9eaf3cb47317d9abc2e1d2" />
+      <keyword name="inPos" id="Node::inPos" ref="classNode.html#a94d763fca0bb262a443eb8954c29cca3" />
+      <keyword name="outPos" id="Node::outPos" ref="classNode.html#a68f8844b5a417d24a73c5a42053f7b83" />
+      <keyword name="min" id="Node::min" ref="classNode.html#a13a0780efbfb45fa05f71db05101d0b5" />
+      <keyword name="max" id="Node::max" ref="classNode.html#a12dde336ea8459ddb531efcdd0efccae" />
+      <keyword name="first" id="Node::first" ref="classNode.html#a649bdd5c69dfb539bc129d2c074f03ea" />
+      <keyword name="second" id="Node::second" ref="classNode.html#a4fb62aa24764bae14627d3afc4039572" />
+      <keyword name="m_name" id="Node::m_name" ref="classNode.html#a212e46e3de8f152be26c55810f504bd0" />
+      <keyword name="m_address" id="Node::m_address" ref="classNode.html#a229782743d15a6963d87ba406bac67c4" />
+      <keyword name="m_ip" id="Node::m_ip" ref="classNode.html#a9eef6ea1453c387e542e23e85a571fdf" />
+      <keyword name="m_pos" id="Node::m_pos" ref="classNode.html#a43c294b967c1b5a6b73060d51824aa4d" />
+      <keyword name="m_in" id="Node::m_in" ref="classNode.html#a8dc9a65d78186e49bbc5fe817b1104f2" />
+      <keyword name="m_out" id="Node::m_out" ref="classNode.html#ab8f3fbda818d7454fa5cb34e078418f3" />
+      <keyword name="m_type" id="Node::m_type" ref="classNode.html#a82da945ee34133f197fd8dcefc9070a0" />
+      <keyword name="m_value" id="Node::m_value" ref="classNode.html#a7dc02eca908f23a9bf1286d64e9d85c6" />
+      <keyword name="m_min" id="Node::m_min" ref="classNode.html#a6c5c7957cd96ee186cd172f0ca160cff" />
+      <keyword name="m_max" id="Node::m_max" ref="classNode.html#a989f95ea5a316010c4e10f8f4b9dda9f" />
+      <keyword name="m_first" id="Node::m_first" ref="classNode.html#ab7660bde372ab02cedcbb810ed878216" />
+      <keyword name="m_second" id="Node::m_second" ref="classNode.html#a9a2c75b4e1cc47bb465b6e032d6aa11e" />
+      <keyword name="m_output" id="Node::m_output" ref="classNode.html#a5c0e1404f737864c62e810fe595c7bde" />
+      <keyword name="m_bound" id="Node::m_bound" ref="classNode.html#aad787043f0df6d527c391ea50583250a" />
+      <keyword name="m_opened" id="Node::m_opened" ref="classNode.html#adb24661af93e1a2749cf360191781d5f" />
+      <keyword name="m_inverted" id="Node::m_inverted" ref="classNode.html#af1127c01cdf01117e053022ab8777768" />
+      <keyword name="m_id" id="Node::m_id" ref="classNode.html#a5c1c0ff28c4d71f57d44400cba820caa" />
+      <keyword name="Room" id="Room" ref="classRoom.html" />
+      <keyword name="connectionsUpdated" id="Room::connectionsUpdated" ref="classRoom.html#a4fad3e109783442157bb775ef417a57b" />
+      <keyword name="nodesUpdated" id="Room::nodesUpdated" ref="classRoom.html#a8261085c6843f3b85d403284b39f92ba" />
+      <keyword name="fileChanged" id="Room::fileChanged" ref="classRoom.html#abc28a6555cb3e3543eecb65095ee89b7" />
+      <keyword name="roomHaveChanged" id="Room::roomHaveChanged" ref="classRoom.html#ae37847fde9763f0561150f8bcfa0b550" />
+      <keyword name="roomLoaded" id="Room::roomLoaded" ref="classRoom.html#abe1f81891e69cd6b511bbf18d7ce38c2" />
+      <keyword name="Room" id="Room::Room" ref="classRoom.html#a58d54cc7a80930812d780f101c1dc4bc" />
+      <keyword name="connections" id="Room::connections" ref="classRoom.html#a95230e582f089891ea8a8f6febfaf2fa" />
+      <keyword name="nodes" id="Room::nodes" ref="classRoom.html#a9ed01ab71422acf2c22b46d7f582f878" />
+      <keyword name="file" id="Room::file" ref="classRoom.html#ab6644a3874458fbeffd5fa2951d281ab" />
+      <keyword name="setFile" id="Room::setFile" ref="classRoom.html#afe61f8f1359a431ef906ee2ff485eb80" />
+      <keyword name="deleteNode" id="Room::deleteNode" ref="classRoom.html#adbcc976eefed696d0536773e75c4f7d2" />
+      <keyword name="connected" id="Room::connected" ref="classRoom.html#aaaeb040b9fa13894f4c19fb1eecbefd2" />
+      <keyword name="canConnect" id="Room::canConnect" ref="classRoom.html#a085e1c1c95f6d30dded1ace857a3ec09" />
+      <keyword name="removeConnections" id="Room::removeConnections" ref="classRoom.html#a0b0b13f4ebd1c45353090b6ac64ed433" />
+      <keyword name="createConnection" id="Room::createConnection" ref="classRoom.html#a3a88ea31e062677f1d245960b20a6e97" />
+      <keyword name="hasOutConnection" id="Room::hasOutConnection" ref="classRoom.html#ad942f0c7132818f36a4de16fe2ca477a" />
+      <keyword name="hasInConnection" id="Room::hasInConnection" ref="classRoom.html#aeffeac1d449a9a713efcf94efb2432e0" />
+      <keyword name="evaluate" id="Room::evaluate" ref="classRoom.html#a0f8b282b43bd3115e24f6b9bd95d92a9" />
+      <keyword name="initSocket" id="Room::initSocket" ref="classRoom.html#a4d01284c86cb970b25b0fcfa45cdd38e" />
+      <keyword name="save" id="Room::save" ref="classRoom.html#ad795aa64d503519ba0777e3f1d81e54c" />
+      <keyword name="save" id="Room::save" ref="classRoom.html#a10b12560a3fbd161c0175a2f6edb9a9d" />
+      <keyword name="load" id="Room::load" ref="classRoom.html#a26065830b40a3a127ee2686d9feb4b74" />
+      <keyword name="savedBefore" id="Room::savedBefore" ref="classRoom.html#a05135b32eee12b1f69ce0a0497ce6f9e" />
+      <keyword name="changesSaved" id="Room::changesSaved" ref="classRoom.html#af51c094a0286a3312b05e2e8425d10f1" />
+      <keyword name="hasMoreLoaded" id="Room::hasMoreLoaded" ref="classRoom.html#abb662577c7ec3ea46d023a845e726cfa" />
+      <keyword name="loadNextNode" id="Room::loadNextNode" ref="classRoom.html#ab1f1a0f0b4db3483b0f09667d81f2d61" />
+      <keyword name="loadConnections" id="Room::loadConnections" ref="classRoom.html#a55b3be4272343997434bd5f690ba954e" />
+      <keyword name="nextType" id="Room::nextType" ref="classRoom.html#a20e9c4082ae977586a53f4f909869592" />
+      <keyword name="read" id="Room::read" ref="classRoom.html#acb99b086249086eef4878fc315aadb91" />
+      <keyword name="write" id="Room::write" ref="classRoom.html#a7e9c3212f3282b514b75a92d68727940" />
+      <keyword name="connections" id="Room::connections" ref="classRoom.html#a393b843ae2ef099ee92633a17f560ec8" />
+      <keyword name="nodes" id="Room::nodes" ref="classRoom.html#a775521f64541cbe3a8ae8a37a008a3c2" />
+      <keyword name="file" id="Room::file" ref="classRoom.html#a13e2ceb7b9470a01114bb50890b41ab7" />
+      <keyword name="readPendingDatagrams" id="Room::readPendingDatagrams" ref="classRoom.html#af50ca900545ad2f106ef15f984424b44" />
+      <keyword name="sendMessage" id="Room::sendMessage" ref="classRoom.html#a3abfcc9def908c1a0acaf286fc325454" />
+      <keyword name="removeConnections" id="Room::removeConnections" ref="classRoom.html#ae87a5e306907216bd57a90ea2a2a5a46" />
+      <keyword name="getValue" id="Room::getValue" ref="classRoom.html#a5b197766e033600e4358c65781e11e73" />
+      <keyword name="processBundle" id="Room::processBundle" ref="classRoom.html#a700df071feffa282696e156791dd0d87" />
+      <keyword name="processMessage" id="Room::processMessage" ref="classRoom.html#ab498f123e988e3596722b0e088507b80" />
+      <keyword name="looping" id="Room::looping" ref="classRoom.html#a95534f9e0c13a8b75c643c985c851400" />
+      <keyword name="networkLoop" id="Room::networkLoop" ref="classRoom.html#aa6f4b7dbdc18771ef12aeeba412414c0" />
+      <keyword name="chained" id="Room::chained" ref="classRoom.html#a27f7c8a9f47e96223a443c73516a2e36" />
+      <keyword name="clearNodes" id="Room::clearNodes" ref="classRoom.html#a00e39d49aaabdee84019b1d9091ced50" />
+      <keyword name="clearConnections" id="Room::clearConnections" ref="classRoom.html#a62765f1f397f932e6d2aa7ed00e0deff" />
+      <keyword name="addNode" id="Room::addNode" ref="classRoom.html#a98d12ac4c68d68775b1e429bc3ad31cf" />
+      <keyword name="addConnection" id="Room::addConnection" ref="classRoom.html#a2ebf6e0a7870458f767a15a458e7e033" />
+      <keyword name="countNodes" id="Room::countNodes" ref="classRoom.html#a94547b2123257446da232b4a045a09ff" />
+      <keyword name="countConnections" id="Room::countConnections" ref="classRoom.html#aaf0c2179afdb30a0a76fb926b403a19b" />
+      <keyword name="getNode" id="Room::getNode" ref="classRoom.html#a89d62f69e6278b5d725b4c15ab21e12c" />
+      <keyword name="getConnection" id="Room::getConnection" ref="classRoom.html#a5a32e38ec8c82987fb99e70106ed6fdc" />
+      <keyword name="m_connections" id="Room::m_connections" ref="classRoom.html#ad63f36cb6664087c6c74dddeb032e711" />
+      <keyword name="m_nodes" id="Room::m_nodes" ref="classRoom.html#ab5be7998bc742a4bf931c81f044d7aae" />
+      <keyword name="m_jsonNodes" id="Room::m_jsonNodes" ref="classRoom.html#a98b8568422738036941daf95be83a9e3" />
+      <keyword name="m_jsonConnections" id="Room::m_jsonConnections" ref="classRoom.html#a9d19c870844f064eb724412ec10ef7f2" />
+      <keyword name="m_nodeHash" id="Room::m_nodeHash" ref="classRoom.html#ace06dd46446e3ca79533f99b1723cf97" />
+      <keyword name="m_sock" id="Room::m_sock" ref="classRoom.html#a726013d07c3e655f21822f720a89cea7" />
+      <keyword name="m_file" id="Room::m_file" ref="classRoom.html#a66ea178fb6c6c69842498b87abac816a" />
+      <keyword name="m_changeSaved" id="Room::m_changeSaved" ref="classRoom.html#aa6a3c11ef8f5d0253f4ddb763cfc3f53" />
+    </keywords>
+    <files>
+      <file>tabs.css</file>
+      <file>tab_a.png</file>
+      <file>tab_b.png</file>
+      <file>tab_h.png</file>
+      <file>tab_s.png</file>
+      <file>nav_h.png</file>
+      <file>nav_f.png</file>
+      <file>bc_s.png</file>
+      <file>doxygen.png</file>
+      <file>closed.png</file>
+      <file>open.png</file>
+      <file>bdwn.png</file>
+      <file>sync_on.png</file>
+      <file>sync_off.png</file>
+      <file>doxygen.css</file>
+      <file>jquery.js</file>
+      <file>dynsections.js</file>
+      <file>search/search_l.png</file>
+      <file>search/search_m.png</file>
+      <file>search/search_r.png</file>
+      <file>search/close.png</file>
+      <file>search/mag_sel.png</file>
+      <file>search/search.css</file>
+      <file>search/search.js</file>
+      <file>connection_8h_source.html</file>
+      <file>node_8h_source.html</file>
+      <file>room_8h_source.html</file>
+      <file>classConnection.html</file>
+      <file>classConnection.png</file>
+      <file>classConnection-members.html</file>
+      <file>classNode.html</file>
+      <file>classNode.png</file>
+      <file>classNode-members.html</file>
+      <file>classRoom.html</file>
+      <file>classRoom.png</file>
+      <file>classRoom-members.html</file>
+      <file>dir_dfdbda394c3f7a3aa55229f33a559c41.html</file>
+      <file>dir_d44c64559bbebec7f509842c48db8b23.html</file>
+      <file>dir_1d81f7f4362e4398c0a695c4e466fcb0.html</file>
+      <file>dir_68267d1309a1af8e8297ef4c3efbcdba.html</file>
+      <file>index.html</file>
+      <file>annotated.html</file>
+      <file>classes.html</file>
+      <file>hierarchy.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_func.html</file>
+      <file>functions_vars.html</file>
+      <file>functions_prop.html</file>
+      <file>functions_prop.html</file>
+      <file>functions_prop.html</file>
+      <file>files.html</file>
+    </files>
+  </filterSection>
+</QtHelpProject>

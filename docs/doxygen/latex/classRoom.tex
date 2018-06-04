@@ -1,0 +1,1100 @@
+\hypertarget{classRoom}{}\section{Room Class Reference}
+\label{classRoom}\index{Room@{Room}}
+
+
+Backend class representing a room.  
+
+
+
+
+{\ttfamily \#include $<$room.\+h$>$}
+
+Inheritance diagram for Room\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classRoom}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classRoom_a4fad3e109783442157bb775ef417a57b}{connections\+Updated}} ()
+\item 
+void \mbox{\hyperlink{classRoom_a8261085c6843f3b85d403284b39f92ba}{nodes\+Updated}} ()
+\item 
+void \mbox{\hyperlink{classRoom_abc28a6555cb3e3543eecb65095ee89b7}{file\+Changed}} ()
+\item 
+void \mbox{\hyperlink{classRoom_ae37847fde9763f0561150f8bcfa0b550}{room\+Have\+Changed}} ()
+\item 
+void \mbox{\hyperlink{classRoom_abe1f81891e69cd6b511bbf18d7ce38c2}{room\+Loaded}} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRoom_a58d54cc7a80930812d780f101c1dc4bc}{Room}} (Q\+Object $\ast$parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ \mbox{\hyperlink{classRoom_a95230e582f089891ea8a8f6febfaf2fa}{connections}} ()
+\begin{DoxyCompactList}\small\item\em Getter method to expose the list of connections to Q\+ML. \end{DoxyCompactList}\item 
+Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ \mbox{\hyperlink{classRoom_a9ed01ab71422acf2c22b46d7f582f878}{nodes}} ()
+\begin{DoxyCompactList}\small\item\em Getter method to expose the list of nodes to Q\+ML. \end{DoxyCompactList}\item 
+Q\+Url \mbox{\hyperlink{classRoom_ab6644a3874458fbeffd5fa2951d281ab}{file}} () const
+\begin{DoxyCompactList}\small\item\em Getter method to expose the file used for saving to Q\+ML. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRoom_afe61f8f1359a431ef906ee2ff485eb80}{set\+File}} (const Q\+Url \&url)
+\begin{DoxyCompactList}\small\item\em Setter to change the file in which changes are to be saved. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_adbcc976eefed696d0536773e75c4f7d2}{delete\+Node}} (\mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Q\+ML exposed method to remove nodes from the room. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}{connected}} (\mbox{\hyperlink{classNode}{Node}} $\ast$a, \mbox{\hyperlink{classNode}{Node}} $\ast$b, int direction=Node\+::\+Input)
+\begin{DoxyCompactList}\small\item\em Checks if two nodes are connected in a certain direction. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_a085e1c1c95f6d30dded1ace857a3ec09}{can\+Connect}} (\mbox{\hyperlink{classNode}{Node}} $\ast$a, \mbox{\hyperlink{classNode}{Node}} $\ast$b, int direction=Node\+::\+Input)
+\begin{DoxyCompactList}\small\item\em Checks all conditions before connecting two nodes. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_a0b0b13f4ebd1c45353090b6ac64ed433}{remove\+Connections}} (\mbox{\hyperlink{classNode}{Node}} $\ast$a, \mbox{\hyperlink{classNode}{Node}} $\ast$b, int t=Node\+::\+Input)
+\begin{DoxyCompactList}\small\item\em Breaks any connections between two nodes in a certain direction. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_a3a88ea31e062677f1d245960b20a6e97}{create\+Connection}} (\mbox{\hyperlink{classNode}{Node}} $\ast$a, \mbox{\hyperlink{classNode}{Node}} $\ast$b, int t=Node\+::\+Input)
+\begin{DoxyCompactList}\small\item\em Establish a connection between two nodes in a certain direction. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_ad942f0c7132818f36a4de16fe2ca477a}{has\+Out\+Connection}} (\mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Check if a node is the sender in any connection in the room. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_aeffeac1d449a9a713efcf94efb2432e0}{has\+In\+Connection}} (\mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Check if a node is the receiver in any connection in the room. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_a0f8b282b43bd3115e24f6b9bd95d92a9}{evaluate}} (\mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Change the output value of a node based on connections and the nodes\textquotesingle{} configuration. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classRoom_a4d01284c86cb970b25b0fcfa45cdd38e}\label{classRoom_a4d01284c86cb970b25b0fcfa45cdd38e}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_a4d01284c86cb970b25b0fcfa45cdd38e}{init\+Socket}} ()
+\begin{DoxyCompactList}\small\item\em Initalize the udp socket to read and send osc messages. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_ad795aa64d503519ba0777e3f1d81e54c}{save}} ()
+\begin{DoxyCompactList}\small\item\em Save changes made to the room in a file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classRoom_a10b12560a3fbd161c0175a2f6edb9a9d}\label{classRoom_a10b12560a3fbd161c0175a2f6edb9a9d}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries save} (const Q\+Url \&url)
+\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_a26065830b40a3a127ee2686d9feb4b74}{load}} (const Q\+Url \&url)
+\begin{DoxyCompactList}\small\item\em Loaded the content of a file. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_a05135b32eee12b1f69ce0a0497ce6f9e}{saved\+Before}} () const
+\begin{DoxyCompactList}\small\item\em Checks if the room have been saved before. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_af51c094a0286a3312b05e2e8425d10f1}{changes\+Saved}} () const
+\begin{DoxyCompactList}\small\item\em Checks if the room has unsaved changed. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE bool \mbox{\hyperlink{classRoom_abb662577c7ec3ea46d023a845e726cfa}{has\+More\+Loaded}} () const
+\begin{DoxyCompactList}\small\item\em Check if there are more json objects to load. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_ab1f1a0f0b4db3483b0f09667d81f2d61}{load\+Next\+Node}} (\mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Load the next json object, if any, into a node. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classRoom_a55b3be4272343997434bd5f690ba954e}{load\+Connections}} ()
+\begin{DoxyCompactList}\small\item\em Load all the connections loaded as json object into \mbox{\hyperlink{classConnection}{Connection}} objects. \end{DoxyCompactList}\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE int \mbox{\hyperlink{classRoom_a20e9c4082ae977586a53f4f909869592}{next\+Type}} ()
+\begin{DoxyCompactList}\small\item\em Get the type of the next node, if any, to be read into a \mbox{\hyperlink{classNode}{Node}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRoom_acb99b086249086eef4878fc315aadb91}{read}} (const Q\+Json\+Object \&json)
+\begin{DoxyCompactList}\small\item\em Read a json object into the room. \end{DoxyCompactList}\item 
+Q\+Json\+Object \mbox{\hyperlink{classRoom_a7e9c3212f3282b514b75a92d68727940}{write}} () const
+\begin{DoxyCompactList}\small\item\em Serialize the room. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ \mbox{\hyperlink{classRoom_a393b843ae2ef099ee92633a17f560ec8}{connections}}
+\item 
+Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ \mbox{\hyperlink{classRoom_a775521f64541cbe3a8ae8a37a008a3c2}{nodes}}
+\item 
+Q\+Url \mbox{\hyperlink{classRoom_a13e2ceb7b9470a01114bb50890b41ab7}{file}}
+\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classRoom_af50ca900545ad2f106ef15f984424b44}\label{classRoom_af50ca900545ad2f106ef15f984424b44}} 
+void \mbox{\hyperlink{classRoom_af50ca900545ad2f106ef15f984424b44}{read\+Pending\+Datagrams}} ()
+\begin{DoxyCompactList}\small\item\em Read pending U\+DP datagrams. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRoom_a3abfcc9def908c1a0acaf286fc325454}{send\+Message}} (\mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Send an O\+SC message based on information in a node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classRoom_ae87a5e306907216bd57a90ea2a2a5a46}{remove\+Connections}} (\mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Remove all connections the specified node is part of, either as sender or receiver. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classRoom_a5b197766e033600e4358c65781e11e73}{get\+Value}} (const \mbox{\hyperlink{classNode}{Node}} $\ast$node) const
+\begin{DoxyCompactList}\small\item\em Getter to read the output of a node. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRoom_a700df071feffa282696e156791dd0d87}{process\+Bundle}} (Osc\+Bundle $\ast$bundle)
+\begin{DoxyCompactList}\small\item\em Read the content of a bundle and update the room. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRoom_ab498f123e988e3596722b0e088507b80}{process\+Message}} (Osc\+Message $\ast$message)
+\begin{DoxyCompactList}\small\item\em Read the content of a message and update the room. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classRoom_a95534f9e0c13a8b75c643c985c851400}{looping}} (\mbox{\hyperlink{classNode}{Node}} $\ast$a, \mbox{\hyperlink{classNode}{Node}} $\ast$b, int direction)
+\begin{DoxyCompactList}\small\item\em Check if a connection between to nodes would create a loop. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classRoom_aa6f4b7dbdc18771ef12aeeba412414c0}{network\+Loop}} (\mbox{\hyperlink{classNode}{Node}} $\ast$a, \mbox{\hyperlink{classNode}{Node}} $\ast$b, int direction)
+\begin{DoxyCompactList}\small\item\em Check if a connection between two nodes would create a network loop. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classRoom_a27f7c8a9f47e96223a443c73516a2e36}{chained}} (\mbox{\hyperlink{classNode}{Node}} $\ast$a, \mbox{\hyperlink{classNode}{Node}} $\ast$b)
+\begin{DoxyCompactList}\small\item\em Check if two nodes are part of the same chain of connection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classRoom_a00e39d49aaabdee84019b1d9091ced50}{clear\+Nodes}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$list)
+\begin{DoxyCompactList}\small\item\em Clear a list of nodes. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classRoom_a62765f1f397f932e6d2aa7ed00e0deff}{clear\+Connections}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$list)
+\begin{DoxyCompactList}\small\item\em Clear a list of connections. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classRoom_a98d12ac4c68d68775b1e429bc3ad31cf}{add\+Node}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$list, \mbox{\hyperlink{classNode}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Add a \mbox{\hyperlink{classNode}{Node}} object to a list. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classRoom_a2ebf6e0a7870458f767a15a458e7e033}{add\+Connection}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$list, \mbox{\hyperlink{classConnection}{Connection}} $\ast$connection)
+\begin{DoxyCompactList}\small\item\em Add a \mbox{\hyperlink{classConnection}{Connection}} object to a list. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{classRoom_a94547b2123257446da232b4a045a09ff}{count\+Nodes}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$list)
+\begin{DoxyCompactList}\small\item\em Get the length of a list of nodes. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{classRoom_aaf0c2179afdb30a0a76fb926b403a19b}{count\+Connections}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$list)
+\begin{DoxyCompactList}\small\item\em Get the length of a list of connections. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{classNode}{Node}} $\ast$ \mbox{\hyperlink{classRoom_a89d62f69e6278b5d725b4c15ab21e12c}{get\+Node}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$list, int index)
+\begin{DoxyCompactList}\small\item\em Get a node from a list. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{classConnection}{Connection}} $\ast$ \mbox{\hyperlink{classRoom_a5a32e38ec8c82987fb99e70106ed6fdc}{get\+Connection}} (Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$list, int index)
+\begin{DoxyCompactList}\small\item\em Get a connection from a list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\+List$<$ \mbox{\hyperlink{classConnection}{Connection}} $\ast$ $>$ \mbox{\hyperlink{classRoom_ad63f36cb6664087c6c74dddeb032e711}{m\+\_\+connections}}
+\item 
+Q\+List$<$ \mbox{\hyperlink{classNode}{Node}} $\ast$ $>$ \mbox{\hyperlink{classRoom_ab5be7998bc742a4bf931c81f044d7aae}{m\+\_\+nodes}}
+\item 
+Q\+Json\+Array \mbox{\hyperlink{classRoom_a98b8568422738036941daf95be83a9e3}{m\+\_\+json\+Nodes}}
+\item 
+Q\+Json\+Array \mbox{\hyperlink{classRoom_a9d19c870844f064eb724412ec10ef7f2}{m\+\_\+json\+Connections}}
+\item 
+Q\+Hash$<$ qulonglong, \mbox{\hyperlink{classNode}{Node}} $\ast$ $>$ \mbox{\hyperlink{classRoom_ace06dd46446e3ca79533f99b1723cf97}{m\+\_\+node\+Hash}}
+\item 
+Q\+Udp\+Socket $\ast$ \mbox{\hyperlink{classRoom_a726013d07c3e655f21822f720a89cea7}{m\+\_\+sock}}
+\item 
+Q\+File \mbox{\hyperlink{classRoom_a66ea178fb6c6c69842498b87abac816a}{m\+\_\+file}}
+\item 
+bool \mbox{\hyperlink{classRoom_aa6a3c11ef8f5d0253f4ddb763cfc3f53}{m\+\_\+change\+Saved}} = true
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Backend class representing a room. 
+
+This class manages the interactions with and between nodes as well as the writing and reading of files from/to memory. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classRoom_a58d54cc7a80930812d780f101c1dc4bc}\label{classRoom_a58d54cc7a80930812d780f101c1dc4bc}} 
+\index{Room@{Room}!Room@{Room}}
+\index{Room@{Room}!Room@{Room}}
+\subsubsection{\texorpdfstring{Room()}{Room()}}
+{\footnotesize\ttfamily Room\+::\+Room (\begin{DoxyParamCaption}\item[{Q\+Object $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Default constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Parent of the room to create. \\
+\hline
+\end{DoxyParams}
+
+
+References m\+\_\+change\+Saved, and room\+Have\+Changed().
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classRoom_a95230e582f089891ea8a8f6febfaf2fa}\label{classRoom_a95230e582f089891ea8a8f6febfaf2fa}} 
+\index{Room@{Room}!connections@{connections}}
+\index{connections@{connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{connections()}{connections()}}
+{\footnotesize\ttfamily Q\+Qml\+List\+Property$<$\mbox{\hyperlink{classConnection}{Connection}}$>$ Room\+::connections (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Getter method to expose the list of connections to Q\+ML. 
+
+\begin{DoxyReturn}{Returns}
+A list of all the connections created in this room. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRoom_a9ed01ab71422acf2c22b46d7f582f878}\label{classRoom_a9ed01ab71422acf2c22b46d7f582f878}} 
+\index{Room@{Room}!nodes@{nodes}}
+\index{nodes@{nodes}!Room@{Room}}
+\subsubsection{\texorpdfstring{nodes()}{nodes()}}
+{\footnotesize\ttfamily Q\+Qml\+List\+Property$<$\mbox{\hyperlink{classNode}{Node}}$>$ Room\+::nodes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Getter method to expose the list of nodes to Q\+ML. 
+
+\begin{DoxyReturn}{Returns}
+A list of all the nodes created in this room. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRoom_ab6644a3874458fbeffd5fa2951d281ab}\label{classRoom_ab6644a3874458fbeffd5fa2951d281ab}} 
+\index{Room@{Room}!file@{file}}
+\index{file@{file}!Room@{Room}}
+\subsubsection{\texorpdfstring{file()}{file()}}
+{\footnotesize\ttfamily Q\+Url Room\+::file (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter method to expose the file used for saving to Q\+ML. 
+
+\begin{DoxyReturn}{Returns}
+The url of the current file in which changes are to be saved. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRoom_afe61f8f1359a431ef906ee2ff485eb80}\label{classRoom_afe61f8f1359a431ef906ee2ff485eb80}} 
+\index{Room@{Room}!set\+File@{set\+File}}
+\index{set\+File@{set\+File}!Room@{Room}}
+\subsubsection{\texorpdfstring{set\+File()}{setFile()}}
+{\footnotesize\ttfamily void Room\+::set\+File (\begin{DoxyParamCaption}\item[{const Q\+Url \&}]{url }\end{DoxyParamCaption})}
+
+
+
+Setter to change the file in which changes are to be saved. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & The url of the new file. \\
+\hline
+\end{DoxyParams}
+
+
+References file\+Changed(), and m\+\_\+file.
+
+\mbox{\Hypertarget{classRoom_adbcc976eefed696d0536773e75c4f7d2}\label{classRoom_adbcc976eefed696d0536773e75c4f7d2}} 
+\index{Room@{Room}!delete\+Node@{delete\+Node}}
+\index{delete\+Node@{delete\+Node}!Room@{Room}}
+\subsubsection{\texorpdfstring{delete\+Node()}{deleteNode()}}
+{\footnotesize\ttfamily bool Room\+::delete\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Q\+ML exposed method to remove nodes from the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node to be deleted. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if a node have been successfully deleted. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classConnection}{Connection}} 
+
+\mbox{\hyperlink{classRoom_a0b0b13f4ebd1c45353090b6ac64ed433}{Room\+::remove\+Connections}} 
+
+\mbox{\hyperlink{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}{Room\+::connected}} 
+\end{DoxySeeAlso}
+
+
+References connections\+Updated(), m\+\_\+nodes, nodes\+Updated(), and remove\+Connections().
+
+\mbox{\Hypertarget{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}\label{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}} 
+\index{Room@{Room}!connected@{connected}}
+\index{connected@{connected}!Room@{Room}}
+\subsubsection{\texorpdfstring{connected()}{connected()}}
+{\footnotesize\ttfamily bool Room\+::connected (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{a,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{b,  }\item[{int}]{direction = {\ttfamily Node\+:\+:Input} }\end{DoxyParamCaption})}
+
+
+
+Checks if two nodes are connected in a certain direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & first node \\
+\hline
+{\em b} & second node \\
+\hline
+{\em direction} & of the connection \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return if the two nodes are connected in the specified direction. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a085e1c1c95f6d30dded1ace857a3ec09}{Room\+::can\+Connect}} 
+
+Node\+::\+Type 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_a085e1c1c95f6d30dded1ace857a3ec09}\label{classRoom_a085e1c1c95f6d30dded1ace857a3ec09}} 
+\index{Room@{Room}!can\+Connect@{can\+Connect}}
+\index{can\+Connect@{can\+Connect}!Room@{Room}}
+\subsubsection{\texorpdfstring{can\+Connect()}{canConnect()}}
+{\footnotesize\ttfamily bool Room\+::can\+Connect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{a,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{b,  }\item[{int}]{direction = {\ttfamily Node\+:\+:Input} }\end{DoxyParamCaption})}
+
+
+
+Checks all conditions before connecting two nodes. 
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}{Room\+::connected}} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em a} & first node \\
+\hline
+{\em b} & second node \\
+\hline
+{\em direction} & Direction of the connection \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if connecting the two nodes would generate no logic issue, such as loops. 
+\end{DoxyReturn}
+
+
+References looping().
+
+\mbox{\Hypertarget{classRoom_a0b0b13f4ebd1c45353090b6ac64ed433}\label{classRoom_a0b0b13f4ebd1c45353090b6ac64ed433}} 
+\index{Room@{Room}!remove\+Connections@{remove\+Connections}}
+\index{remove\+Connections@{remove\+Connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{remove\+Connections()}{removeConnections()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Room\+::remove\+Connections (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{a,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{b,  }\item[{int}]{t = {\ttfamily Node\+:\+:Input} }\end{DoxyParamCaption})}
+
+
+
+Breaks any connections between two nodes in a certain direction. 
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}{Room\+::connected}} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em a} & first node \\
+\hline
+{\em b} & second node \\
+\hline
+{\em direction} & Direction of the connection \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}{Room\+::connected}} 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_a3a88ea31e062677f1d245960b20a6e97}\label{classRoom_a3a88ea31e062677f1d245960b20a6e97}} 
+\index{Room@{Room}!create\+Connection@{create\+Connection}}
+\index{create\+Connection@{create\+Connection}!Room@{Room}}
+\subsubsection{\texorpdfstring{create\+Connection()}{createConnection()}}
+{\footnotesize\ttfamily void Room\+::create\+Connection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{a,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{b,  }\item[{int}]{t = {\ttfamily Node\+:\+:Input} }\end{DoxyParamCaption})}
+
+
+
+Establish a connection between two nodes in a certain direction. 
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}{Room\+::connected}} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em a} & first node \\
+\hline
+{\em b} & second node \\
+\hline
+{\em direction} & Direction of the connection \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_aaaeb040b9fa13894f4c19fb1eecbefd2}{Room\+::connected}} 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+connections, and network\+Loop().
+
+\mbox{\Hypertarget{classRoom_ad942f0c7132818f36a4de16fe2ca477a}\label{classRoom_ad942f0c7132818f36a4de16fe2ca477a}} 
+\index{Room@{Room}!has\+Out\+Connection@{has\+Out\+Connection}}
+\index{has\+Out\+Connection@{has\+Out\+Connection}!Room@{Room}}
+\subsubsection{\texorpdfstring{has\+Out\+Connection()}{hasOutConnection()}}
+{\footnotesize\ttfamily bool Room\+::has\+Out\+Connection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Check if a node is the sender in any connection in the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if the node is part of any connection in the room as the sender. 
+\end{DoxyReturn}
+
+
+References m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_aeffeac1d449a9a713efcf94efb2432e0}\label{classRoom_aeffeac1d449a9a713efcf94efb2432e0}} 
+\index{Room@{Room}!has\+In\+Connection@{has\+In\+Connection}}
+\index{has\+In\+Connection@{has\+In\+Connection}!Room@{Room}}
+\subsubsection{\texorpdfstring{has\+In\+Connection()}{hasInConnection()}}
+{\footnotesize\ttfamily bool Room\+::has\+In\+Connection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Check if a node is the receiver in any connection in the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if the node is part of any connection in the room as the receiver. 
+\end{DoxyReturn}
+
+
+References m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_a0f8b282b43bd3115e24f6b9bd95d92a9}\label{classRoom_a0f8b282b43bd3115e24f6b9bd95d92a9}} 
+\index{Room@{Room}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!Room@{Room}}
+\subsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily void Room\+::evaluate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Change the output value of a node based on connections and the nodes\textquotesingle{} configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node to evaluate \\
+\hline
+\end{DoxyParams}
+
+
+References get\+Value(), and m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_ad795aa64d503519ba0777e3f1d81e54c}\label{classRoom_ad795aa64d503519ba0777e3f1d81e54c}} 
+\index{Room@{Room}!save@{save}}
+\index{save@{save}!Room@{Room}}
+\subsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void Room\+::save (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Save changes made to the room in a file. 
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a66ea178fb6c6c69842498b87abac816a}{Room\+::m\+\_\+file}} 
+
+\mbox{\hyperlink{classRoom_afe61f8f1359a431ef906ee2ff485eb80}{Room\+::set\+File}}
+\end{DoxySeeAlso}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_ad795aa64d503519ba0777e3f1d81e54c}{Room\+::save}} 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+change\+Saved, m\+\_\+file, and write().
+
+\mbox{\Hypertarget{classRoom_a26065830b40a3a127ee2686d9feb4b74}\label{classRoom_a26065830b40a3a127ee2686d9feb4b74}} 
+\index{Room@{Room}!load@{load}}
+\index{load@{load}!Room@{Room}}
+\subsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void Room\+::load (\begin{DoxyParamCaption}\item[{const Q\+Url \&}]{url }\end{DoxyParamCaption})}
+
+
+
+Loaded the content of a file. 
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_ab1f1a0f0b4db3483b0f09667d81f2d61}{Room\+::load\+Next\+Node}} 
+
+\mbox{\hyperlink{classRoom_a55b3be4272343997434bd5f690ba954e}{Room\+::load\+Connections}} 
+\end{DoxySeeAlso}
+
+
+References file(), read(), and room\+Loaded().
+
+\mbox{\Hypertarget{classRoom_a05135b32eee12b1f69ce0a0497ce6f9e}\label{classRoom_a05135b32eee12b1f69ce0a0497ce6f9e}} 
+\index{Room@{Room}!saved\+Before@{saved\+Before}}
+\index{saved\+Before@{saved\+Before}!Room@{Room}}
+\subsubsection{\texorpdfstring{saved\+Before()}{savedBefore()}}
+{\footnotesize\ttfamily bool Room\+::saved\+Before (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Checks if the room have been saved before. 
+
+\begin{DoxyReturn}{Returns}
+Return true if the room have been saved. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_ad795aa64d503519ba0777e3f1d81e54c}{Room\+::save}} 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+file.
+
+\mbox{\Hypertarget{classRoom_af51c094a0286a3312b05e2e8425d10f1}\label{classRoom_af51c094a0286a3312b05e2e8425d10f1}} 
+\index{Room@{Room}!changes\+Saved@{changes\+Saved}}
+\index{changes\+Saved@{changes\+Saved}!Room@{Room}}
+\subsubsection{\texorpdfstring{changes\+Saved()}{changesSaved()}}
+{\footnotesize\ttfamily bool Room\+::changes\+Saved (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Checks if the room has unsaved changed. 
+
+\begin{DoxyReturn}{Returns}
+Return true if the room have not been modified since the last write.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a05135b32eee12b1f69ce0a0497ce6f9e}{Room\+::saved\+Before}} 
+
+\mbox{\hyperlink{classRoom_ad795aa64d503519ba0777e3f1d81e54c}{Room\+::save}} 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+change\+Saved.
+
+\mbox{\Hypertarget{classRoom_abb662577c7ec3ea46d023a845e726cfa}\label{classRoom_abb662577c7ec3ea46d023a845e726cfa}} 
+\index{Room@{Room}!has\+More\+Loaded@{has\+More\+Loaded}}
+\index{has\+More\+Loaded@{has\+More\+Loaded}!Room@{Room}}
+\subsubsection{\texorpdfstring{has\+More\+Loaded()}{hasMoreLoaded()}}
+{\footnotesize\ttfamily bool Room\+::has\+More\+Loaded (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Check if there are more json objects to load. 
+
+\begin{DoxyReturn}{Returns}
+Return true if the list \mbox{\hyperlink{classRoom_a98b8568422738036941daf95be83a9e3}{Room\+::m\+\_\+json\+Nodes}} is not empty. 
+\end{DoxyReturn}
+
+
+References m\+\_\+json\+Nodes.
+
+\mbox{\Hypertarget{classRoom_ab1f1a0f0b4db3483b0f09667d81f2d61}\label{classRoom_ab1f1a0f0b4db3483b0f09667d81f2d61}} 
+\index{Room@{Room}!load\+Next\+Node@{load\+Next\+Node}}
+\index{load\+Next\+Node@{load\+Next\+Node}!Room@{Room}}
+\subsubsection{\texorpdfstring{load\+Next\+Node()}{loadNextNode()}}
+{\footnotesize\ttfamily void Room\+::load\+Next\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Load the next json object, if any, into a node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node in which the next json object should be read. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_abb662577c7ec3ea46d023a845e726cfa}{Room\+::has\+More\+Loaded}} 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+json\+Nodes, m\+\_\+node\+Hash, m\+\_\+nodes, room\+Have\+Changed(), and send\+Message().
+
+\mbox{\Hypertarget{classRoom_a55b3be4272343997434bd5f690ba954e}\label{classRoom_a55b3be4272343997434bd5f690ba954e}} 
+\index{Room@{Room}!load\+Connections@{load\+Connections}}
+\index{load\+Connections@{load\+Connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{load\+Connections()}{loadConnections()}}
+{\footnotesize\ttfamily void Room\+::load\+Connections (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Load all the connections loaded as json object into \mbox{\hyperlink{classConnection}{Connection}} objects. 
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a26065830b40a3a127ee2686d9feb4b74}{Room\+::load}} 
+
+\mbox{\hyperlink{classRoom_ab1f1a0f0b4db3483b0f09667d81f2d61}{Room\+::load\+Next\+Node}} 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+connections, m\+\_\+json\+Connections, and m\+\_\+node\+Hash.
+
+\mbox{\Hypertarget{classRoom_a20e9c4082ae977586a53f4f909869592}\label{classRoom_a20e9c4082ae977586a53f4f909869592}} 
+\index{Room@{Room}!next\+Type@{next\+Type}}
+\index{next\+Type@{next\+Type}!Room@{Room}}
+\subsubsection{\texorpdfstring{next\+Type()}{nextType()}}
+{\footnotesize\ttfamily int Room\+::next\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the type of the next node, if any, to be read into a \mbox{\hyperlink{classNode}{Node}} object. 
+
+\begin{DoxyReturn}{Returns}
+Return the type of the next json object to be read. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+Node\+::\+Type 
+
+Node\+::has\+More\+Loaded 
+\end{DoxySeeAlso}
+
+
+References m\+\_\+json\+Nodes.
+
+\mbox{\Hypertarget{classRoom_acb99b086249086eef4878fc315aadb91}\label{classRoom_acb99b086249086eef4878fc315aadb91}} 
+\index{Room@{Room}!read@{read}}
+\index{read@{read}!Room@{Room}}
+\subsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily void Room\+::read (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{json }\end{DoxyParamCaption})}
+
+
+
+Read a json object into the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json} & J\+S\+ON object to be read. \\
+\hline
+\end{DoxyParams}
+
+
+References m\+\_\+connections, m\+\_\+json\+Connections, m\+\_\+json\+Nodes, m\+\_\+node\+Hash, and m\+\_\+nodes.
+
+\mbox{\Hypertarget{classRoom_a7e9c3212f3282b514b75a92d68727940}\label{classRoom_a7e9c3212f3282b514b75a92d68727940}} 
+\index{Room@{Room}!write@{write}}
+\index{write@{write}!Room@{Room}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily Q\+Json\+Object Room\+::write (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Serialize the room. 
+
+\begin{DoxyReturn}{Returns}
+Return the J\+S\+ON object containing the data. 
+\end{DoxyReturn}
+
+
+References m\+\_\+connections, and m\+\_\+nodes.
+
+\mbox{\Hypertarget{classRoom_a4fad3e109783442157bb775ef417a57b}\label{classRoom_a4fad3e109783442157bb775ef417a57b}} 
+\index{Room@{Room}!connections\+Updated@{connections\+Updated}}
+\index{connections\+Updated@{connections\+Updated}!Room@{Room}}
+\subsubsection{\texorpdfstring{connections\+Updated}{connectionsUpdated}}
+{\footnotesize\ttfamily void Room\+::connections\+Updated (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Notify a change in the list of connections. \mbox{\Hypertarget{classRoom_a8261085c6843f3b85d403284b39f92ba}\label{classRoom_a8261085c6843f3b85d403284b39f92ba}} 
+\index{Room@{Room}!nodes\+Updated@{nodes\+Updated}}
+\index{nodes\+Updated@{nodes\+Updated}!Room@{Room}}
+\subsubsection{\texorpdfstring{nodes\+Updated}{nodesUpdated}}
+{\footnotesize\ttfamily void Room\+::nodes\+Updated (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Notify a change in the list of connections. \mbox{\Hypertarget{classRoom_abc28a6555cb3e3543eecb65095ee89b7}\label{classRoom_abc28a6555cb3e3543eecb65095ee89b7}} 
+\index{Room@{Room}!file\+Changed@{file\+Changed}}
+\index{file\+Changed@{file\+Changed}!Room@{Room}}
+\subsubsection{\texorpdfstring{file\+Changed}{fileChanged}}
+{\footnotesize\ttfamily void Room\+::file\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Notify when the default file has changed. \mbox{\Hypertarget{classRoom_ae37847fde9763f0561150f8bcfa0b550}\label{classRoom_ae37847fde9763f0561150f8bcfa0b550}} 
+\index{Room@{Room}!room\+Have\+Changed@{room\+Have\+Changed}}
+\index{room\+Have\+Changed@{room\+Have\+Changed}!Room@{Room}}
+\subsubsection{\texorpdfstring{room\+Have\+Changed}{roomHaveChanged}}
+{\footnotesize\ttfamily void Room\+::room\+Have\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Notify when the room have changed. Used to relay change in individual nodes to the room. \mbox{\Hypertarget{classRoom_abe1f81891e69cd6b511bbf18d7ce38c2}\label{classRoom_abe1f81891e69cd6b511bbf18d7ce38c2}} 
+\index{Room@{Room}!room\+Loaded@{room\+Loaded}}
+\index{room\+Loaded@{room\+Loaded}!Room@{Room}}
+\subsubsection{\texorpdfstring{room\+Loaded}{roomLoaded}}
+{\footnotesize\ttfamily void Room\+::room\+Loaded (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+Notify when the reading of a file have completed. \mbox{\Hypertarget{classRoom_ae87a5e306907216bd57a90ea2a2a5a46}\label{classRoom_ae87a5e306907216bd57a90ea2a2a5a46}} 
+\index{Room@{Room}!remove\+Connections@{remove\+Connections}}
+\index{remove\+Connections@{remove\+Connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{remove\+Connections()}{removeConnections()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Room\+::remove\+Connections (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Remove all connections the specified node is part of, either as sender or receiver. 
+
+Useful to clean up before deleting a node. 
+\begin{DoxyParams}{Parameters}
+{\em node} & The node to clean. \\
+\hline
+\end{DoxyParams}
+
+
+References connections\+Updated(), and m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_a5b197766e033600e4358c65781e11e73}\label{classRoom_a5b197766e033600e4358c65781e11e73}} 
+\index{Room@{Room}!get\+Value@{get\+Value}}
+\index{get\+Value@{get\+Value}!Room@{Room}}
+\subsubsection{\texorpdfstring{get\+Value()}{getValue()}}
+{\footnotesize\ttfamily bool Room\+::get\+Value (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Getter to read the output of a node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node to be evaluated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the output value of the node. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a0f8b282b43bd3115e24f6b9bd95d92a9}{Room\+::evaluate}} 
+\end{DoxySeeAlso}
+
+
+References has\+In\+Connection(), and m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_a700df071feffa282696e156791dd0d87}\label{classRoom_a700df071feffa282696e156791dd0d87}} 
+\index{Room@{Room}!process\+Bundle@{process\+Bundle}}
+\index{process\+Bundle@{process\+Bundle}!Room@{Room}}
+\subsubsection{\texorpdfstring{process\+Bundle()}{processBundle()}}
+{\footnotesize\ttfamily void Room\+::process\+Bundle (\begin{DoxyParamCaption}\item[{Osc\+Bundle $\ast$}]{bundle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Read the content of a bundle and update the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bundle} & The bundle to read. \\
+\hline
+\end{DoxyParams}
+
+
+References process\+Message().
+
+\mbox{\Hypertarget{classRoom_ab498f123e988e3596722b0e088507b80}\label{classRoom_ab498f123e988e3596722b0e088507b80}} 
+\index{Room@{Room}!process\+Message@{process\+Message}}
+\index{process\+Message@{process\+Message}!Room@{Room}}
+\subsubsection{\texorpdfstring{process\+Message()}{processMessage()}}
+{\footnotesize\ttfamily void Room\+::process\+Message (\begin{DoxyParamCaption}\item[{Osc\+Message $\ast$}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Read the content of a message and update the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to read. \\
+\hline
+\end{DoxyParams}
+
+
+References m\+\_\+nodes.
+
+\mbox{\Hypertarget{classRoom_a95534f9e0c13a8b75c643c985c851400}\label{classRoom_a95534f9e0c13a8b75c643c985c851400}} 
+\index{Room@{Room}!looping@{looping}}
+\index{looping@{looping}!Room@{Room}}
+\subsubsection{\texorpdfstring{looping()}{looping()}}
+{\footnotesize\ttfamily bool Room\+::looping (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{a,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{b,  }\item[{int}]{direction }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Check if a connection between to nodes would create a loop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first node. \\
+\hline
+{\em b} & The second node. \\
+\hline
+{\em direction} & The direction of the connection. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if the connection would create a loop. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+Romm\+::can\+Connect 
+\end{DoxySeeAlso}
+
+
+References connected(), and m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_aa6f4b7dbdc18771ef12aeeba412414c0}\label{classRoom_aa6f4b7dbdc18771ef12aeeba412414c0}} 
+\index{Room@{Room}!network\+Loop@{network\+Loop}}
+\index{network\+Loop@{network\+Loop}!Room@{Room}}
+\subsubsection{\texorpdfstring{network\+Loop()}{networkLoop()}}
+{\footnotesize\ttfamily bool Room\+::network\+Loop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{a,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{b,  }\item[{int}]{direction }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Check if a connection between two nodes would create a network loop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first node. \\
+\hline
+{\em b} & The second node. \\
+\hline
+{\em direction} & The direction of the connection. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if the connection would generate a network loop. 
+\end{DoxyReturn}
+
+
+References chained(), and m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_a27f7c8a9f47e96223a443c73516a2e36}\label{classRoom_a27f7c8a9f47e96223a443c73516a2e36}} 
+\index{Room@{Room}!chained@{chained}}
+\index{chained@{chained}!Room@{Room}}
+\subsubsection{\texorpdfstring{chained()}{chained()}}
+{\footnotesize\ttfamily bool Room\+::chained (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{a,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Check if two nodes are part of the same chain of connection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first node. \\
+\hline
+{\em b} & The second node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true if the two ndoes are connected. 
+\end{DoxyReturn}
+
+
+References connected(), and m\+\_\+connections.
+
+\mbox{\Hypertarget{classRoom_a00e39d49aaabdee84019b1d9091ced50}\label{classRoom_a00e39d49aaabdee84019b1d9091ced50}} 
+\index{Room@{Room}!clear\+Nodes@{clear\+Nodes}}
+\index{clear\+Nodes@{clear\+Nodes}!Room@{Room}}
+\subsubsection{\texorpdfstring{clear\+Nodes()}{clearNodes()}}
+{\footnotesize\ttfamily void Room\+::clear\+Nodes (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$}]{list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Clear a list of nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list to be cleared. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classRoom_a62765f1f397f932e6d2aa7ed00e0deff}\label{classRoom_a62765f1f397f932e6d2aa7ed00e0deff}} 
+\index{Room@{Room}!clear\+Connections@{clear\+Connections}}
+\index{clear\+Connections@{clear\+Connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{clear\+Connections()}{clearConnections()}}
+{\footnotesize\ttfamily void Room\+::clear\+Connections (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$}]{list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Clear a list of connections. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list to be cleared. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classRoom_a98d12ac4c68d68775b1e429bc3ad31cf}\label{classRoom_a98d12ac4c68d68775b1e429bc3ad31cf}} 
+\index{Room@{Room}!add\+Node@{add\+Node}}
+\index{add\+Node@{add\+Node}!Room@{Room}}
+\subsubsection{\texorpdfstring{add\+Node()}{addNode()}}
+{\footnotesize\ttfamily void Room\+::add\+Node (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$}]{list,  }\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Add a \mbox{\hyperlink{classNode}{Node}} object to a list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list to add the node to. \\
+\hline
+{\em node} & The node to add to the list. \\
+\hline
+\end{DoxyParams}
+
+
+References room\+Have\+Changed(), and send\+Message().
+
+\mbox{\Hypertarget{classRoom_a2ebf6e0a7870458f767a15a458e7e033}\label{classRoom_a2ebf6e0a7870458f767a15a458e7e033}} 
+\index{Room@{Room}!add\+Connection@{add\+Connection}}
+\index{add\+Connection@{add\+Connection}!Room@{Room}}
+\subsubsection{\texorpdfstring{add\+Connection()}{addConnection()}}
+{\footnotesize\ttfamily void Room\+::add\+Connection (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$}]{list,  }\item[{\mbox{\hyperlink{classConnection}{Connection}} $\ast$}]{connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Add a \mbox{\hyperlink{classConnection}{Connection}} object to a list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list to add the connection to. \\
+\hline
+{\em connection} & The connection to add to the list. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classRoom_a94547b2123257446da232b4a045a09ff}\label{classRoom_a94547b2123257446da232b4a045a09ff}} 
+\index{Room@{Room}!count\+Nodes@{count\+Nodes}}
+\index{count\+Nodes@{count\+Nodes}!Room@{Room}}
+\subsubsection{\texorpdfstring{count\+Nodes()}{countNodes()}}
+{\footnotesize\ttfamily int Room\+::count\+Nodes (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$}]{list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Get the length of a list of nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list to get the length of. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return the length of the list. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRoom_aaf0c2179afdb30a0a76fb926b403a19b}\label{classRoom_aaf0c2179afdb30a0a76fb926b403a19b}} 
+\index{Room@{Room}!count\+Connections@{count\+Connections}}
+\index{count\+Connections@{count\+Connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{count\+Connections()}{countConnections()}}
+{\footnotesize\ttfamily int Room\+::count\+Connections (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$}]{list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Get the length of a list of connections. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list to get the length of. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return the length of the list. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRoom_a89d62f69e6278b5d725b4c15ab21e12c}\label{classRoom_a89d62f69e6278b5d725b4c15ab21e12c}} 
+\index{Room@{Room}!get\+Node@{get\+Node}}
+\index{get\+Node@{get\+Node}!Room@{Room}}
+\subsubsection{\texorpdfstring{get\+Node()}{getNode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classNode}{Node}} $\ast$ Room\+::get\+Node (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ $\ast$}]{list,  }\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Get a node from a list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list from which to get the node. \\
+\hline
+{\em index} & The index of the node to get. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return the node at the specified position in the list. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRoom_a5a32e38ec8c82987fb99e70106ed6fdc}\label{classRoom_a5a32e38ec8c82987fb99e70106ed6fdc}} 
+\index{Room@{Room}!get\+Connection@{get\+Connection}}
+\index{get\+Connection@{get\+Connection}!Room@{Room}}
+\subsubsection{\texorpdfstring{get\+Connection()}{getConnection()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classConnection}{Connection}} $\ast$ Room\+::get\+Connection (\begin{DoxyParamCaption}\item[{Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ $\ast$}]{list,  }\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Get a connection from a list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The list from which to get the connection. \\
+\hline
+{\em index} & The index of the connection to get. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return the connection at the specified position in the list. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRoom_a3abfcc9def908c1a0acaf286fc325454}\label{classRoom_a3abfcc9def908c1a0acaf286fc325454}} 
+\index{Room@{Room}!send\+Message@{send\+Message}}
+\index{send\+Message@{send\+Message}!Room@{Room}}
+\subsubsection{\texorpdfstring{send\+Message}{sendMessage}}
+{\footnotesize\ttfamily void Room\+::send\+Message (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNode}{Node}} $\ast$}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Send an O\+SC message based on information in a node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node from which the content of the message is retrieved. \\
+\hline
+\end{DoxyParams}
+
+
+References m\+\_\+sock.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classRoom_ad63f36cb6664087c6c74dddeb032e711}\label{classRoom_ad63f36cb6664087c6c74dddeb032e711}} 
+\index{Room@{Room}!m\+\_\+connections@{m\+\_\+connections}}
+\index{m\+\_\+connections@{m\+\_\+connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+connections}{m\_connections}}
+{\footnotesize\ttfamily Q\+List$<$\mbox{\hyperlink{classConnection}{Connection}}$\ast$$>$ Room\+::m\+\_\+connections\hspace{0.3cm}{\ttfamily [private]}}
+
+List of connections created in the room. \mbox{\Hypertarget{classRoom_ab5be7998bc742a4bf931c81f044d7aae}\label{classRoom_ab5be7998bc742a4bf931c81f044d7aae}} 
+\index{Room@{Room}!m\+\_\+nodes@{m\+\_\+nodes}}
+\index{m\+\_\+nodes@{m\+\_\+nodes}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+nodes}{m\_nodes}}
+{\footnotesize\ttfamily Q\+List$<$\mbox{\hyperlink{classNode}{Node}}$\ast$$>$ Room\+::m\+\_\+nodes\hspace{0.3cm}{\ttfamily [private]}}
+
+List of nodes created in the room. \mbox{\Hypertarget{classRoom_a98b8568422738036941daf95be83a9e3}\label{classRoom_a98b8568422738036941daf95be83a9e3}} 
+\index{Room@{Room}!m\+\_\+json\+Nodes@{m\+\_\+json\+Nodes}}
+\index{m\+\_\+json\+Nodes@{m\+\_\+json\+Nodes}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+json\+Nodes}{m\_jsonNodes}}
+{\footnotesize\ttfamily Q\+Json\+Array Room\+::m\+\_\+json\+Nodes\hspace{0.3cm}{\ttfamily [private]}}
+
+List of nodes loaded but not yet created. \mbox{\Hypertarget{classRoom_a9d19c870844f064eb724412ec10ef7f2}\label{classRoom_a9d19c870844f064eb724412ec10ef7f2}} 
+\index{Room@{Room}!m\+\_\+json\+Connections@{m\+\_\+json\+Connections}}
+\index{m\+\_\+json\+Connections@{m\+\_\+json\+Connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+json\+Connections}{m\_jsonConnections}}
+{\footnotesize\ttfamily Q\+Json\+Array Room\+::m\+\_\+json\+Connections\hspace{0.3cm}{\ttfamily [private]}}
+
+List of connections loaded but not yet created. \mbox{\Hypertarget{classRoom_ace06dd46446e3ca79533f99b1723cf97}\label{classRoom_ace06dd46446e3ca79533f99b1723cf97}} 
+\index{Room@{Room}!m\+\_\+node\+Hash@{m\+\_\+node\+Hash}}
+\index{m\+\_\+node\+Hash@{m\+\_\+node\+Hash}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+node\+Hash}{m\_nodeHash}}
+{\footnotesize\ttfamily Q\+Hash$<$qulonglong, \mbox{\hyperlink{classNode}{Node}}$\ast$$>$ Room\+::m\+\_\+node\+Hash\hspace{0.3cm}{\ttfamily [private]}}
+
+Hashmap used to rebuild the connections from loaded items. -- (pointer swizzling) \mbox{\Hypertarget{classRoom_a726013d07c3e655f21822f720a89cea7}\label{classRoom_a726013d07c3e655f21822f720a89cea7}} 
+\index{Room@{Room}!m\+\_\+sock@{m\+\_\+sock}}
+\index{m\+\_\+sock@{m\+\_\+sock}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+sock}{m\_sock}}
+{\footnotesize\ttfamily Q\+Udp\+Socket$\ast$ Room\+::m\+\_\+sock\hspace{0.3cm}{\ttfamily [private]}}
+
+Socket to listen for O\+SC messages. \mbox{\Hypertarget{classRoom_a66ea178fb6c6c69842498b87abac816a}\label{classRoom_a66ea178fb6c6c69842498b87abac816a}} 
+\index{Room@{Room}!m\+\_\+file@{m\+\_\+file}}
+\index{m\+\_\+file@{m\+\_\+file}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+file}{m\_file}}
+{\footnotesize\ttfamily Q\+File Room\+::m\+\_\+file\hspace{0.3cm}{\ttfamily [private]}}
+
+File in which changes are to be saved. \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_ad795aa64d503519ba0777e3f1d81e54c}{Room\+::save}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classRoom_aa6a3c11ef8f5d0253f4ddb763cfc3f53}\label{classRoom_aa6a3c11ef8f5d0253f4ddb763cfc3f53}} 
+\index{Room@{Room}!m\+\_\+change\+Saved@{m\+\_\+change\+Saved}}
+\index{m\+\_\+change\+Saved@{m\+\_\+change\+Saved}!Room@{Room}}
+\subsubsection{\texorpdfstring{m\+\_\+change\+Saved}{m\_changeSaved}}
+{\footnotesize\ttfamily bool Room\+::m\+\_\+change\+Saved = true\hspace{0.3cm}{\ttfamily [private]}}
+
+Boolean holding wether there are unsaved changes in the room currently 
+
+\subsection{Property Documentation}
+\mbox{\Hypertarget{classRoom_a393b843ae2ef099ee92633a17f560ec8}\label{classRoom_a393b843ae2ef099ee92633a17f560ec8}} 
+\index{Room@{Room}!connections@{connections}}
+\index{connections@{connections}!Room@{Room}}
+\subsubsection{\texorpdfstring{connections}{connections}}
+{\footnotesize\ttfamily Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classConnection}{Connection}} $>$ Room\+::connections\hspace{0.3cm}{\ttfamily [read]}}
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a393b843ae2ef099ee92633a17f560ec8}{Room\+::connections}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classRoom_a775521f64541cbe3a8ae8a37a008a3c2}\label{classRoom_a775521f64541cbe3a8ae8a37a008a3c2}} 
+\index{Room@{Room}!nodes@{nodes}}
+\index{nodes@{nodes}!Room@{Room}}
+\subsubsection{\texorpdfstring{nodes}{nodes}}
+{\footnotesize\ttfamily Q\+Qml\+List\+Property$<$ \mbox{\hyperlink{classNode}{Node}} $>$ Room\+::nodes\hspace{0.3cm}{\ttfamily [read]}}
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a775521f64541cbe3a8ae8a37a008a3c2}{Room\+::nodes}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classRoom_a13e2ceb7b9470a01114bb50890b41ab7}\label{classRoom_a13e2ceb7b9470a01114bb50890b41ab7}} 
+\index{Room@{Room}!file@{file}}
+\index{file@{file}!Room@{Room}}
+\subsubsection{\texorpdfstring{file}{file}}
+{\footnotesize\ttfamily Q\+Url Room\+::file\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classRoom_a13e2ceb7b9470a01114bb50890b41ab7}{Room\+::file}} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/room.\+h\item 
+src/cpp/room.\+cpp\end{DoxyCompactItemize}

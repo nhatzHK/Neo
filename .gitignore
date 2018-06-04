@@ -79,3 +79,6 @@ Thumbs.db
 
 # Neo files
 *.neo
+
+# tmp files
+*.tmp

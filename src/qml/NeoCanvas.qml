@@ -36,7 +36,7 @@ Canvas {
         ctx.clearRect(0, 0, width, height)
         ctx.lineWidth = 1
         ctx.beginPath()
-        ctx.strokeStyle = "#2979ff"
+        ctx.strokeStyle = "#202225"
 
         for (var i = 0; i < room.connections.length; ++i) {
 

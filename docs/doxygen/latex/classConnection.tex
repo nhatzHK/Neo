@@ -1,0 +1,65 @@
+\hypertarget{classConnection}{}\section{Connection Class Reference}
+\label{classConnection}\index{Connection@{Connection}}
+Inheritance diagram for Connection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classConnection}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classConnection_a33165f69da60f638d3d8412e3ccc4312}\label{classConnection_a33165f69da60f638d3d8412e3ccc4312}} 
+void {\bfseries receiver\+Changed} ()
+\item 
+\mbox{\Hypertarget{classConnection_acd694eeb6ad7e287aacd356b95fe6dd9}\label{classConnection_acd694eeb6ad7e287aacd356b95fe6dd9}} 
+void {\bfseries sender\+Changed} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classConnection_a8afe63c8ac9873d6e01e2ca19218344e}\label{classConnection_a8afe63c8ac9873d6e01e2ca19218344e}} 
+{\bfseries Connection} (Q\+Object $\ast$parent=nullptr)
+\item 
+\mbox{\Hypertarget{classConnection_ab510cb0a3cf64e4d98f624e73728bec0}\label{classConnection_ab510cb0a3cf64e4d98f624e73728bec0}} 
+\mbox{\hyperlink{classNode}{Node}} $\ast$ {\bfseries receiver} () const
+\item 
+\mbox{\Hypertarget{classConnection_af28434b67e1e6c6930f5363612dda233}\label{classConnection_af28434b67e1e6c6930f5363612dda233}} 
+\mbox{\hyperlink{classNode}{Node}} $\ast$ {\bfseries sender} () const
+\item 
+\mbox{\Hypertarget{classConnection_ac7e9230266e557439f1597d14d92bd41}\label{classConnection_ac7e9230266e557439f1597d14d92bd41}} 
+void {\bfseries set\+Receiver} (\mbox{\hyperlink{classNode}{Node}} $\ast$n)
+\item 
+\mbox{\Hypertarget{classConnection_aab3e0207b72d5af2dfbf6c0757ecc4da}\label{classConnection_aab3e0207b72d5af2dfbf6c0757ecc4da}} 
+void {\bfseries set\+Sender} (\mbox{\hyperlink{classNode}{Node}} $\ast$n)
+\item 
+\mbox{\Hypertarget{classConnection_ad75ed4e7c64886d0a7b1b229da1087a6}\label{classConnection_ad75ed4e7c64886d0a7b1b229da1087a6}} 
+void {\bfseries read} (const Q\+Json\+Object \&json, const Q\+Hash$<$ qulonglong, \mbox{\hyperlink{classNode}{Node}} $\ast$$>$ \&hash)
+\item 
+\mbox{\Hypertarget{classConnection_a8e141967a494f7e3d577fe018cfa5178}\label{classConnection_a8e141967a494f7e3d577fe018cfa5178}} 
+Q\+Json\+Object {\bfseries write} () const
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classConnection_a801ac88d7985062c01ebff75ca3845a7}\label{classConnection_a801ac88d7985062c01ebff75ca3845a7}} 
+\mbox{\hyperlink{classNode}{Node}} {\bfseries to}
+\item 
+\mbox{\Hypertarget{classConnection_a9e0992b9aebf3307aa05ef797ed8426d}\label{classConnection_a9e0992b9aebf3307aa05ef797ed8426d}} 
+\mbox{\hyperlink{classNode}{Node}} {\bfseries from}
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classConnection_a508ae4ca471baad98e9ace730e8ab500}\label{classConnection_a508ae4ca471baad98e9ace730e8ab500}} 
+\mbox{\hyperlink{classNode}{Node}} $\ast$ {\bfseries m\+\_\+receiver}
+\item 
+\mbox{\Hypertarget{classConnection_aa6eb9bca71cf1144595325a4c47182b9}\label{classConnection_aa6eb9bca71cf1144595325a4c47182b9}} 
+\mbox{\hyperlink{classNode}{Node}} $\ast$ {\bfseries m\+\_\+sender}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/connection.\+h\item 
+src/cpp/connection.\+cpp\end{DoxyCompactItemize}

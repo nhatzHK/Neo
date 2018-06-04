@@ -1,11 +1,15 @@
 #include "room.h"
 #include <QDebug>
 
+/*!
+ */
 Room::Room(QObject* parent)
 {
   connect(this, &Room::roomHaveChanged, [=]() { this->m_changeSaved = false; });
 }
 
+/*!
+ */
 void
 Room::clearNodes(QQmlListProperty<Node>* l)
 {
@@ -13,6 +17,8 @@ Room::clearNodes(QQmlListProperty<Node>* l)
   emit((Room*)l->object)->nodesUpdated();
 }
 
+/*!
+ */
 void
 Room::clearConnections(QQmlListProperty<Connection>* l)
 {
@@ -20,6 +26,8 @@ Room::clearConnections(QQmlListProperty<Connection>* l)
   emit((Room*)l->object)->connectionsUpdated();
 }
 
+/*!
+ */
 void
 Room::addNode(QQmlListProperty<Node>* l, Node* n)
 {
@@ -30,6 +38,8 @@ Room::addNode(QQmlListProperty<Node>* l, Node* n)
   emit r->nodesUpdated();
 }
 
+/*!
+ */
 void
 Room::addConnection(QQmlListProperty<Connection>* l, Connection* c)
 {
@@ -37,30 +47,40 @@ Room::addConnection(QQmlListProperty<Connection>* l, Connection* c)
   emit((Room*)l->object)->connectionsUpdated();
 }
 
+/*!
+ */
 int
 Room::countNodes(QQmlListProperty<Node>* l)
 {
   return ((Room*)l->object)->m_nodes.length();
 }
 
+/*!
+ */
 int
 Room::countConnections(QQmlListProperty<Connection>* l)
 {
   return ((Room*)l->object)->m_connections.length();
 }
 
+/*!
+ */
 Node*
 Room::getNode(QQmlListProperty<Node>* l, int i)
 {
   return ((Room*)l->object)->m_nodes.at(i);
 }
 
+/*!
+ */
 Connection*
 Room::getConnection(QQmlListProperty<Connection>* l, int i)
 {
   return ((Room*)l->object)->m_connections.at(i);
 }
 
+/*!
+ */
 QQmlListProperty<Node>
 Room::nodes()
 {
@@ -72,6 +92,8 @@ Room::nodes()
                                 &Room::clearNodes);
 }
 
+/*!
+ */
 QQmlListProperty<Connection>
 Room::connections()
 {
@@ -83,12 +105,16 @@ Room::connections()
                                       &Room::clearConnections);
 }
 
+/*!
+ */
 QUrl
 Room::file() const
 {
   return QUrl(m_file.fileName());
 }
 
+/*!
+ */
 void
 Room::setFile(const QUrl& url)
 {
@@ -96,6 +122,9 @@ Room::setFile(const QUrl& url)
   emit fileChanged();
 }
 
+/*!
+ * \details Also breaks any connection involving that node.
+ */
 bool
 Room::deleteNode(Node* n)
 {
@@ -106,6 +135,8 @@ Room::deleteNode(Node* n)
   return b;
 }
 
+/*!
+ */
 void
 Room::removeConnections(Node* n)
 {
@@ -119,6 +150,9 @@ Room::removeConnections(Node* n)
   emit connectionsUpdated();
 }
 
+/*!
+ * \details The parameters behave like Room::connected
+ */
 void
 Room::createConnection(Node* a, Node* b, int t)
 {
@@ -148,6 +182,19 @@ Room::createConnection(Node* a, Node* b, int t)
   m_connections.append(c);
 }
 
+/*!
+ *  \details The \p direction parameter specifies how the other parameters
+ * should be interpreted.
+ *
+ * Possible values:\n
+ * - Node::Input\n
+ * 	 Indicates that the first parameter (\p a) is the sender in a potential
+ * connection.
+ * - Node::Output\n
+ * 	 Indicates that the first parameter (\p a) is the receiver in a
+ * potential connection.
+ *
+ */
 bool
 Room::connected(Node* a, Node* b, int t)
 {
@@ -169,6 +216,10 @@ Room::connected(Node* a, Node* b, int t)
   return false;
 }
 
+/*!
+ * \details Mainly to check for possible loops before establishing a connection.
+ * The parameters behave like Room::connected.
+ */
 bool
 Room::canConnect(Node* a, Node* b, int t)
 {
@@ -196,6 +247,9 @@ Room::canConnect(Node* a, Node* b, int t)
   return true;
 }
 
+/*!
+ * \details The parameters are inteerpreted like in Room::canConnect.
+ */
 bool
 Room::looping(Node* a, Node* b, int t)
 {
@@ -220,6 +274,11 @@ Room::looping(Node* a, Node* b, int t)
   return false;
 }
 
+/*!
+ * \details A network loop is created when an output node (type Node::Output)
+ * and an input node (type Node::Input) are connected and have the same OSC
+ * address.
+ */
 bool
 Room::networkLoop(Node* a, Node* b, int t)
 {
@@ -250,6 +309,10 @@ Room::networkLoop(Node* a, Node* b, int t)
   return false;
 }
 
+/*!
+ * \details If \p b can be reached by recursively exploring the connection
+ * list starting from \p a, the nodes are considered chained.
+ */
 bool
 Room::chained(Node* a, Node* b)
 {
@@ -266,8 +329,10 @@ Room::chained(Node* a, Node* b)
   return false;
 }
 
+/*!
+ */
 bool
-Room::hasInConnection(Node* n)
+Room::hasInConnection(Node* n) const
 {
   if (n->type() == Node::Input) {
     return false;
@@ -282,8 +347,10 @@ Room::hasInConnection(Node* n)
   return false;
 }
 
+/*!
+ */
 bool
-Room::hasOutConnection(Node* n)
+Room::hasOutConnection(Node* n) const
 {
 
   if (n->type() == Node::Output) {
@@ -299,6 +366,9 @@ Room::hasOutConnection(Node* n)
   return false;
 }
 
+/*!
+ * \details The parameters behave like Room::connected.
+ */
 void
 Room::removeConnections(Node* a, Node* b, int t)
 {
@@ -321,8 +391,10 @@ Room::removeConnections(Node* a, Node* b, int t)
   }
 }
 
+/*!
+ */
 bool
-Room::getValue(Node* n)
+Room::getValue(Node* n) const
 {
 
   if (!n->opened()) {
@@ -367,6 +439,8 @@ Room::getValue(Node* n)
   return res ^ n->inverted();
 }
 
+/*!
+ */
 void
 Room::evaluate(Node* n)
 {
@@ -379,6 +453,8 @@ Room::evaluate(Node* n)
   }
 }
 
+/*!
+ */
 void
 Room::initSocket()
 {
@@ -386,11 +462,13 @@ Room::initSocket()
   if (m_sock->bind(QHostAddress::LocalHost, 8888)) {
     connect(m_sock, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
   } else {
-    qDebug()
+    qWarning()
       << "BIND SOCKET ERROR: (room - initSocket)Failed to bind socket.\n";
   }
 }
 
+/*!
+ */
 void
 Room::readPendingDatagrams()
 {
@@ -407,11 +485,13 @@ Room::readPendingDatagrams()
         processMessage(reader.getMessage());
       }
     } catch (QException& qe) {
-      qDebug() << qe.what() << '\n';
+      qWarning() << qe.what() << '\n';
     }
   }
 }
 
+/*!
+ */
 void
 Room::sendMessage(Node* n)
 {
@@ -420,6 +500,8 @@ Room::sendMessage(Node* n)
   m_sock->writeDatagram(*(mc.getBytes()), n->getIp(), n->getPort());
 }
 
+/*!
+ */
 void
 Room::processBundle(OscBundle* bundle)
 {
@@ -432,6 +514,8 @@ Room::processBundle(OscBundle* bundle)
   }
 }
 
+/*!
+ */
 void
 Room::processMessage(OscMessage* message)
 {
@@ -443,11 +527,19 @@ Room::processMessage(OscMessage* message)
   }
 }
 
+/*!
+ * \details Serializes every node and connection created in this room and write
+ * them to a file.
+ *
+ * \pre This function assumes a file have been set already by calling
+ * Room::setFile.
+ *
+ */
 void
 Room::save()
 {
   if (!m_file.open(QIODevice::WriteOnly)) {
-    qDebug() << "Could not open file: " << m_file.fileName() << '\n';
+    qWarning() << "Could not open file: " << m_file.fileName() << '\n';
     return;
   }
 
@@ -458,6 +550,8 @@ Room::save()
   m_file.close();
 }
 
+/*!
+ */
 void
 Room::save(const QUrl& url)
 {
@@ -467,12 +561,21 @@ Room::save(const QUrl& url)
   save();
 }
 
+/*!
+ * \details The content of the file is loaded into json objects.
+ *
+ * This method does not create instances of Node or Connection for the loaded
+ * data.
+ *
+ * \post The content of the lists Room::m_jsonNodes and Room::m_jsonConnections
+ * should be consumed after calling this function.
+ */
 void
 Room::load(const QUrl& url)
 {
   QFile file(url.toLocalFile());
   if (!file.open(QIODevice::ReadOnly)) {
-    qDebug() << "Could not open file: " << url.toLocalFile();
+    qWarning() << "Could not open file: " << url.toLocalFile();
     return;
   }
 
@@ -485,18 +588,29 @@ Room::load(const QUrl& url)
   emit roomLoaded();
 }
 
+/*!
+ * \details This method can be used to determine if a file name have been set
+ * before calling Room::save.
+ *
+ * \pre The room should be cleared of all its nodes and connections before
+ * loading new data in it.
+ */
 bool
 Room::savedBefore() const
 {
   return m_file.exists();
 }
 
+/*!
+ */
 bool
 Room::changesSaved() const
 {
   return m_changeSaved;
 }
 
+/*!
+ */
 void
 Room::read(const QJsonObject& json)
 {
@@ -513,6 +627,8 @@ Room::read(const QJsonObject& json)
   }
 }
 
+/*!
+ */
 QJsonObject
 Room::write() const
 {
@@ -532,12 +648,19 @@ Room::write() const
   return json;
 }
 
+/*!
+ * \pre Room::load have to be called before using this method.
+ * \post When this returns false, Room::loadConnections should be called
+ * immediately after.
+ */
 bool
 Room::hasMoreLoaded() const
 {
   return !(m_jsonNodes.isEmpty());
 }
 
+/*!
+ */
 void
 Room::loadNextNode(Node* n)
 {
@@ -550,6 +673,11 @@ Room::loadNextNode(Node* n)
   }
 }
 
+/*!
+ * \pre Room::load should be called before using this method. All
+ * nodes loaded as json objects should have also been loaded into Node objects
+ * before calling this.
+ */
 void
 Room::loadConnections()
 {
@@ -563,6 +691,11 @@ Room::loadConnections()
   }
 }
 
+/*!
+ * \pre Room::hasMoreLoaded have to be used before calling this method to
+ * determine if there is more loaded data
+ *
+ */
 int
 Room::nextType()
 {
